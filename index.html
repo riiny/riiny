@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Name | Portfolio</title>
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
   <style>
     body {
       font-family: 'Helvetica Neue', sans-serif;
@@ -82,13 +86,13 @@
 </head>
 <body>
 
-  <header>
+  <header data-aos="fade-down">
     <h1>Your Name</h1>
     <p>Designer • Developer • Creative Thinker</p>
     <a href="#projects" class="btn">View My Work</a>
   </header>
 
-  <section id="about" class="section">
+  <section id="about" class="section" data-aos="fade-up">
     <h2>About Me</h2>
     <p>
       Hello! I'm a passionate creative professional with experience in <strong>web development, graphic design,</strong> and building functional, beautiful user experiences.
@@ -96,33 +100,41 @@
     </p>
   </section>
 
-  <section id="projects" class="section">
+  <section id="projects" class="section" data-aos="fade-up">
     <h2>Featured Projects</h2>
     <div class="projects">
-      <div class="project">
+      <div class="project" data-aos="fade-up" data-aos-delay="100">
         <h3>VacantVue</h3>
         <p>A mobile and desktop app for managing parking slot reservations and POS systems. Built with Firebase, Kotlin, and JavaScript.</p>
       </div>
-      <div class="project">
+      <div class="project" data-aos="fade-up" data-aos-delay="200">
         <h3>Collage Art Series</h3>
         <p>A collection of surreal and emotional digital collages made with Adobe Photoshop. Each piece tells a personal visual story.</p>
       </div>
-      <div class="project">
+      <div class="project" data-aos="fade-up" data-aos-delay="300">
         <h3>FlowLow</h3>
         <p>A productivity-focused app that helps users track and optimize their workflow. Created for my BSIT thesis project.</p>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="section">
+  <section id="contact" class="section" data-aos="fade-up">
     <h2>Contact Me</h2>
     <p>If you’d like to work together or just want to say hi, feel free to drop me a message!</p>
     <a href="mailto:youremail@example.com" class="btn">Get in Touch</a>
   </section>
 
-  <footer>
+  <footer data-aos="fade-up">
     &copy; 2025 Your Name. All rights reserved.
   </footer>
 
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
+  </script>
 </body>
 </html>
