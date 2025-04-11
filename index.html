@@ -45,8 +45,8 @@
   window.addEventListener('scroll', () => {
     const aboutSection = document.getElementById('about');
     const scrollPosition = window.scrollY;
-    const fadeStart = 50; // Start fading out after 50px of scroll
-    const fadeEnd = 300; // Fully faded out at 300px of scroll
+    const fadeStart = 200; // Start fading out after 50px of scroll
+    const fadeEnd = 350; // Fully faded out at 300px of scroll
 
     if (scrollPosition > fadeStart) {
       const opacity = Math.max(0, 1 - (scrollPosition - fadeStart) / (fadeEnd - fadeStart));
