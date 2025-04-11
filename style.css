@@ -76,7 +76,6 @@ html, body {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: rgba(0, 0, 0, 0.3);
-  padding: 15px;
   transition: background-color 0.3s ease;
 }
 
