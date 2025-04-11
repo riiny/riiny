@@ -4,16 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Riin Valeña - Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-dark fixed-top">
-  <div class="container-fluid justify-content-center">
-    <button class="btn btn-outline-light mx-2" onclick="scrollToSection('about')">About Me</button>
-    <button class="btn btn-outline-light mx-2" onclick="scrollToSection('projects')">Projects</button>
-    <button class="btn btn-outline-light mx-2" onclick="scrollToSection('contact')">Contact</button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container justify-content-center">
+    <ul class="navbar-nav">
+      <li class="nav-item mx-2"><a class="btn btn-outline-light" onclick="scrollToSection('about')">About Me</a></li>
+      <li class="nav-item mx-2"><a class="btn btn-outline-light" onclick="scrollToSection('projects')">Projects</a></li>
+      <li class="nav-item mx-2"><a class="btn btn-outline-light" onclick="scrollToSection('contact')">Contact</a></li>
+    </ul>
   </div>
 </nav>
 
@@ -46,15 +48,14 @@
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselTodo" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-<!-- Replace with custom icon if desired -->
-
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselTodo" data-bs-slide="next">
           <span class="carousel-control-next-icon"></span>
         </button>
-        <div>
+      </div>
       <p class="project-description">A productivity app to manage daily tasks, complete with category filters and real-time syncing using Firebase. Built using JavaScript, Firebase, and Bootstrap.</p>
-</div>
+    </div>
+
     <!-- Project 2 -->
     <div class="mb-5">
       <h4 class="mb-3">Weather App</h4>
@@ -115,7 +116,12 @@
   </div>
 </section>
 
-<!-- Bootstrap JS Bundle -->
+<footer class="text-center bg-dark text-white py-4">
+  <div class="container">
+    <p class="mb-0">&copy; 2025 Riin Valeña. All rights reserved.</p>
+  </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   function scrollToSection(id) {
