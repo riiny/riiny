@@ -164,7 +164,7 @@
   </section>
     
 
-<section id="contact" class="section bg-secondary text-white text-center" >
+<section id="contact" class="section bg-secondary text-white text-center" data-aos="fade-out">
   <div class="container">
     <h1>Contact</h1>
     <p class="lead" style="color: white !important;">Let’s build something together! You can reach me here:</p>
@@ -176,31 +176,6 @@
     </p>
   </div>
 </section>
-
-<script>
-  // Add fade-out effect on scroll up for the contact section
-  let lastScrollTop = 0;
-  window.addEventListener('scroll', () => {
-    const contactSection = document.getElementById('contact');
-    const scrollTop = window.scrollY;
-
-    if (scrollTop < lastScrollTop) { // Scrolling up
-      const fadeStart = 200; // Start fading out after 200px of scroll up
-      const fadeEnd = 600; // Fully faded out at 600px of scroll up
-
-      if (scrollTop < fadeEnd) {
-        const opacity = Math.max(0, 1 - (fadeEnd - scrollTop) / (fadeEnd - fadeStart));
-        contactSection.style.opacity = opacity;
-      } else {
-        contactSection.style.opacity = 0;
-      }
-    } else { // Scrolling down
-      contactSection.style.opacity = 1;
-    }
-
-    lastScrollTop = scrollTop;
-  });
-</script>
 
 
 <footer class="text-center bg-dark text-white py-4">
