@@ -95,7 +95,7 @@ html, body {
   max-width: 850px;
   margin: 0 auto 60px;
   background-color: #fff;
-  padding: 0;
+  padding: 20px 30px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
   line-height: 1.6;
@@ -130,7 +130,7 @@ h4 {
   }
 
   .project-description {
-    padding: 0;
+    padding: 20px;
     font-size: 0.95rem;
   }
 
