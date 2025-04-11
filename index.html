@@ -169,20 +169,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 
-  function scrollToTopOnReload() {
-    if (performance.navigation.type === 1) { // Check if the page was reloaded
-      window.scrollTo(0, 0); // Scroll to the top (x: 0, y: 0)
-    }
-  }
-
-  // Call the function when the page loads
-  window.onload = scrollToTopOnReload;
 
   function scrollToSection(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   }
 
-
+  window.addEventListener('scroll', function () {
+    const aboutSection = document.getElementById('about');
+    const scrollPosition = window.scrollY;
+    const sectionHeight = aboutSection.offsetHeight;
+    const triggerPoint = aboutSection.offsetTop + sectionHeight;
+  
+    if (scrollPosition > triggerPoint) {
+      aboutSection.classList.add('faded-out');
+    } else {
+      aboutSection.classList.remove('faded-out');
+    }
+  });
+  
   AOS.init({
     duration: 1000,  // animation duration in ms
     once: true,      // trigger animation once when scrolling down

@@ -58,7 +58,7 @@ html, body {
   max-width: 850px;
   margin: 0 auto;
   overflow: hidden;
-  box-shadow: none; /* ✅ removed carousel shadow */
+  box-shadow: none; 
   border-radius: 0 !important;
 }
 
@@ -187,5 +187,13 @@ small {
     font-size: 20px;
   }
 
+  #about {
+    transition: background-color 1s ease;
+    background-color: #0dcaf0; /* default bg-info color */
+  }
+  
+  #about.faded-out {
+    background-color: transparent;
+  }
   
 }
