@@ -189,11 +189,12 @@ small {
 
   #about {
     transition: background-color 1s ease;
-    background-color: #0dcaf0; /* default bg-info color */
+    background-color: #ffffff; /* Bootstrap 'bg-info' */
   }
   
   #about.faded-out {
-    background-color: transparent;
+    background-color: rgba(13, 202, 240, 0); /* same color but fully transparent */
   }
+  
   
 }
