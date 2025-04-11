@@ -54,9 +54,9 @@ html, body {
 .carousel {
   max-width: 850px;
   margin: 0 auto;
-
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 0;
 }
 
 /* Carousel Image */
@@ -87,13 +87,15 @@ html, body {
 /* Description Styling */
 .project-description {
   max-width: 850px;
-  margin: 25px auto 60px;
+  margin: 0 auto 60px;
   background-color: #fff;
-  padding: 0px 30px;
+  padding: 0;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
   line-height: 1.6;
   text-align: left;
+  border-radius: 0;
+  border-top: none;
 }
 
 /* Headings */
@@ -118,7 +120,7 @@ h4 {
   }
 
   .project-description {
-    padding: 20px;
+    padding: 0;
     font-size: 0.95rem;
   }
 
