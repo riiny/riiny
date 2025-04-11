@@ -177,6 +177,31 @@
   </div>
 </section>
 
+<script>
+  // Add fade-out effect on scroll up
+  let lastScrollTop = 0;
+  window.addEventListener('scroll', () => {
+    const contactSection = document.getElementById('contact');
+    const scrollTop = window.scrollY;
+
+    if (scrollTop < lastScrollTop) { // Scrolling up
+      const fadeStart = 50; // Start fading out after 50px of scroll up
+      const fadeEnd = 200; // Fully faded out at 200px of scroll up
+
+      if (scrollTop < fadeEnd) {
+        const opacity = Math.max(0, 1 - (fadeEnd - scrollTop) / (fadeEnd - fadeStart));
+        contactSection.style.opacity = opacity;
+      } else {
+        contactSection.style.opacity = 0;
+      }
+    } else { // Scrolling down
+      contactSection.style.opacity = 1;
+    }
+
+    lastScrollTop = scrollTop;
+  });
+</script>
+
 <footer class="text-center bg-dark text-white py-4">
   <div class="container">
     <p class="mb-0">&copy; 2025 Riin Valeña. All rights reserved.</p>
