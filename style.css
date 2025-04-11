@@ -22,11 +22,13 @@ html, body {
 
 /* Navbar */
 .navbar {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: none; /* ✅ removed navbar shadow */
   z-index: 1000;
   font-weight: 500;
+  border-radius: 0 !important;
 }
 
+/* Navigation Links */
 .nav-link {
   font-size: 16px;
   margin-right: 20px;
@@ -55,7 +57,7 @@ html, body {
   max-width: 850px;
   margin: 0 auto;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: none; /* ✅ removed carousel shadow */
   border-radius: 0 !important;
 }
 
@@ -100,9 +102,8 @@ html, body {
   line-height: 1.6;
   text-align: left;
   border-radius: 0 !important;
-  box-shadow: none; /* ✅ removed shadow */
+  box-shadow: none; /* ✅ ensure no description shadow */
 }
-
 
 /* Remove Bootstrap default rounded class if used */
 .rounded, .rounded-0, .rounded-start, .rounded-end, .rounded-top, .rounded-bottom {
