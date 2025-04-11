@@ -40,6 +40,23 @@
   </div>
 </section>
 
+<script>
+  // Add fade-out effect on scroll
+  window.addEventListener('scroll', () => {
+    const aboutSection = document.getElementById('about');
+    const scrollPosition = window.scrollY;
+    const fadeStart = 50; // Start fading out after 50px of scroll
+    const fadeEnd = 300; // Fully faded out at 300px of scroll
+
+    if (scrollPosition > fadeStart) {
+      const opacity = Math.max(0, 1 - (scrollPosition - fadeStart) / (fadeEnd - fadeStart));
+      aboutSection.style.opacity = opacity;
+    } else {
+      aboutSection.style.opacity = 1;
+    }
+  });
+</script>
+
 <section id="projects" class="section bg-light text-center" data-aos="fade-out">
   <div class="container">
     <h1 class="mb-5" data-aos="fade-up">Projects</h1>
@@ -174,18 +191,7 @@
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   }
 
-  window.addEventListener('scroll', function () {
-    const aboutSection = document.getElementById('about');
-    const scrollPosition = window.scrollY;
-    const sectionHeight = aboutSection.offsetHeight;
-    const triggerPoint = aboutSection.offsetTop + sectionHeight;
-  
-    if (scrollPosition > triggerPoint) {
-      aboutSection.classList.add('faded-out');
-    } else {
-      aboutSection.classList.remove('faded-out');
-    }
-  });
+ 
   
   AOS.init({
     duration: 1000,  // animation duration in ms
