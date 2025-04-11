@@ -1,17 +1,20 @@
 html, body {
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .section {
-    padding: 100px 20px;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-  
-  .carousel-caption {
-    padding: 1rem;
-  }
-  
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+.section {
+  padding: 100px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-description {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1rem;
+  color: #444;
+}

@@ -22,51 +22,90 @@
   <div class="container">
     <h1>About Me</h1>
     <p class="lead">Hi! I'm Alex, a passionate web developer who enjoys building engaging websites and web apps. I specialize in front-end development using HTML, CSS, JavaScript, and frameworks like React and Bootstrap.</p>
-    <p>My journey started in college, and I’ve since completed multiple personal and academic projects focused on design, accessibility, and user experience. I’m also learning backend tools like Node.js and Firebase to expand my skillset.</p>
+    <p>I’ve built several applications that solve real-world problems and am always exploring new technologies to improve my skillset.</p>
   </div>
 </section>
 
 <section id="projects" class="section bg-light text-center">
   <div class="container">
-    <h1>Projects</h1>
-    <div id="projectCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://via.placeholder.com/800x400?text=To-Do+App" class="d-block w-100" alt="To-Do App">
-          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-            <h5>To-Do App</h5>
-            <p>A productivity app to manage daily tasks with real-time syncing using Firebase.</p>
+    <h1 class="mb-5">Projects</h1>
+
+    <!-- Project 1 -->
+    <div class="mb-5">
+      <h4 class="mb-3">To-Do App</h4>
+      <div id="carouselTodo" class="carousel slide mb-3" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://picsum.photos/seed/todo1/800/400" class="d-block w-100" alt="Todo App Screenshot 1">
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/seed/todo2/800/400" class="d-block w-100" alt="Todo App Screenshot 2">
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/seed/todo3/800/400" class="d-block w-100" alt="Todo App Screenshot 3">
           </div>
         </div>
-        <div class="carousel-item">
-          <img src="https://via.placeholder.com/800x400?text=Portfolio+Website" class="d-block w-100" alt="Portfolio">
-          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-            <h5>Portfolio Website</h5>
-            <p>A personal website showcasing my skills, work, and contact info using HTML, CSS, and JS.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="https://via.placeholder.com/800x400?text=Weather+App" class="d-block w-100" alt="Weather App">
-          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-            <h5>Weather App</h5>
-            <p>Pulls real-time weather data using OpenWeatherMap API and displays it in a responsive UI.</p>
-          </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselTodo" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselTodo" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-      </button>
+      <p class="project-description">A productivity app to manage daily tasks, complete with category filters and real-time syncing using Firebase. Built using JavaScript, Firebase, and Bootstrap.</p>
     </div>
+
+    <!-- Project 2 -->
+    <div class="mb-5">
+      <h4 class="mb-3">Weather App</h4>
+      <div id="carouselWeather" class="carousel slide mb-3" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://picsum.photos/seed/weather1/800/400" class="d-block w-100" alt="Weather App Screenshot 1">
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/seed/weather2/800/400" class="d-block w-100" alt="Weather App Screenshot 2">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselWeather" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselWeather" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+      <p class="project-description">This web app fetches real-time weather updates using OpenWeatherMap API and displays them in a clean, responsive layout. Built with HTML, CSS, and JavaScript.</p>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="mb-5">
+      <h4 class="mb-3">Portfolio Website</h4>
+      <div id="carouselPortfolio" class="carousel slide mb-3" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://picsum.photos/seed/portfolio1/800/400" class="d-block w-100" alt="Portfolio Screenshot 1">
+          </div>
+          <div class="carousel-item">
+            <img src="https://picsum.photos/seed/portfolio2/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselPortfolio" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselPortfolio" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+      <p class="project-description">This is the website you're looking at! Designed to be responsive and elegant, it showcases my development and design experience. Made with HTML, CSS, Bootstrap, and love.</p>
+    </div>
+
   </div>
 </section>
 
 <section id="contact" class="section bg-secondary text-white text-center">
   <div class="container">
     <h1>Contact</h1>
-    <p class="lead">Feel free to reach out via email or through my socials!</p>
+    <p class="lead">Let’s build something together! You can reach me here:</p>
     <p>Email: alex.dev@email.com</p>
     <p>
       <a href="#" class="text-white me-3">LinkedIn</a>
