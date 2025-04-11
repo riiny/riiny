@@ -178,15 +178,15 @@
 </section>
 
 <script>
-  // Add fade-out effect on scroll up
+  // Add fade-out effect on scroll up for the contact section
   let lastScrollTop = 0;
   window.addEventListener('scroll', () => {
     const contactSection = document.getElementById('contact');
     const scrollTop = window.scrollY;
 
     if (scrollTop < lastScrollTop) { // Scrolling up
-      const fadeStart = 500; // Start fading out after 50px of scroll up
-      const fadeEnd = 400; // Fully faded out at 200px of scroll up
+      const fadeStart = 200; // Start fading out after 200px of scroll up
+      const fadeEnd = 600; // Fully faded out at 600px of scroll up
 
       if (scrollTop < fadeEnd) {
         const opacity = Math.max(0, 1 - (fadeEnd - scrollTop) / (fadeEnd - fadeStart));
@@ -201,6 +201,7 @@
     lastScrollTop = scrollTop;
   });
 </script>
+
 
 <footer class="text-center bg-dark text-white py-4">
   <div class="container">
