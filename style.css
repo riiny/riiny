@@ -187,36 +187,5 @@ small {
     font-size: 20px;
   }
 
-  .sec2,
-.sec1 {
-  width: 100%;
-  height: 100vh;
-  background-color: white;
-  color: black;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: poppins;
-}
-.sec2 > h1 {
-  animation: revealing;
-  animation-timeline: view(block);
-  animation-range: cover 0% cover 50%;
-  margin: 0px;
-}
-@keyframes revealing {
-  from {
-    color: gray;
-    margin-left: 100vw;
-    filter: blur(50px);
-    opacity: 0.5;
-  }
-  to {
-    margin: 0px;
-    filter: blur(0px);
-    opacity: 1;
-  }
-}
-
+  
 }
