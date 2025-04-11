@@ -1,9 +1,12 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 /* General Styles */
 html, body {
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #f8f9fa;
   color: #333;
 }
@@ -21,12 +24,25 @@ html, body {
 .navbar {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   z-index: 1000;
+  font-weight: 500;
+}
+
+.nav-link {
+  font-size: 16px;
+  margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0d6efd;
 }
 
 /* Buttons */
 .btn-outline-light {
   border: 1px solid white;
   transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .btn-outline-light:hover {
@@ -49,6 +65,11 @@ html, body {
   width: 100%;
   height: 400px;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.carousel-inner img:hover {
+  transform: scale(1.01);
 }
 
 /* Carousel Controls */
@@ -70,16 +91,27 @@ html, body {
   max-width: 850px;
   margin: 25px auto 60px;
   background-color: #fff;
-  padding: 20px 25px;
+  padding: 25px 30px;
   border-radius: 12px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
+  line-height: 1.6;
   text-align: left;
 }
 
-/* Heading Tweaks */
+/* Headings */
 h1, h4 {
   font-weight: 600;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h4 {
+  font-size: 22px;
 }
 
 /* Responsive Fix */
@@ -89,7 +121,15 @@ h1, h4 {
   }
 
   .project-description {
-    padding: 15px;
+    padding: 20px;
     font-size: 0.95rem;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h4 {
+    font-size: 20px;
   }
 }
