@@ -3,80 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Squiggly Scroll Text</title>
+  <title>My Portfolio</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      min-height: 300vh; /* Makes page scrollable */
-      background: #111;
-      overflow-x: hidden;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Arial', sans-serif;
+      scroll-behavior: smooth;
+      background: #f4f4f4;
+      color: #333;
     }
 
-    .squiggly-text {
-      position: absolute;
-      color: #fff;
-      font-size: 24px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: squiggle 2s infinite alternate ease-in-out;
-      transition: opacity 1s ease, transform 1s ease;
+    nav {
+      position: fixed;
+      width: 100%;
+      background: #333;
+      color: white;
+      padding: 1em 0;
+      text-align: center;
+      z-index: 1000;
     }
 
-    .squiggly-text.visible {
-      opacity: 1;
-      transform: translateY(0);
+    nav button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 16px;
+      margin: 0 15px;
+      cursor: pointer;
+      transition: color 0.3s;
     }
 
-    @keyframes squiggle {
-      0% {
-        transform: rotate(-2deg) translateY(0);
-      }
-      100% {
-        transform: rotate(2deg) translateY(0);
-      }
+    nav button:hover {
+      color: #00bcd4;
+    }
+
+    section {
+      padding: 100px 20px;
+      min-height: 100vh;
+    }
+
+    #about {
+      background: #e0f7fa;
+    }
+
+    #projects {
+      background: #fff3e0;
+    }
+
+    #contact {
+      background: #ede7f6;
+    }
+
+    /* Carousel Styles */
+    .carousel {
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      margin: auto;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .carousel img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+    }
+
+    .description {
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .carousel-buttons {
+      margin-top: 10px;
+    }
+
+    .carousel-buttons button {
+      margin: 0 10px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
+<nav>
+  <button onclick="scrollToSection('about')">About Me</button>
+  <button onclick="scrollToSection('projects')">Projects</button>
+  <button onclick="scrollToSection('contact')">Contact</button>
+</nav>
+
+<section id="about">
+  <h1>About Me</h1>
+  <p>This is a placeholder for the About Me section. You can describe your skills, education, or passions here.</p>
+</section>
+
+<section id="projects">
+  <h1>Projects</h1>
+  <div class="carousel">
+    <img id="carousel-image" src="https://via.placeholder.com/600x300?text=Project+1" alt="Project 1" />
+    <p class="description" id="carousel-description">This is the description for Project 1.</p>
+    <div class="carousel-buttons">
+      <button onclick="prevSlide()">Previous</button>
+      <button onclick="nextSlide()">Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h1>Contact</h1>
+  <p>Contact form or social media links can go here. For now, this is just a placeholder.</p>
+</section>
+
 <script>
-  const messages = [
-    "squiggle one", "keep scrolling", "down you go", "wavy thoughts", 
-    "twist and fade", "almost there", "are we lost?", "follow the squiggle", 
-    "spiraling down", "mystery below", "still scrolling", "fade into view"
-  ];
-
-  const total = 30;
-
-  for (let i = 0; i < total; i++) {
-    const span = document.createElement('span');
-    span.textContent = messages[Math.floor(Math.random() * messages.length)];
-    span.classList.add('squiggly-text');
-
-    // Random position
-    const top = Math.random() * 2500 + 100;
-    const left = Math.random() * (window.innerWidth - 150);
-    span.style.top = `${top}px`;
-    span.style.left = `${left}px`;
-
-    document.body.appendChild(span);
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   }
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, {
-    threshold: 0.1
-  });
+  const slides = [
+    {
+      image: 'https://via.placeholder.com/600x300?text=Project+1',
+      description: 'This is the description for Project 1.'
+    },
+    {
+      image: 'https://via.placeholder.com/600x300?text=Project+2',
+      description: 'This is the description for Project 2.'
+    },
+    {
+      image: 'https://via.placeholder.com/600x300?text=Project+3',
+      description: 'This is the description for Project 3.'
+    }
+  ];
 
-  document.querySelectorAll('.squiggly-text').forEach(el => {
-    observer.observe(el);
-  });
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    const img = document.getElementById('carousel-image');
+    const desc = document.getElementById('carousel-description');
+    img.src = slides[index].image;
+    desc.textContent = slides[index].description;
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  // Initialize first slide
+  showSlide(currentSlide);
 </script>
 
 </body>
