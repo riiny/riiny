@@ -54,7 +54,7 @@ html, body {
 .carousel {
   max-width: 850px;
   margin: 0 auto;
-  border-radius: 16px;
+
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
@@ -76,7 +76,6 @@ html, body {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
   padding: 15px;
   transition: background-color 0.3s ease;
 }
@@ -92,7 +91,6 @@ html, body {
   margin: 25px auto 60px;
   background-color: #fff;
   padding: 25px 30px;
-  border-radius: 12px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
   line-height: 1.6;
