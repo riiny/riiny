@@ -170,9 +170,16 @@
 <script>
 
   window.onload = function() {
-    window.scrollTo(0, 0);
+    // Check if the page is not already scrolled to the top
+    if (document.documentElement.scrollTop !== 0 || document.body.scrollTop !== 0) {
+      window.scrollTo(0, 0);
+    }
   };
-  
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
   function scrollToSection(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   }
