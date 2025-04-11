@@ -95,13 +95,14 @@ html, body {
   max-width: 850px;
   margin: 0 auto 60px;
   background-color: #fff;
-  padding: 20px 30px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  padding: 30px;
   font-size: 1rem;
   line-height: 1.6;
   text-align: left;
   border-radius: 0 !important;
+  box-shadow: none; /* ✅ removed shadow */
 }
+
 
 /* Remove Bootstrap default rounded class if used */
 .rounded, .rounded-0, .rounded-start, .rounded-end, .rounded-top, .rounded-bottom {
