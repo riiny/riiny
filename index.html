@@ -9,195 +9,853 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <style>
-    /* Custom styles for fade-out animation */
-    [data-aos="fade-out"] {
-      opacity: 0;
-      transition: opacity 1s ease-out;
+    /* Custom styles for motherboard-style layout */
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    
-    [data-aos="fade-out"].aos-animate {
-      opacity: 1;
+
+    .glow-element {
+      position: absolute;
+      background: radial-gradient(circle at center, rgba(45, 90, 45, 0.4) 0%, rgba(45, 90, 45, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      animation: fadeOutGlow 1s forwards;
+    }
+
+    @keyframes fadeOutGlow {
+      from { opacity: 1; transform: scale(0.5); }
+      to { opacity: 0; transform: scale(1.2); }
+    }
+
+    /* Header Section */
+    .hero-section {
+      background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+      padding: 120px 0 80px 0;
+      text-align: center;
+      border-bottom: 2px solid #2d5a2d;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%232d5a2d" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #2d5a2d;
+      text-shadow: 0 0 20px rgba(45, 90, 45, 0.5);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: #e0e0e0;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: #cccccc;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: rgba(26, 26, 26, 0.95) !important;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #2d5a2d;
+      padding: 15px 0;
+    }
+
+    .nav-link {
+      color: #2d5a2d !important;
+      font-weight: 500;
+      margin: 0 15px;
+      padding: 10px 20px !important;
+      border: 2px solid transparent;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .nav-link:hover {
+      color: #ffffff !important;
+      background: #2d5a2d;
+      border-color: #2d5a2d;
+      box-shadow: 0 0 20px rgba(45, 90, 45, 0.4);
+    }
+
+    /* Portfolio Sections */
+    .portfolio-section {
+      padding: 80px 0;
+      border-bottom: 1px solid #333;
+      position: relative;
+    }
+
+    .portfolio-section:nth-child(even) {
+      background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    }
+
+    .portfolio-section:nth-child(odd) {
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      color: #2d5a2d;
+      text-shadow: 0 0 15px rgba(45, 90, 45, 0.3);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: #cccccc;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Portfolio Cards */
+    .portfolio-card {
+      background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+      border: 2px solid #2d5a2d;
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 40px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(45, 90, 45, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .portfolio-card:hover::before {
+      left: 100%;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(45, 90, 45, 0.2);
+      border-color: #3a6a3a;
+    }
+
+    /* New Portfolio Layout */
+    .portfolio-image-card {
+      background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+      border: 2px solid #2d5a2d;
+      border-radius: 15px;
+      padding: 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-image-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(45, 90, 45, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .portfolio-image-card:hover::before {
+      left: 100%;
+    }
+
+    .portfolio-image-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(45, 90, 45, 0.2);
+      border-color: #3a6a3a;
+    }
+
+    .portfolio-details-card {
+      background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+      border: 2px solid #2d5a2d;
+      border-radius: 15px;
+      padding: 40px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-details-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(45, 90, 45, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .portfolio-details-card:hover::before {
+      left: 100%;
+    }
+
+    .portfolio-details-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(45, 90, 45, 0.2);
+      border-color: #3a6a3a;
+    }
+
+    .portfolio-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+    }
+
+    .portfolio-title {
+      font-size: 1.5rem;
+      color: #2d5a2d;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .portfolio-description {
+      color: #cccccc;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tech-tag {
+      background: #2d5a2d;
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .portfolio-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .portfolio-btn {
+      background: transparent;
+      border: 2px solid #2d5a2d;
+      color: #2d5a2d;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .portfolio-btn:hover {
+      background: #2d5a2d;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(45, 90, 45, 0.4);
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .contact-info {
+      background: rgba(45, 90, 45, 0.1);
+      border: 1px solid #2d5a2d;
+      border-radius: 15px;
+      padding: 40px;
+      margin: 30px 0;
+    }
+
+    .contact-item {
+      margin: 20px 0;
+      font-size: 1.1rem;
+      color: #e0e0e0;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .social-link {
+      color: #2d5a2d;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(45, 90, 45, 0.6);
+    }
+
+    /* Footer */
+    footer {
+      background: #0a0a0a;
+      border-top: 1px solid #2d5a2d;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .portfolio-card {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container justify-content-center">
-    <ul class="navbar-nav">
-      <li class="nav-item mx-2"><a class="btn btn-outline-light" onclick="scrollToSection('about')">About Me</a></li>
-      <li class="nav-item mx-2"><a class="btn btn-outline-light" onclick="scrollToSection('projects')">Projects</a></li>
-      <li class="nav-item mx-2"><a class="btn btn-outline-light" onclick="scrollToSection('contact')">Contact</a></li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#" style="color: #2d5a2d; font-weight: 600; font-size: 1.5rem;">Riin Valeña</a>
+    <div class="navbar-nav ms-auto">
+      <a class="nav-link" href="#about">About</a>
+      <a class="nav-link" href="#portfolio">Portfolio</a>
+      <a class="nav-link" href="#contact">Contact</a>
+    </div>
   </div>
 </nav>
 
-<section id="about" class="section bg-info text-white text-center" data-aos="fade-out">
+<!-- Hero Section -->
+<section class="hero-section" id="about">
   <div class="container">
-    <h1 style="color: white !important;">About Me</h1>
-    <p class="lead" data-aos="fade-up" style="color: white !important;">Hi, I’m Riin Valena — a BSIT student from Far Eastern University, currently based in Tondo, Manila. I’m passionate about self-improvement, staying active through working out, and enjoying meaningful moments with friends.</p>
-    <p data-aos="fade-up" style="color: white !important;">I specialize in web design and mobile application development, with hands-on experience using languages like <b>HTML, CSS, JavaScript, Kotlin, and Swift.</b> I also have a strong creative side, with skills in Photoshop, Premiere Pro, and other multimedia tools that help bring ideas to life visually and interactively.</p>
+    <div class="hero-content">
+      <h1 class="hero-title">Riin Valeña</h1>
+      <p class="hero-subtitle">BSIT Student & Full-Stack Developer</p>
+      <p class="hero-description">
+        Hi, I'm Riin Valena — a BSIT student from Far Eastern University, currently based in Tondo, Manila. 
+        I specialize in web design and mobile application development, with hands-on experience using languages 
+        like HTML, CSS, JavaScript, Kotlin, and Swift. I also have a strong creative side, with skills in 
+        Photoshop, Premiere Pro, and other multimedia tools that help bring ideas to life visually and interactively.
+      </p>
+    </div>
   </div>
 </section>
 
-<script>
-  // Add fade-out effect on scroll
-  window.addEventListener('scroll', () => {
-    const aboutSection = document.getElementById('about');
-    const scrollPosition = window.scrollY;
-    const fadeStart = 200; // Start fading out after 50px of scroll
-    const fadeEnd = 350; // Fully faded out at 300px of scroll
-
-    if (scrollPosition > fadeStart) {
-      const opacity = Math.max(0, 1 - (scrollPosition - fadeStart) / (fadeEnd - fadeStart));
-      aboutSection.style.opacity = opacity;
-    } else {
-      aboutSection.style.opacity = 1;
-    }
-  });
-</script>
-
-<section id="projects" class="section bg-light text-center" data-aos="fade-out">
+<!-- Portfolio Section 1: Web Development -->
+<section class="portfolio-section" id="portfolio">
   <div class="container">
-    <h1 class="mb-5" data-aos="fade-up">Projects</h1>
-
-    <!-- Project 1 -->
-    <div class="mb-1" data-aos="fade-up">
-      <div class="mb-1">
-        <h4 class="mb-1">Portfolio Website</h4>
-        <div id="carouselPortfolio1" class="carousel slide" data-bs-ride="false">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://picsum.photos/seed/portfolio1/800/400" class="d-block w-100" alt="Portfolio Screenshot 1">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio2/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio3/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio4/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio5/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselPortfolio1" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselPortfolio1" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-          </button>
-        </div>
-        <p class="project-description mt-2">This is the website you're looking at! Designed to be responsive and elegant, it showcases my development and design experience. Made with HTML, CSS, Bootstrap, and love.</p>
-      </div>
-    </div>
-
-    <!-- Project 2 -->
-    <div class="mb-1" data-aos="fade-up">
-      <div class="mb-1">
-        <h4 class="mb-1">Portfolio Website</h4>
-        <div id="carouselPortfolio2" class="carousel slide" data-bs-ride="false">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://picsum.photos/seed/portfolio1/800/400" class="d-block w-100" alt="Portfolio Screenshot 1">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio2/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio3/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio4/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio5/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselPortfolio2" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselPortfolio2" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-          </button>
-        </div>
-        <p class="project-description mt-2">This is the website you're looking at! Designed to be responsive and elegant, it showcases my development and design experience. Made with HTML, CSS, Bootstrap, and love.</p>
-      </div>
+    <div class="section-header">
+      <h2 class="section-title">Web Development Projects</h2>
+      <p class="section-subtitle">Modern, responsive web applications built with cutting-edge technologies</p>
     </div>
     
-
-    <!-- Project 3 -->
-    <div class="mb-1" data-aos="fade-up">
-      <div class="mb-1">
-        <h4 class="mb-1">Portfolio Website</h4>
-        <div id="carouselPortfolio3" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://picsum.photos/seed/portfolio1/800/400" class="d-block w-100" alt="Portfolio Screenshot 1">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio2/800/400" class="d-block w-100" alt="Portfolio Screenshot 2">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio3/800/400" class="d-block w-100" alt="Portfolio Screenshot 3">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio4/800/400" class="d-block w-100" alt="Portfolio Screenshot 4">
-            </div>
-            <div class="carousel-item">
-              <img src="https://picsum.photos/seed/portfolio5/800/400" class="d-block w-100" alt="Portfolio Screenshot 5">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselPortfolio3" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselPortfolio3" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-          </button>
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/web1/600/300" alt="Portfolio Website" class="portfolio-image">
         </div>
-        <p class="project-description mt-2">This is the website you're looking at! Designed to be responsive and elegant, it showcases my development and design experience. Made with HTML, CSS, Bootstrap, and love.</p>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Portfolio Website</h3>
+          <p class="portfolio-description">
+            A modern, responsive portfolio website showcasing my development skills. Features smooth animations, 
+            interactive elements, and a clean design that adapts to all devices. Built with modern web technologies
+            and optimized for performance across all platforms.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Bootstrap</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">Live Demo</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
       </div>
     </div>
 
-  </section>
-    
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/web2/600/300" alt="E-commerce Platform" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">E-commerce Platform</h3>
+          <p class="portfolio-description">
+            A full-featured e-commerce platform with user authentication, product management, 
+            shopping cart functionality, and secure payment processing. Includes admin dashboard,
+            inventory management, and comprehensive analytics.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">MongoDB</span>
+            <span class="tech-tag">Express</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">Live Demo</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<section id="contact" class="section bg-secondary text-white text-center" data-aos="fade-out">
-  <div class="container">
-    <h1>Contact</h1>
-    <p class="lead" style="color: white !important;">Let’s build something together! You can reach me here:</p>
-    <p style="color: white !important;">Email: riinvalena1@email.com</p>
-    <p style="color: white !important;">Phone No.: +63 9763115113</p>
-    <p>
-      <a href="https://www.linkedin.com/in/riin-vale%C3%B1a-6071b7208/" class="text-white me-3">LinkedIn</a>
-      <a href="https://github.com/riiny" class="text-white me-3">GitHub</a>
-      <a href="https://www.facebook.com/RiinValena/" class="text-white">FaceBook</a>
-    </p>
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/web3/600/300" alt="Blog Platform" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Blog Platform</h3>
+          <p class="portfolio-description">
+            A feature-rich blogging platform with content management, user authentication, 
+            comment system, and SEO optimization features. Supports multiple authors,
+            rich text editing, and social media integration.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Vue.js</span>
+            <span class="tech-tag">PHP</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">Laravel</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">Live Demo</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/web4/600/300" alt="Task Management App" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Task Management App</h3>
+          <p class="portfolio-description">
+            A collaborative task management application with real-time updates, team collaboration, 
+            project tracking, and progress visualization. Features include kanban boards,
+            time tracking, and automated notifications.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Angular</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">Socket.io</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">Live Demo</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-
-<footer class="text-center bg-dark text-white py-4">
+<!-- Portfolio Section 2: Mobile Development -->
+<section class="portfolio-section">
   <div class="container">
-    <p class="mb-0">&copy; 2025 Riin Valeña. All rights reserved.</p>
+    <div class="section-header">
+      <h2 class="section-title">Mobile Applications</h2>
+      <p class="section-subtitle">Cross-platform mobile apps built for iOS and Android</p>
+    </div>
+    
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/mobile1/600/300" alt="Fitness Tracker" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Fitness Tracker App</h3>
+          <p class="portfolio-description">
+            A comprehensive fitness tracking application that monitors workouts, nutrition, and progress. 
+            Features include workout planning, progress charts, and social sharing capabilities.
+            Includes GPS tracking, heart rate monitoring, and personalized training plans.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Kotlin</span>
+            <span class="tech-tag">Android</span>
+            <span class="tech-tag">SQLite</span>
+            <span class="tech-tag">Firebase</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">App Store</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/mobile2/600/300" alt="Task Manager" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Task Manager Pro</h3>
+          <p class="portfolio-description">
+            A productivity app designed to help users organize tasks, set reminders, and track project progress. 
+            Includes team collaboration features and cloud synchronization. Features calendar integration,
+            priority levels, and automated task scheduling.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Swift</span>
+            <span class="tech-tag">iOS</span>
+            <span class="tech-tag">Core Data</span>
+            <span class="tech-tag">CloudKit</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">App Store</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/mobile3/600/300" alt="Weather App" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Weather Forecast App</h3>
+          <p class="portfolio-description">
+            A beautiful weather application with real-time weather data, location-based forecasts, 
+            weather alerts, and customizable widgets for home screen. Includes radar maps,
+            hourly forecasts, and severe weather notifications.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">React Native</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Weather API</span>
+            <span class="tech-tag">AsyncStorage</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">App Store</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/mobile4/600/300" alt="Social Media App" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Social Media Platform</h3>
+          <p class="portfolio-description">
+            A social networking app with user profiles, photo sharing, messaging, and real-time notifications. 
+            Features include stories, direct messaging, and content discovery. Includes live streaming,
+            group chats, and content moderation tools.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Flutter</span>
+            <span class="tech-tag">Dart</span>
+            <span class="tech-tag">Firebase</span>
+            <span class="tech-tag">Cloud Firestore</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">App Store</a>
+            <a href="#" class="portfolio-btn">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio Section 3: Creative Projects -->
+<section class="portfolio-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Creative & Multimedia</h2>
+      <p class="section-subtitle">Design projects and multimedia content showcasing creative skills</p>
+    </div>
+    
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/creative1/600/300" alt="Brand Identity" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Brand Identity Design</h3>
+          <p class="portfolio-description">
+            Complete brand identity package including logo design, color palette, typography, 
+            and brand guidelines for a tech startup company. Includes business card designs,
+            letterhead templates, and comprehensive style guide documentation.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Photoshop</span>
+            <span class="tech-tag">Illustrator</span>
+            <span class="tech-tag">InDesign</span>
+            <span class="tech-tag">Branding</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">View Project</a>
+            <a href="#" class="portfolio-btn">Case Study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/creative2/600/300" alt="Video Production" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">Video Production</h3>
+          <p class="portfolio-description">
+            Professional video production including editing, color grading, and post-production 
+            for corporate presentations and marketing materials. Features include motion graphics,
+            sound design, and multi-camera editing for live events.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Premiere Pro</span>
+            <span class="tech-tag">After Effects</span>
+            <span class="tech-tag">DaVinci Resolve</span>
+            <span class="tech-tag">Motion Graphics</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">Watch Video</a>
+            <a href="#" class="portfolio-btn">Portfolio</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/creative3/600/300" alt="UI/UX Design" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">UI/UX Design System</h3>
+          <p class="portfolio-description">
+            Comprehensive design system for a mobile banking application including user interface design, 
+            user experience flows, and interactive prototypes. Includes accessibility guidelines,
+            responsive design patterns, and user testing documentation.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Figma</span>
+            <span class="tech-tag">Sketch</span>
+            <span class="tech-tag">Adobe XD</span>
+            <span class="tech-tag">Prototyping</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">View Project</a>
+            <a href="#" class="portfolio-btn">Case Study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="portfolio-image-card" data-aos="fade-right">
+          <img src="https://picsum.photos/seed/creative4/600/300" alt="3D Animation" class="portfolio-image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="portfolio-details-card" data-aos="fade-left">
+          <h3 class="portfolio-title">3D Animation & Modeling</h3>
+          <p class="portfolio-description">
+            High-quality 3D modeling and animation project featuring character design, 
+            environmental modeling, and cinematic storytelling for a short film. Includes rigging,
+            texturing, lighting, and compositing for professional-grade output.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-tag">Blender</span>
+            <span class="tech-tag">Maya</span>
+            <span class="tech-tag">Cinema 4D</span>
+            <span class="tech-tag">3D Animation</span>
+          </div>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-btn">Watch Video</a>
+            <a href="#" class="portfolio-btn">Portfolio</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Let's work together to bring your ideas to life</p>
+    </div>
+    
+    <div class="contact-info">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="contact-item">
+            <h4 style="color: #2d5a2d; margin-bottom: 10px;">Email</h4>
+            <p>riinvalena1@email.com</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-item">
+            <h4 style="color: #2d5a2d; margin-bottom: 10px;">Phone</h4>
+            <p>+63 9763115113</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-item">
+            <h4 style="color: #2d5a2d; margin-bottom: 10px;">Location</h4>
+            <p>Tondo, Manila, Philippines</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/riin-vale%C3%B1a-6071b7208/" class="social-link" target="_blank">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+        <a href="https://github.com/riiny" class="social-link" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="https://www.facebook.com/RiinValena/" class="social-link" target="_blank">
+          <i class="fab fa-facebook"></i> Facebook
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Riin Valeña. All rights reserved.</p>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
 <script>
+  document.body.style.backgroundColor = 'black';
 
+  function createGlowElement(x, y) {
+    const glow = document.createElement('div');
+    glow.classList.add('glow-element');
+    glow.style.left = `${x}px`;
+    glow.style.top = `${y}px`;
+    glow.style.width = `80px`;
+    glow.style.height = `80px`;
+    document.body.appendChild(glow);
 
-  function scrollToSection(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      glow.remove();
+    }, 1000);
   }
 
- 
-  
+  document.addEventListener('mousemove', (e) => {
+    createGlowElement(e.clientX, e.clientY);
+  });
+
+  // Smooth scrolling for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
   AOS.init({
-    duration: 1000,  // animation duration in ms
-    once: true,      // trigger animation once when scrolling down
+    duration: 1000,
+    once: true,
+    offset: 100
   });
 </script>
 
