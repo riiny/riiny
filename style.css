@@ -15,7 +15,6 @@ body {
   border-bottom: 2px solid #2d5a2d;
   position: relative;
   overflow: hidden;
-  z-index: 10;
 }
 
 .hero-section::before {
@@ -445,7 +444,9 @@ footer {
 }
 
 /* Match backgrounds between nav and portfolio sections */
-.section-nav,
+.section-nav {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+}
 .portfolio-section {
-	background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
 }
