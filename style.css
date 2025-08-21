@@ -183,13 +183,25 @@ body {
 /* Overlay-style portfolio cards */
 .portfolio-card {
 	position: relative;
-  overflow: hidden;
+	overflow: hidden;
 }
 
 .portfolio-card .row {
 	display: block;
-	min-height: 420px;
+	min-height: 600px; /* increased card height */
 	position: relative;
+}
+
+@media (max-width: 992px) {
+	.portfolio-card .row {
+		min-height: 480px;
+	}
+}
+
+@media (max-width: 576px) {
+	.portfolio-card .row {
+		min-height: 380px;
+	}
 }
 
 .portfolio-card .portfolio-image {
@@ -198,7 +210,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 100%;
-  object-fit: cover;
+	object-fit: cover;
 	filter: brightness(0.9);
 }
 
