@@ -60,6 +60,16 @@ body {
   font-weight: 400;
 }
 
+.portfolio-description {
+  font-size: 1.125rem;
+  color: #cccccc;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+  line-height: 1.7;
+  font-weight: 400;
+
+}
+
 .hero-contact-btn {
   background: transparent;
   border: 2px solid #2d5a2d;
@@ -366,6 +376,15 @@ footer {
 
 /* Remove vertical space between project cards */
 .portfolio-section .mb-5 {
+	margin-bottom: 0 !important;
+}
+
+/* Ensure no gaps between portfolio cards */
+.portfolio-section .row {
+	margin-bottom: 0 !important;
+}
+
+.portfolio-section .portfolio-card {
 	margin-bottom: 0 !important;
 }
 
