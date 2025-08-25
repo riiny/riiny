@@ -238,6 +238,15 @@ body {
 	max-width: 900px;
 }
 
+/* Tighten spacing: remove bottom padding and last-child margin inside portfolio content */
+.portfolio-card .portfolio-content {
+  padding-bottom: 0 !important;
+}
+
+.portfolio-card .portfolio-content > *:last-child {
+  margin-bottom: 0 !important;
+}
+
 /* Improve contrast for headings and tags over images */
 .portfolio-title {
 	color: #ffffff;
@@ -361,6 +370,8 @@ footer {
 .portfolio-section .row {
   margin-left: 0;
   margin-right: 0;
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
 }
 
 .portfolio-section [class^="col-"],
@@ -372,6 +383,7 @@ footer {
 /* Remove card corner rounding for true edge-to-edge */
 .portfolio-card {
   border-radius: 0;
+  padding: 0;
 }
 
 /* Remove vertical space between project cards */
@@ -384,8 +396,27 @@ footer {
 	margin-bottom: 0 !important;
 }
 
+/* Remove top margin between consecutive rows within portfolio section */
+.portfolio-section .row + .row {
+  margin-top: 0 !important;
+}
+
 .portfolio-section .portfolio-card {
 	margin-bottom: 0 !important;
+}
+
+/* Remove any residual spacing between stacked cards */
+.portfolio-section .col-12,
+.portfolio-section .col-md-6,
+.portfolio-section .col-md-12 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.portfolio-section .container-fluid,
+.portfolio-section .container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* Section navigation above portfolio */
