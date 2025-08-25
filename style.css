@@ -158,6 +158,11 @@ body {
   z-index: 10;
 }
 
+/* Remove extra space above the first portfolio section under the nav */
+#portfolio.portfolio-section {
+  padding-top: 0;
+}
+
 .portfolio-section:nth-child(even) {
   background: #161616;
 }
