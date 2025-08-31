@@ -209,7 +209,15 @@ body {
 
 @media (max-width: 992px) {
 	.portfolio-card .row {
-		min-height: 480px;
+		min-height: auto;
+    display: flex;
+    flex-direction: column;
+	}
+}
+
+@media (max-width: 992px) {
+	.portfolio-card .row {
+		min-height: auto;
 	}
 }
 
@@ -456,9 +464,65 @@ footer {
 }
 
 /* Responsive Design */
+@media (max-width: 992px) {
+  .portfolio-card .row {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .portfolio-card .col-md-6,
+  .portfolio-card .col-md-6.offset-md-6 {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .portfolio-card .portfolio-content {
+    position: relative !important;
+    transform: none !important;
+    padding: 40px 20px !important;
+    max-width: 100%;
+    background: #111;
+  }
+
+  .portfolio-card .portfolio-image {
+    position: relative;
+    height: auto;
+    max-height: 400px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .portfolio-card .col-md-6.order-md-2 {
+    order: 1 !important;
+  }
+
+  .portfolio-card .col-md-6.order-md-1 {
+    order: 2 !important;
+  }
+
+  #proj3Carousel {
+    display: none;
+  }
+
+  .portfolio-card .row .col-md-6.d-flex.align-items-end {
+    align-items: flex-start !important;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
     font-weight: 700;
   }
   
@@ -467,12 +531,12 @@ footer {
   }
   
   .section-title {
-    font-size: 2.25rem;
+    font-size: 2rem;
     font-weight: 600;
   }
   
   .section-subtitle {
-    font-size: 1.125rem;
+    font-size: 1.1rem;
   }
   
   .portfolio-title {
@@ -480,7 +544,62 @@ footer {
   }
   
   .portfolio-card {
-    padding: 20px;
+    padding: 0;
+  }
+
+  .section-nav {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: center;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #2d5a2d;
+  }
+
+  .nav-btn:last-child {
+    border-bottom: none;
+  }
+
+  .contact-info .row > div {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 60px 20px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .portfolio-section {
+    padding: 60px 0;
+  }
+
+  .section-header {
+    padding: 0 20px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .portfolio-description {
+    font-size: 1rem;
   }
 }
 
