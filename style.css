@@ -7,6 +7,279 @@ body {
   line-height: 1.6;
 }
 
+/* Music Video Carousel Styles */
+#musicCarousel {
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#musicCarousel .carousel-inner {
+  border-radius: 15px;
+}
+
+#musicCarousel .carousel-item {
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: block;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+#musicCarousel .carousel-item.active,
+#musicCarousel .carousel-item-next,
+#musicCarousel .carousel-item-prev {
+  display: block;
+}
+
+#musicCarousel .carousel-item.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+#musicCarousel .carousel-item-next,
+#musicCarousel .carousel-item-prev {
+  opacity: 0;
+  z-index: 1;
+}
+
+#musicCarousel .carousel-fade .carousel-item {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: none;
+}
+
+#musicCarousel .carousel-fade .carousel-item.active,
+#musicCarousel .carousel-fade .carousel-item-next.carousel-item-start,
+#musicCarousel .carousel-fade .carousel-item-prev.carousel-item-end {
+  opacity: 1;
+}
+
+#musicCarousel .carousel-fade .carousel-item-next,
+#musicCarousel .carousel-fade .carousel-item-prev,
+#musicCarousel .carousel-fade .carousel-item.active.carousel-item-start,
+#musicCarousel .carousel-fade .carousel-item.active.carousel-item-end {
+  opacity: 0;
+}
+
+/* Enhanced fade transition for better fade out/fade in sequence */
+#musicCarousel .carousel-fade .carousel-item.active.carousel-item-start {
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#musicCarousel .carousel-fade .carousel-item.active.carousel-item-end {
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#musicCarousel .carousel-fade .carousel-item-next.carousel-item-start {
+  opacity: 1;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+}
+
+#musicCarousel .carousel-fade .carousel-item-prev.carousel-item-end {
+  opacity: 1;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+}
+
+#musicCarousel .carousel-indicators {
+  bottom: 20px;
+  z-index: 15;
+}
+
+#musicCarousel .carousel-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  margin: 0 5px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#musicCarousel .carousel-indicators button.active {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+#musicCarousel .carousel-indicators button:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+
+
+
+
+#musicCarousel .carousel-control-prev,
+#musicCarousel .carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.8;
+  z-index: 20;
+  position: absolute;
+  cursor: pointer;
+}
+
+#musicCarousel .carousel-control-prev:hover,
+#musicCarousel .carousel-control-next:hover {
+  transform: translateY(-50%) scale(1.1);
+  opacity: 1;
+  z-index: 21;
+}
+
+#musicCarousel .carousel-control-prev-icon,
+#musicCarousel .carousel-control-next-icon {
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+#musicCarousel .carousel-control-prev:hover .carousel-control-prev-icon {
+  transform: translateX(-2px);
+}
+
+#musicCarousel .carousel-control-next:hover .carousel-control-next-icon {
+  transform: translateX(2px);
+}
+
+/* Smooth video transitions */
+#musicCarousel iframe {
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced carousel wrapper */
+#musicCarousel .carousel-inner {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Ensure carousel container has proper positioning for controls */
+#musicCarousel {
+  position: relative;
+}
+
+/* Remove conflicting carousel item styles */
+/* These styles were conflicting with the fade animation */
+
+/* Enhanced smooth carousel class */
+#musicCarousel.carousel-smooth .carousel-inner {
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Smooth fade transitions for video content */
+#musicCarousel .carousel-item iframe {
+  opacity: 1;
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#musicCarousel .carousel-item.active iframe {
+  opacity: 1;
+}
+
+/* Ensure smooth fade transitions */
+#musicCarousel .carousel-inner {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover effects for better interactivity */
+#musicCarousel:hover .carousel-control-prev,
+#musicCarousel:hover .carousel-control-next {
+  opacity: 1;
+}
+
+/* Smooth loading states */
+#musicCarousel .carousel-item.loading {
+  opacity: 0.7;
+  transform: scale(0.98);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced focus states for accessibility */
+#musicCarousel .carousel-control-prev:focus,
+#musicCarousel .carousel-control-next:focus,
+#musicCarousel .carousel-indicators button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  #musicCarousel {
+    margin: 20px !important;
+  }
+  
+  #musicCarousel .carousel-control-prev,
+  #musicCarousel .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+  
+  #musicCarousel .carousel-indicators {
+    bottom: 15px;
+  }
+  
+  #musicCarousel .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    margin: 0 3px;
+  }
+}
+
+/* Ensure proper carousel behavior */
+#musicCarousel.carousel {
+  position: relative;
+}
+
+#musicCarousel .carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+#musicCarousel .carousel-item {
+  position: relative;
+  display: none;
+  float: left;
+  width: 100%;
+  margin-right: -100%;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease-in-out;
+}
+
+#musicCarousel .carousel-item.active,
+#musicCarousel .carousel-item-next,
+#musicCarousel .carousel-item-prev {
+  display: block;
+}
+
+#musicCarousel .carousel-item-next:not(.carousel-item-start),
+#musicCarousel .carousel-item-prev:not(.carousel-item-end) {
+  transform: translateX(0);
+}
+
+#musicCarousel .carousel-item-next.carousel-item-start {
+  transform: translateX(100%);
+}
+
+#musicCarousel .carousel-item-prev.carousel-item-end {
+  transform: translateX(-100%);
+}
+
 /* Header Section */
 .hero-section {
   background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
@@ -646,4 +919,31 @@ footer {
 		max-width: 100%;
 		margin-left: 0;
 	}
+}
+
+#musicCarousel {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+#musicCarousel .carousel-control-prev,
+#musicCarousel .carousel-control-next {
+  width: 5%;
+  background: rgba(0,0,0,0.5);
+}
+
+#musicCarousel .carousel-control-prev:hover,
+#musicCarousel .carousel-control-next:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+#musicCarousel .ratio {
+  background: #000;
+}
+
+#musicCarousel iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
 }
