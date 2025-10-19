@@ -6,7 +6,14 @@
   <title>Riin Valeña | Contact</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = { theme: { extend: { colors:{accent:'#0ea5e9'}, fontFamily:{sans:['Inter','system-ui'], mono:['ui-monospace','monospace']} } } }
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { accent: '#0ea5e9', accentDark: '#0369a1' },
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'], mono: ['ui-monospace','Menlo','Monaco','monospace'] }
+        }
+      }
+    }
   </script>
   <style>
     body{background:#fffff0;color:#121212;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif}
@@ -29,34 +36,111 @@
     </ul>
   </nav>
 
-  <main class="min-h-screen px-6 sm:px-12 py-12 max-w-6xl mx-auto">
+  <main class="min-h-screen px-6 sm:px-12 py-16 max-w-7xl mx-auto">
     <div id="page" class="page">
-      <section id="contact-hero" class="min-h-screen flex items-center">
+      <!-- Hero Section -->
+      <section id="contact-hero" class="min-h-screen flex flex-col justify-center">
         <div class="w-full">
-          <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 font-mono">Contact</h1>
+          <!-- Main Heading -->
+          <div class="mb-16">
+            <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 font-mono">Contact</h1>
+            <p class="text-lg mb-4">I'm available for contract and full-time opportunities.</p>
+          </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Main Content -->
+          <div class="mb-16">
+            <!-- Contact Information -->
+            <div class="space-y-8">
+              <div>
+                <h2 class="text-2xl font-bold mb-6 font-mono">Get In Touch</h2>
+                
+                <div class="space-y-6">
+                  <!-- Email -->
+                  <div class="group">
+                    <div class="flex items-center gap-4 p-4 border-l-4 border-black bg-gray-50 hover:bg-black hover:text-white transition-all duration-300">
+                      <div class="w-8 h-8 bg-black group-hover:bg-white rounded-sm flex items-center justify-center">
+                        <span class="text-white group-hover:text-black font-bold text-sm">@</span>
+                      </div>
+                      <div>
+                        <p class="text-sm font-mono text-gray-600 group-hover:text-gray-300">EMAIL</p>
+                        <a href="mailto:riinvalena1@gmail.com" class="text-lg font-semibold block">riinvalena1@gmail.com</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Phone -->
+                  <div class="group">
+                    <div class="flex items-center gap-4 p-4 border-l-4 border-black bg-gray-50 hover:bg-black hover:text-white transition-all duration-300">
+                      <div class="w-8 h-8 bg-black group-hover:bg-white rounded-sm flex items-center justify-center">
+                        <span class="text-white group-hover:text-black font-bold text-sm">T</span>
+                      </div>
+                      <div>
+                        <p class="text-sm font-mono text-gray-600 group-hover:text-gray-300">PHONE</p>
+                        <a href="tel:+639763115113" class="text-lg font-semibold block">+63 976 311 5113</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Location -->
+                  <div class="group">
+                    <div class="flex items-center gap-4 p-4 border-l-4 border-black bg-gray-50 hover:bg-black hover:text-white transition-all duration-300">
+                      <div class="w-8 h-8 bg-black group-hover:bg-white rounded-sm flex items-center justify-center">
+                        <span class="text-white group-hover:text-black font-bold text-sm">L</span>
+                      </div>
             <div>
-              <p class="text-lg mb-4">I'm available for contract and full-time opportunities. Please reach out via email or connect on LinkedIn.</p>
+                        <p class="text-sm font-mono text-gray-600 group-hover:text-gray-300">LOCATION</p>
+                        <span class="text-lg font-semibold block">Philippines</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <div class="mt-6">
-                <a href="mailto:riinvalena1@gmail.com" class="block text-base font-semibold mb-1">riinvalena1@example.com</a>
-                <a href="https://www.linkedin.com/in/riinv/" target="_blank" rel="noopener" class="block text-base font-semibold mb-1">LinkedIn</a>
-                <a href="https://github.com/riiny" target="_blank" rel="noopener" class="block text-base font-semibold">GitHub</a>
+              <!-- Social Media Section -->
+              <div class="mt-12">
+                <h3 class="text-xl font-bold mb-6 font-mono">Connect With Me</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <!-- LinkedIn -->
+                  <a href="https://www.linkedin.com/in/riinv/" target="_blank" rel="noopener" 
+                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
+                    <div class="text-2xl font-bold mb-2">in</div>
+                    <p class="text-xs font-mono uppercase tracking-wide">LinkedIn</p>
+                  </a>
+
+                  <!-- GitHub -->
+                  <a href="https://github.com/riiny" target="_blank" rel="noopener"
+                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
+                    <div class="text-2xl font-bold mb-2">gh</div>
+                    <p class="text-xs font-mono uppercase tracking-wide">GitHub</p>
+                  </a>
+
+                  <!-- Twitter/X -->
+                  <a href="https://www.facebook.com/RiinValena/" target="_blank" rel="noopener"
+                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
+                    <div class="text-2xl font-bold mb-2">fb</div>
+                    <p class="text-xs font-mono uppercase tracking-wide">Facebook</p>
+                  </a>
+
+                  <!-- Instagram -->
+                  <a href="https://www.instagram.com/riinv__/" target="_blank" rel="noopener"
+                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
+                    <div class="text-2xl font-bold mb-2">ig</div>
+                    <p class="text-xs font-mono uppercase tracking-wide">Instagram</p>
+                  </a>
+                </div>
               </div>
             </div>
 
-            <aside>
-              <div class="brutalist-border p-6">
-                <h3 class="text-xl font-bold mb-4 font-mono">Get in touch</h3>
-                <p class="text-sm">Prefer email? Use the address above. Social links open in a new tab. For portfolios or attachments, include a short note in your message.</p>
-              </div>
-            </aside>
           </div>
+
+          <!-- Border -->
+          <div class="border-t-2 border-black"></div>
         </div>
       </section>
 
-      <footer class="py-8 text-center text-xs text-gray-600">© <span id="year"></span> Riin Valeña</footer>
+      <footer class="py-12 text-center border-t border-gray-200">
+        <p class="text-sm text-gray-500 font-mono">© <span id="year"></span> Riin Valeña • Built with passion</p>
+      </footer>
     </div>
   </main>
 
