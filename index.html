@@ -1,563 +1,452 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Riin Valeña - Portfolio</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Riin Valeña | Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { accent: '#0ea5e9', accentDark: '#0369a1' },
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'], mono: ['ui-monospace','Menlo','Monaco','monospace'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    body{background:#fffff0;color:#121212;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif}
+    html{scroll-behavior:smooth}
+    .brutalist-border{border:2px solid #000}
+    .focus-outline:focus{outline:3px solid #0ea5e9;outline-offset:2px}
+    /* Page transition wrapper (fade + slight vertical) */
+    #page{opacity:0;transform:translateY(6px);transition:opacity 320ms ease, transform 320ms ease}
+    #page.visible{opacity:1;transform:translateY(0)}
+    #page.exit{opacity:0;transform:translateY(-6px)}
+    @media (prefers-reduced-motion: reduce){#page{transition:none!important;transform:none!important}}
+  </style>
 </head>
-<body>
+<body class="antialiased leading-normal">
+  <!-- Fixed small nav top-right linking to separate pages -->
+  <nav class="fixed top-6 right-6 z-50">
+    <ul class="flex flex-col gap-3 text-sm">
+      <li><a href="index.html" class="block px-3 py-1 border-2 border-black bg-black text-white hover:bg-white hover:text-black transition-colors duration-200 focus-outline">HOME</a></li>
+  <li><a href="resume.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">RESUME</a></li>
+  <li><a href="about.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">ABOUT</a></li>
+  <li><a href="contact.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">CONTACT</a></li>
+    </ul>
+  </nav>
 
+  <main class="min-h-screen px-6 sm:px-12 py-12 max-w-6xl mx-auto">
+    <div id="page" class="page">
+    <!-- HERO -->
+    <section id="hero" class="min-h-screen flex items-center">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center w-full">
+        <div>
+          <h1 class="text-4xl sm:text-7xl font-extrabold tracking-tight font-mono">Riin Valeña| Front-End Developer</h1>
+          <p class="mt-6 text-lg sm:text-2xl max-w-xl">I design and build websites that are intuitively easy to navigate and fully responsive across all devices. My focus is on clear typography, robust performance, and a streamlined user experience.
+  
+          </p>
+          <div class="mt-6">
+            <a href="resume.html" class="inline-block border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors duration-150 focus-outline">View Resume</a>
+          </div>
+        </div>
+        <div class="hidden sm:block">
+          <div class="brutalist-border p-6 h-full flex items-center justify-center">
+            <div class="text-center">
+              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2">Selected Work</div>
+              <div class="text-2xl font-bold">Minimal interfaces, clear typography, easy to navigate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- PROJECTS -->
+    <section id="projects" class="py-12">
+      <h2 class="text-3xl font-bold mb-6 font-mono">Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Project card images: 160px height on mobile, 192px on small screens and up -->
+        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
+          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
+            <!-- Unsplash images: 1200px width, auto height, cropped to fit container -->
+            <img loading="lazy" src="assets/img/vacantvuecover.png" alt="VacantVue project screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 font-mono">VacantVue: Arduino-Based Parking Spot Availability Detection System</h3>
+            <p class="text-sm mb-3">A smart parking management system that utilizes IoT sensors and a PHP/Firebase 
+              platform to offer real-time availability, reservations, and cashless payments.</p>
+            <p class="text-xs mb-3 font-semibold">Tech: HTML5, CSS3, JavaScript, Bootstrap, PHP, Firebase, Arduino, PayMongo</p>
+            <button data-project="alpha" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
+          </div>
+        </article>
 
-<!-- Hero Section -->
-<section class="hero-section" id="about">
-  <div class="container">
-    <div class="hero-content">
-      <h1 class="hero-title">Riin Valeña</h1>
-      <p class="hero-subtitle">BSIT Student & Full-Stack Developer</p>
-      <p class="hero-description">
-        Hi, I'm Riin Valena - a BSIT Specializing in Web and Mobile Application Development student from Far Eastern University, currently based in Tondo, Manila. 
-        I specialize in web design and development, with hands-on experience using languages 
-        like HTML, CSS, and JavaScript. I also have a strong creative side, with skills in 
-        Photoshop, Premiere Pro, and other multimedia tools that help bring ideas to life visually and interactively.
-      </p>
-      <a href="#contact" class="hero-contact-btn">Get In Touch</a>
-    </div>
-  </div>
-</section>
+        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
+          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
+            <img loading="lazy" src="assets/img/portfoliocover.png" alt="Project Beta screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 font-mono">Portfolio Site</h3>
+            <p class="text-sm mb-3">A modern, responsive portfolio website showcasing my work and skills with smooth animations and clean design.</p>
+            <p class="text-xs mb-3 font-semibold">Tech: HTML5, CSS3, JavaScript, Tailwind CSS</p>
+            <a href="https://github.com/riiny/riiny" target="_blank" class="text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">Github</a>
+          </div>
+        </article>
 
-<div class="container-fluid px-0">
-	<div class="section-nav">
-		<a href="#portfolio" class="nav-btn">Web Development</a>
-		<a href="#creative" class="nav-btn">Creative & Multimedia</a>
-	</div>
-</div>
+        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
+          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
+            <img loading="lazy" src="assets/img/cccover.png" alt="Project Gamma screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 font-mono">Capstone Compass</h3>
+            <p class="text-sm mb-3">
+              A project management platform that helps students and mentors collaborate efficiently on academic capstone projects through features like group chat, progress tracking, task management, and submission handling.            </p>
+            <p class="text-xs mb-3 font-semibold">Tech: Laravel, PHP, MySQL, Bootstrap, Javascript</p>
+            <button data-project="epsilon" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
+          </div>
+        </article>
 
-<!-- Portfolio Section 1: Web Development -->
-<section class="portfolio-section" id="portfolio">
-  <div class="container-fluid px-0">
+        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
+          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
+            <img loading="lazy" src="assets/img/hhcover.png" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 font-mono">Hiwa-hiwa</h3>
+            <p class="text-sm mb-3">A series of digital collage posters that utilize layered, fragmented pieces to deconstruct and reimagine the faces of musical icons in a multidimensional and cohesive new style.</p>
+            <p class="text-xs mb-3 font-semibold">Tech: Adobe Photoshop, Adobe Lightroom</p>
+            <a href="https://www.behance.net/gallery/211533245/HIWA-HIWA-Collage-Art-Series" target="_blank" class="text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">Behance</a>
+          </div>
+        </article>
+
+        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
+          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
+            <img loading="lazy" src="assets/img/vintagecover.png" alt="Project Gamma screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 font-mono">Vintage Shirt Design</h3>
+            <p class="text-sm mb-3">A collection of T-shirt designs that blend retro aesthetics and vintage-inspired textures with bold typography to celebrate impactful athletes through a classic sports-themed visual lens.</p>
+            <p class="text-xs mb-3 font-semibold">Tech: Adobe Photoshop, Adobe Lightroom</p>
+            <a href="https://www.behance.net/gallery/212629569/Vintage-Shirt-Designs-Sports" target="_blank" class="text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">Behance</a>
+          </div>
+        </article>
+
+        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
+          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black relative">
+            <video 
+              id="vc-trailer-video"
+              class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105" 
+              muted 
+              loop
+              preload="metadata"
+              poster="assets/img/vctrailer.png"
+            >
+              <source src="assets/vids/vctrailer.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 font-mono">VacantVue - Official Trailer</h3>
+            <p class="text-sm mb-3">I produced the VacantVue trailer for our capstone thesis exhibit, showcasing the UI/UX design and seamless integration of its mobile/desktop applications, along with the Arduino-powered engineering used for real-time slot detection in this complete smart parking solution.</p>
+            <p class="text-xs mb-3 font-semibold">Tech: Adobe Premiere Pro, Adobe Photoshop</p>
+            <button data-project="theta" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
+          </div>
+        </article>
+
+        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
+          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
+            <img loading="lazy" src="assets/img/csm.gif" alt="2019 mini project screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2 font-mono">2019 mini project</h3>
+            <p class="text-sm mb-3">In 2019, I created a personal mini project to experiment with music visualizers for favorite tracks, challenging my creativity to design simple, entertaining videos that used only images and animated GIFs to complement the atmosphere and enhance the visual storytelling of each song.</p>
+            <p class="text-xs mb-3 font-semibold">Tech: Adobe Premiere Pro, Adobe Photoshop</p>
+            <button data-project="iota" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
     
-    <div class="section-header" style="padding-top: 40px;">
-      <h2 class="section-title">Web Development Projects</h2>
-      <p class="section-subtitle">
-        Explore a showcase of innovative, user-friendly web applications designed for real-world impact. Each project highlights my expertise in modern frameworks, responsive design, and seamless user experiences—demonstrating a passion for building solutions that are both visually appealing and highly functional.
-      </p>
-    </div>
+
     
-    <div class="row mb-0">
-      <div class="col-12">
-        <div class="portfolio-card" data-aos="fade-up" style="margin-top: -20px;">
-          <div class="row" style="align-items: flex-end;">
-            <div class="col-md-6 d-flex align-items-end" style="min-height: 100px;">
-              <img src="img/proj1.png" alt="Portfolio Website" class="portfolio-image" style="width: 100%; height: auto;">
-            </div>
-            <div class="col-md-6 offset-md-6 d-flex align-items-end">
-              <div class="portfolio-content" style="margin-top: auto;">
-                <h3 class="portfolio-title">Portfolio Website</h3>
-                <p class="portfolio-description">
-                  A modern, responsive portfolio website showcasing my development skills. Features smooth animations, 
-                  interactive elements, and a clean design. Built with modern web technologies
-                  and optimized for performance across all platforms.
-                </p>
-                <div class="tech-stack">
-                  <span class="tech-tag">HTML5</span>
-                  <span class="tech-tag">CSS3</span>
-                  <span class="tech-tag">JavaScript</span>
-                  <span class="tech-tag">Bootstrap</span>
-                </div>
-                <div class="portfolio-links">
-                  <a href="https://github.com/riiny/riiny" class="portfolio-btn" target="_blank" rel="noopener">Source Code</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+    <footer class="py-8 text-center text-xs text-gray-600">© <span id="year"></span>  Riin Valeña</footer>
     </div>
+  </main>
 
-    <div class="row mb-0">
-      <div class="col-12">
-        <div class="portfolio-card" data-aos="fade-up" style=" padding: 0; background: transparent; box-shadow: none;">
-          <div class="row" >
-            <div class="col-md-6 d-flex align-items-center justify-content-center" style="min-height: 400px;">
-              <img src="img/proj2.png" alt="E-commerce Platform" class="portfolio-image" style="max-width:100%; max-height:100%; width:auto; height:auto; display:block; object-fit:contain;">
-            </div>
-            <div class="col-md-6 d-flex align-items-center justify-content-center" >
-              <div class="portfolio-content" style="width: 100%; transform: translateY(-300px); padding-top: 200px;">
-                <h3 class="portfolio-title" style="padding-left:1; margin-left:0;">
-                  VacantVue: Arduino-Based Parking Spot Availability Detection System
-                </h3>
-                <p class="portfolio-description" style="padding-left:0; margin-left:0;">
-                  VacantVue is a smart parking management system I led as the Project Leader for my capstone thesis. It provides real-time slot availability, easy reservations, and secure cashless payments through a web and mobile platform integrated with IoT sensors.
-                  <br><br>
-                  In this role, I managed the entire development process from planning and task delegation, to testing, developing, and deployment, ensuring the system aligned with our objectives. Built with PHP, Firebase, and Arduino-based sensors, VacantVue delivers real-time monitoring through ultrasonic sensors and an ESP32 Wi-Fi module, synchronizing data with Firebase for accurate updates. Motorists can reserve slots and pay seamlessly via PayMongo, while attendants and administrators access dashboards for walk-in transactions, monitoring, and reporting. By applying Agile Scrum methodology and ISO-aligned quality standards, I guided the team in creating a reliable, sustainable, and user-friendly solution that reduces parking search times and enhances urban mobility.
-                </p>
-                <div class="tech-stack">
-                  <span class="tech-tag">HTML5</span>
-                  <span class="tech-tag">CSS3</span>
-                  <span class="tech-tag">JavaScript</span>
-                  <span class="tech-tag">Bootstrap</span>
-                  <span class="tech-tag">PHP</span>
-                  <span class="tech-tag">Composer</span>
-                  <span class="tech-tag">Firebase</span>
-                  <span class="tech-tag">Arduino</span>
-                  <span class="tech-tag">PayMongo</span>
-                </div>
-              </div>
-            </div>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <!-- Project Modal -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-60 px-4 py-8 opacity-0 transition-opacity duration-300" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-panel bg-white text-black max-w-6xl w-full brutalist-border shadow-lg relative max-h-[92vh] overflow-auto mx-auto transform scale-95 translate-y-2 opacity-0 transition-all duration-300">
+  <div class="p-6">
+        <h3 id="modal-title" class="text-2xl font-bold mb-3 font-mono"></h3>
+        <div id="modal-carousel" class="relative">
+          <button id="modal-prev" class="absolute left-0 top-1/2 -translate-y-1/2 border-2 border-black bg-white px-3 py-2">‹</button>
+          <!-- Modal images: 384px height on mobile, 520px on small screens and up -->
+          <div id="modal-image-container" class="w-full h-96 sm:h-[520px] bg-gray-100 flex items-center justify-center overflow-hidden">
+            <!-- Image inserted here -->
           </div>
+          <button id="modal-next" class="absolute right-0 top-1/2 -translate-y-1/2 border-2 border-black bg-white px-3 py-2">›</button>
         </div>
-      </div>
-    </div>
-
-    <div class="row mb-0">
-      <div class="col-12">
-        <div class="portfolio-card" data-aos="fade-up">
-          <div class="row">
-            <div class="col-md-6">
-              <div id="proj3Carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000" style="z-index:0; position:absolute; top:0; left:0; width:100%; height:100%;">
-                <div class="carousel-inner" style="width:100%; height:100%;">
-                  <div class="carousel-item active" style="width:100%; height:100%;">
-                    <img src="img/proj3-1.png" class="d-block" alt="Background Layer"
-                         style="width:100%; height:100%; object-fit:cover;">
-                  </div>
-                  <div class="carousel-item" style="width:100%; height:100%;">
-                    <img src="img/proj3-2.png" class="d-block" alt="Background Layer 2"
-                         style="width:100%; height:100%; object-fit:cover;">
-                  </div>
-                  <div class="carousel-item" style="width:100%; height:100%;">
-                    <img src="img/proj3-3.png" class="d-block" alt="Background Layer 3"
-                         style="width:100%; height:100%; object-fit:cover;">
-                  </div>
-                  <div class="carousel-item" style="width:100%; height:100%;">
-                    <img src="img/proj3-4.png" class="d-block" alt="Background Layer 3"
-                         style="width:100%; height:100%; object-fit:cover;">
-                  </div>
-                </div>
-              </div>
-              <img src="img/proj3.png" alt="Blog Platform" class="portfolio-image" style="z-index:1;">
-            </div>
-            <div class="col-md-6 offset-md-6 d-flex align-items-end" style="margin-top:0;">
-
-
-
-              <div class="portfolio-content" style="padding-top: 0;padding-top: 200px;">
-
-
-                <h3 class="portfolio-title">Portfolio Website</h3>
-                <p class="portfolio-description">
-                  This project is the very first website I am truly proud of creating. It is a multi-page website featuring sections like Home, About, Services, Portfolio, and Team, designed to showcase professional content in a clean and modern layout. The site demonstrates my foundational skills in web design, responsive layouts, and visual presentation.
-                </p>
-                <div class="tech-stack">
-                  <span class="tech-tag">HTML5</span>
-                  <span class="tech-tag">CSS3</span>
-                  <span class="tech-tag">JavaScript</span>
-                  <span class="tech-tag">Bootstrap</span>
-                </div>
-                <div class="portfolio-links">
-                  <a href="https://github.com/riiny/riiny" class="portfolio-btn" target="_blank" rel="noopener">Source Code</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-   <!-- <div class="row">
-      <div class="col-12">
-        <div class="portfolio-card" data-aos="fade-up">
-          <div class="row">
-            <div class="col-md-6">
-              <img src="https://picsum.photos/seed/web4/600/300" alt="Task Management App" class="portfolio-image">
-            </div>
-            <div class="col-md-6">
-              <div class="portfolio-content">
-                <h3 class="portfolio-title">Task Management App</h3>
-                <p class="portfolio-description">
-                  A collaborative task management application with real-time updates, team collaboration, 
-                  project tracking, and progress visualization. Features include kanban boards,
-                  time tracking, and automated notifications.
-                </p>
-                <div class="tech-stack">
-                  <span class="tech-tag">Angular</span>
-                  <span class="tech-tag">TypeScript</span>
-                  <span class="tech-tag">PostgreSQL</span>
-                  <span class="tech-tag">Socket.io</span>
-                </div>
-                <div class="portfolio-links">
-                  <a href="#" class="portfolio-btn">Live Demo</a>
-                  <a href="#" class="portfolio-btn">Source Code</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <p id="modal-desc" class="mt-4 text-base"></p>
+        <p id="modal-tech" class="mt-3 text-sm font-semibold"></p>
       </div>
     </div>
   </div>
-</section>-->
 
+  <script>
+    (function(){
+      const projects = {
+        alpha: {
+          title: 'VacantVue: Arduino-Based Parking Spot Availability Detection System',
+          long: 'VacantVue is a smart parking management system I led as the Project Leader for my capstone thesis. It provides real-time slot availability, easy reservations, and secure cashless payments through a web and mobile platform integrated with IoT sensors.\n\nIn this role, I managed the entire development process from planning and task delegation, to testing, developing, and deployment, ensuring the system aligned with our objectives. Built with PHP, Firebase, and Arduino-based sensors, VacantVue delivers real-time monitoring through ultrasonic sensors and an ESP32 Wi-Fi module, synchronizing data with Firebase for accurate updates. Motorists can reserve slots and pay seamlessly via PayMongo, while attendants and administrators access dashboards for walk-in transactions, monitoring, and reporting. By applying Agile Scrum methodology and ISO-aligned quality standards, I guided the team in creating a reliable, sustainable, and user-friendly solution that reduces parking search times and enhances urban mobility.', 
+          tech: ['HTML5','CSS3','JavaScript','Bootstrap','PHP','Firebase','Arduino','PayMongo'],
+          // Modal images: 1600px width for high resolution display
+          images: [
+            'assets/img/vc1.png',
+            'assets/img/vc2.png'
+          ]
+        },
+        gamma: {
+          title: 'Project Gamma',
+          long: 'Project Gamma is a documentation and design system exercise. It focuses on component usage, accessibility guidelines, and live examples for cross-team reuse.',
+          tech: ['Figma','Storybook'],
+          images: [
+            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop&s=5',
+            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop&s=6'
+          ]
+        },
+        delta: {
+          title: 'Project Delta',
+          long: 'Project Delta demonstrates a responsive grid layout engine, with experiments in typographic rhythm and column balancing across breakpoints.',
+          tech: ['React','CSS Grid'],
+          images: [
+            'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1600&auto=format&fit=crop&s=7',
+            'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1600&auto=format&fit=crop&s=8'
+          ]
+        },
+        epsilon: {
+          title: 'Capstone Compass',
+          long: 'Capstone Compass is a comprehensive project management platform designed specifically for academic capstone projects. It facilitates seamless collaboration between students, mentors, and advisors through features like real-time group chat, progress tracking, task management, and streamlined submission handling. The platform streamlines the entire capstone journey from initial planning to final presentation, ensuring all stakeholders stay connected and informed throughout the project lifecycle.',
+          tech: ['Laravel','PHP','MySQL','Bootstrap','JavaScript','jQuery'],
+          images: [
+            'assets/img/cc1.png',
+            'assets/img/cc2.png',
+            'assets/img/cc3.png',
+            'assets/img/cc4.png'
+          ]
+        },
+        theta: {
+          title: 'VacantVue - Official Trailer',
+          long: 'A promotional video project showcasing the VacantVue parking management system. Created using Adobe Premiere Pro, highlighting the key features, user experience, and technical capabilities of the IoT-based solution.',
+          tech: ['Video Editing','Adobe Premiere'],
+          images: [
+            'assets/vids/vctrailereal.mp4',
+          ]
+        },
+        iota: {
+          title: '2019 Mini Project',
+          long: 'A creative video project from 2019 where I experimented with music visualizers for my favorite tracks. This project challenged my creativity to design simple, entertaining videos using only images and animated GIFs to complement the atmosphere and enhance the visual storytelling of each song. Each video was carefully crafted to synchronize with the music, creating immersive audio-visual experiences that showcase early experimentation with motion graphics and video editing techniques.',
+          tech: ['Adobe Premiere Pro','Adobe Photoshop'],
+          images: [
+            'assets/vids/mini1.mp4',
+            'assets/vids/mini2.mp4',
+            'assets/vids/mini3.mp4',
+            'assets/vids/mini4.mp4',
+            'assets/vids/mini5.mp4',
+            'assets/vids/mini6.mp4'
+          ]
+        }
+      };
 
-    
-<!-- Portfolio Section 3: Creative Projects -->
-<section class="portfolio-section" id="creative">
-  <div class="container-fluid px-0">
-    <div class="section-header">
-      <h2 class="section-title">Creative & Multimedia</h2>
-      <p class="section-subtitle">
-        Explore a diverse collection of creative projects, including digital art, collage series, and multimedia designs. Each piece highlights my passion for visual storytelling, innovative techniques, and a keen eye for aesthetics—demonstrating how technology and artistry come together to create impactful, memorable experiences.
-      </p>
-            </div>
-    
-            <div class="row mb-0" alt="shanti" style="margin-bottom: 0;">
-              <div class="col-12">
-                <div class="portfolio-card" data-aos="fade-up" style=" padding: 0; background: transparent; box-shadow: none; margin-bottom: 0;">
-                  <div class="row" >
-                    <div class="col-md-6 d-flex align-items-center justify-content-start" style="min-height: 400px;">
-                      <img src="img/proj4-1.png" alt="E-commerce Platform" class="portfolio-image" style="max-width:90%; max-height:90%; width:auto; height:auto; display:block; object-fit:contain;">
-                    </div>
-                    <div class="col-md-6 d-flex align-items-center justify-content-center" >
-                      <div class="portfolio-content" style="width: 100%; transform: translateY(-200px);">
-                        <h3 class="portfolio-title" style="padding-left:1; margin-left:0;">
-                          Hiwa-hiwa
-                        </h3>
-                        <p class="portfolio-description" style="padding-left:0; margin-left:0;">
-                          “Hiwa-Hiwa” is a Filipino term that translates to “sliced” or “fragmented.” This title embodies both the technique and essence of this project, a collage series that deconstructs and reimagines the faces of musical icons. 
+      const modal = document.getElementById('project-modal');
+      const titleEl = document.getElementById('modal-title');
+      const descEl = document.getElementById('modal-desc');
+      const techEl = document.getElementById('modal-tech');
+      const imgContainer = document.getElementById('modal-image-container');
+      const prevBtn = document.getElementById('modal-prev');
+      const nextBtn = document.getElementById('modal-next');
 
-                          <br><br>
-                          Each poster in Hiwa-Hiwa is a visual composition of layered fragments—different cuts and pieces that come together to form a unique, cohesive image. Like music itself, where individual notes, beats, and tones blend into one harmonious sound, Hiwa-Hiwa uses artistic fragments to portray these icons in a fresh, multidimensional way.
-                        </p>
-                        <div class="portfolio-links">
-                          <a href="https://www.behance.net/gallery/211533245/HIWA-HIWA-Collage-Art-Series" class="portfolio-btn" target="_blank" rel="noopener">See Gallery</a>
+      let current = { key: null, idx: 0 };
 
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      function openModal(key){
+        const p = projects[key];
+        if(!p) return;
+        current.key = key; current.idx = 0;
+        titleEl.textContent = p.title;
+        descEl.innerHTML = p.long.replace(/\n\n/g, '<br><br>');
+        techEl.textContent = 'Tech: ' + p.tech.join(', ');
         
-
-            <div class="row mb-0" alt="vintage" style="margin-top: 0;">
-              <div class="col-12">
-              <div class="portfolio-card" data-aos="fade-up">
-                <div class="row" style="position: relative; min-height: 600px;">
-                <div class="col-md-12" style="min-height:600px; position: relative;">
-                  <div id="proj3Carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="7000" style="z-index:0; position:absolute; top:0; left:0; width:100%; height:100%; min-height:600px;">
-                  <div class="carousel-inner" style="width:100%; height:100%;">
-                    <div class="carousel-item active" style="width:100%; height:100%;">
-                    <img src="img/proj5-1.png" class="d-block w-100" alt="Background Layer"
-                       style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-                    <div class="carousel-item" style="width:100%; height:100%;">
-                    <img src="img/proj5-2.png" class="d-block w-100" alt="Background Layer 2"
-                       style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-                    <div class="carousel-item" style="width:100%; height:100%;">
-                    <img src="img/proj5-3.png" class="d-block w-100" alt="Background Layer 3"
-                       style="width:100%; height:100%; object-fit:cover;">
-                    </div>
-
-                  </div>
-                  </div>
-                </div>
-                <div class="portfolio-content" style="position: absolute; top: 50%; right: 40px; transform: translateY(-50%); z-index: 10; max-width: 900px; padding: 30px; border-radius: 10px; backdrop-filter: blur(10px);">
-                  <h3 class="portfolio-title">Vintage Shirt Design</h3>
-                  <p class="portfolio-description"></p>
-                    This collection is all about combining my love for sports and vintage design. I’ve created a series of shirt designs inspired by athletes I look up to, blending retro aesthetics with sports-themed visuals.
-      <br><br>
-      Each design features bold typography, classic color schemes, and vintage-inspired textures that give it an old-school vibe. It’s a nod to the style of past eras while celebrating the athletes who’ve made an impact on me.
-                  </p>
-                  <div class="portfolio-links">
-                    <a href="https://www.behance.net/gallery/212629569/Vintage-Shirt-Designs-Sports" class="portfolio-btn" target="_blank" rel="noopener">See Gallery</a>
-                  </div>
-                  </div>
-                </div>
-                </div>
-              </div>
-              </div>
-            </div>
-
-
-
-<div class="row mb-0">
-  <div class="col-12">
-    <div class="portfolio-card" data-aos="fade-up">
-      <div class="row d-flex align-items-center">
-        <!-- Left column - Text content -->
-        <div class="col-md-6">
-          <div class="portfolio-content" style="padding: 40px;">
-            <h3 class="portfolio-title">VacantVue - Official Trailer</h3>
-            <p class="portfolio-description">
-              I produced the VacantVue trailer for our capstone thesis exhibit, highlighting the system’s clean UI/UX design, key features, and seamless integration of mobile and desktop applications. The video also showcases the Arduino-powered engineering behind real-time slot detection, emphasizing how hardware and software come together to create a complete smart parking solution.
-            </p>
-            <div class="tech-stack">
-              <span class="tech-tag">Adobe Premiere Pro</span>
-              <span class="tech-tag">Adobe After Effects</span>
-              <span class="tech-tag">Adobe Photoshop</span>
-            </div>
-
-          </div>
-        </div>
-        <!-- Right column - Video -->
-        <div class="col-md-6">
-          <div style="padding: 40px; height: 100%; min-height: 500px;">
-            <iframe 
-              style="width: 100%; height: 100%; min-height: 500px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" 
-              src="https://www.youtube-nocookie.com/embed/w_rLB91Gms0?version=3&vq=hd720&amp;modestbranding=1&amp;rel=0&amp;controls=0&amp;&showinfo=0&amp;delete controls=0&amp;fs=0&amp;showinfo=0" 
-              title="YouTube video player" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Replace the existing music portfolio card with this code -->
-<div class="row" alt="music">
-  <div class="col-12">
-    <div class="portfolio-card" data-aos="fade-up">
-      <div class="row d-flex align-items-center"> <!-- Added d-flex and align-items-center -->
-        <!-- Left column - Video Carousel -->
-        <div class="col-md-6">
-          <div id="musicCarousel" class="carousel slide" data-bs-ride="carousel"data-bs-touch="true" data-bs-keyboard="true" style="margin: 40px;">
-            <div class="carousel-inner" style="background-color: black;">
-              <div class="carousel-item active">
-                <div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/1114793345?byline=0&dnt=1&fun=0&portrait=0&title=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/vimeo/">vimeo embed video</a> generator</small></iframe></div>
-              </div>
-              <div class="carousel-item">
-                <div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/1114793696?byline=0&dnt=1&fun=0&portrait=0&title=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/vimeo/">vimeo embed video</a> generator</small></iframe></div>
-              </div>
-              <div class="carousel-item">
-                <div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/1114793753?byline=0&dnt=1&fun=0&portrait=0&title=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/vimeo/">vimeo embed video</a> generator</small></iframe></div>
-              </div>
-              <div class="carousel-item">
-                <div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/1114793789?byline=0&dnt=1&fun=0&portrait=0&title=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/vimeo/">vimeo embed video</a> generator</small></iframe></div>
-              </div>
-              <div class="carousel-item">
-                <div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/1114793810?byline=0&dnt=1&fun=0&portrait=0&title=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/vimeo/">vimeo embed video</a> generator</small></iframe></div>
-              </div>
-              <div class="carousel-item">
-                <div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://player.vimeo.com/video/1114793833?byline=0&dnt=1&fun=0&portrait=0&title=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/vimeo/">vimeo embed video</a> generator</small></iframe></div>
-              </div>
-            </div>
-            
-            <!-- Carousel Indicators -->
-
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#musicCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#musicCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        </div>
-        <!-- Right column - Content -->
-        <div class="col-md-6 d-flex align-items-center"> <!-- Added d-flex and align-items-center -->
-          <div class="portfolio-content" style="padding: 40px;">
-            <h3 class="portfolio-title">2019 mini project</h3>
-            <p class="portfolio-description">
-              In 2019, I created a personal mini project experimenting with music visualizers for some of my favorite tracks. By limiting myself to only using images and animated GIFs, I challenged my creativity to design simple yet entertaining videos that complemented the atmosphere of each song. This project allowed me to explore visual storytelling through minimal elements, pushing me to see how far I could go in enhancing music with visuals.
-            </p>
-            <div class="tech-stack">
-              <span class="tech-tag">Adobe Premiere Pro</span>
-
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-</section>
-
-<!-- Contact Section -->
-<section class="contact-section" id="contact">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Get In Touch</h2>
-
-    </div>
-    
-    <div class="contact-info">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="contact-item">
-            <h4 style="color: #2d5a2d; margin-bottom: 10px;">Email</h4>
-            <p>riinvalena1@email.com</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="contact-item">
-            <h4 style="color: #2d5a2d; margin-bottom: 10px;">Phone</h4>
-            <p>+63 976-311-5113</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="contact-item">
-            <h4 style="color: #2d5a2d; margin-bottom: 10px;">Location</h4>
-            <p>Tondo, Manila, Philippines</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/riinv/" class="social-link" target="_blank">
-          <i class="fab fa-linkedin"></i> LinkedIn
-        </a>
-        <a href="https://github.com/riiny" class="social-link" target="_blank">
-          <i class="fab fa-github"></i> GitHub
-        </a>
-        <a href="https://www.facebook.com/RiinValena/" class="social-link" target="_blank">
-          <i class="fab fa-facebook"></i> Facebook
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <p>&copy; 2025 Riin Valeña. All rights reserved.</p>
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-<script>
-  document.body.style.backgroundColor = 'black';
-  
-  // Smooth scrolling for navigation links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-  
-  // Music video carousel functionality
-  document.addEventListener('DOMContentLoaded', function() {
-    // Wait for Bootstrap to be fully loaded
-    if (typeof bootstrap === 'undefined') {
-      console.error('Bootstrap not loaded');
-      return;
-    }
-    
-    const musicCarousel = document.getElementById('musicCarousel');
-    
-    if (musicCarousel) {
-      try {
-        // Initialize Bootstrap carousel
-        const carousel = new bootstrap.Carousel(musicCarousel, {
-          interval: 8000,
-          wrap: true,
-          keyboard: true,
-          pause: 'hover',
-          touch: true
-        });
+        // Hide/show navigation arrows based on number of images
+        if(p.images.length <= 1) {
+          prevBtn.style.display = 'none';
+          nextBtn.style.display = 'none';
+        } else {
+          prevBtn.style.display = 'block';
+          nextBtn.style.display = 'block';
+        }
         
-        console.log('Music carousel initialized successfully:', carousel);
-      
-      // Function to pause all videos in the carousel
-      function pauseAllVideos() {
-        const iframes = musicCarousel.querySelectorAll('iframe');
-        iframes.forEach(iframe => {
-          try {
-            // For Vimeo videos
-            if (iframe.src.includes('vimeo.com')) {
-              iframe.contentWindow.postMessage('{"method":"pause"}', '*');
-            }
-          } catch (e) {
-            // Handle any errors gracefully
-            console.log('Video pause attempt failed:', e);
-          }
+        renderImage();
+        // show overlay then animate in
+        modal.classList.remove('hidden');
+        // force a frame so transitions run
+        requestAnimationFrame(()=>{
+          modal.classList.remove('opacity-0');
+          modal.classList.add('opacity-100');
+          const panel = modal.querySelector('.modal-panel');
+          panel.classList.remove('scale-95','translate-y-2','opacity-0');
+          panel.classList.add('scale-100','translate-y-0','opacity-100');
         });
+        modal.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
       }
-      
-      // Pause videos when carousel slides
-      musicCarousel.addEventListener('slide.bs.carousel', function(event) {
-        console.log('Carousel slide event:', event);
-        pauseAllVideos();
-      });
-      
-      // Pause videos when carousel is paused
-      musicCarousel.addEventListener('pause.bs.carousel', function(event) {
-        console.log('Carousel pause event:', event);
-        pauseAllVideos();
-      });
-      
-      // Add more event listeners for debugging
-      musicCarousel.addEventListener('slid.bs.carousel', function(event) {
-        console.log('Carousel slide completed:', event);
-      });
-      
-      // Add keyboard navigation
-      document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowLeft') {
-          event.preventDefault();
-          carousel.prev();
-        } else if (event.key === 'ArrowRight') {
-          event.preventDefault();
-          carousel.next();
-        }
-      });
-      
-      // Ensure carousel is properly initialized and starts automatically
-      setTimeout(() => {
-        if (carousel && typeof carousel.cycle === 'function') {
-          carousel.cycle();
-        }
-        // Force start the carousel
-        if (carousel && typeof carousel.start === 'function') {
-          carousel.start();
-        }
-      }, 100);
-      
-      // Fallback initialization if needed
-      setTimeout(() => {
-        if (carousel && !carousel._interval) {
-          console.log('Fallback carousel start');
-          carousel.cycle();
-        }
-      }, 2000);
-      } catch (error) {
-        console.error('Error initializing music carousel:', error);
-      }
-    }
-  });
-  
-  AOS.init({
-    duration: 1000,
-    once: true,
-    offset: 100
-  });
-</script>
 
+      function closeModal(){
+        const panel = modal.querySelector('.modal-panel');
+        // animate out
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        panel.classList.remove('scale-100','translate-y-0','opacity-100');
+        panel.classList.add('scale-95','translate-y-2','opacity-0');
+        // wait for transition then hide
+        setTimeout(()=>{
+          modal.classList.add('hidden');
+          modal.setAttribute('aria-hidden','true');
+          document.body.style.overflow = '';
+          current = { key: null, idx: 0 };
+        }, 320);
+      }
+
+      function renderImage(){
+        const p = projects[current.key];
+        if(!p) return;
+        const url = p.images[current.idx];
+        imgContainer.innerHTML = '';
+        
+        // Check if the URL is a video file
+        if(url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg')) {
+          const video = document.createElement('video');
+          video.src = url;
+          video.alt = p.title + ' video ' + (current.idx + 1);
+          video.className = 'w-full h-full object-contain bg-black';
+          video.controls = true;
+          video.autoplay = false;
+          video.muted = true;
+          video.loop = true;
+          imgContainer.appendChild(video);
+        } else {
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = p.title + ' screenshot ' + (current.idx + 1);
+          img.className = 'w-full h-full object-cover';
+          img.loading = 'lazy';
+          imgContainer.appendChild(img);
+        }
+      }
+
+      prevBtn.addEventListener('click', ()=>{
+        const p = projects[current.key];
+        if(!p) return;
+        current.idx = (current.idx - 1 + p.images.length) % p.images.length;
+        renderImage();
+      });
+      nextBtn.addEventListener('click', ()=>{
+        const p = projects[current.key];
+        if(!p) return;
+        current.idx = (current.idx + 1) % p.images.length;
+        renderImage();
+      });
+
+
+      // Open modal buttons
+      document.querySelectorAll('.js-open-modal').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const key = btn.getAttribute('data-project');
+          openModal(key);
+        });
+      });
+
+      // Keyboard interactions
+      document.addEventListener('keydown', (e)=>{
+        if(modal.classList.contains('hidden')) return;
+        if(e.key === 'Escape') closeModal();
+        if(e.key === 'ArrowLeft') prevBtn.click();
+        if(e.key === 'ArrowRight') nextBtn.click();
+      });
+
+      // Click outside to close
+      modal.addEventListener('click', (e)=>{
+        if(e.target === modal) closeModal();
+      });
+    })();
+  </script>
+  <script>
+    (function(){
+      const TRANSITION_MS = 320;
+      function isLocalHtmlLink(anchor){
+        if(!anchor || !anchor.getAttribute) return false;
+        if(anchor.target && anchor.target.toLowerCase() === '_blank') return false;
+        const href = anchor.getAttribute('href') || '';
+        if(href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+        if(href.startsWith('#')) return false; // hash navigation
+        try{
+          const url = new URL(href, location.href);
+          if(url.origin !== location.origin) return false;
+          return url.pathname.endsWith('.html') || url.pathname !== location.pathname;
+        }catch(e){ return false; }
+      }
+
+      function navigateWithTransition(href){
+        const page = document.getElementById('page');
+        if(!page){ location.href = href; return; }
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if(prefersReduced){ location.href = href; return; }
+        page.classList.remove('visible');
+        page.classList.add('exit');
+        setTimeout(()=> { location.href = href; }, TRANSITION_MS);
+      }
+
+      document.addEventListener('click', function(e){
+        const a = e.target.closest('a');
+        if(!a) return;
+        if(!isLocalHtmlLink(a)) return;
+        e.preventDefault();
+        navigateWithTransition(a.href);
+      });
+
+      function showPage(){
+        const page = document.getElementById('page');
+        if(!page) return;
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if(prefersReduced){ page.classList.add('visible'); return; }
+        requestAnimationFrame(()=>{ page.classList.add('visible'); page.classList.remove('exit'); });
+      }
+
+      document.addEventListener('DOMContentLoaded', showPage);
+      window.addEventListener('pageshow', showPage);
+    })();
+
+    // Video hover play functionality
+    (function(){
+      const video = document.getElementById('vc-trailer-video');
+      if (!video) return;
+
+      // Find the parent article element
+      const article = video.closest('article');
+      if (!article) return;
+
+      article.addEventListener('mouseenter', function() {
+        video.play().catch(e => {
+          console.log('Video play failed:', e);
+        });
+      });
+
+      article.addEventListener('mouseleave', function() {
+        video.pause();
+        // Don't reset currentTime - let it resume from where it was paused
+      });
+    })();
+  </script>
 </body>
 </html>

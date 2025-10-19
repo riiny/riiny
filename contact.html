@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Riin Valeña | Contact</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors:{accent:'#0ea5e9'}, fontFamily:{sans:['Inter','system-ui'], mono:['ui-monospace','monospace']} } } }
+  </script>
+  <style>
+    body{background:#fffff0;color:#121212;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif}
+    .brutalist-border{border:2px solid #000}
+    .focus-outline:focus{outline:3px solid #0ea5e9;outline-offset:2px}
+    /* Page transition wrapper (fade + slight vertical) */
+    #page{opacity:0;transform:translateY(6px);transition:opacity 320ms ease, transform 320ms ease}
+    #page.visible{opacity:1;transform:translateY(0)}
+    #page.exit{opacity:0;transform:translateY(-6px)}
+    @media (prefers-reduced-motion: reduce){#page{transition:none!important;transform:none!important}}
+  </style>
+</head>
+<body class="antialiased leading-normal">
+  <nav class="fixed top-6 right-6 z-50">
+    <ul class="flex flex-col gap-3 text-sm">
+      <li><a href="index.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">HOME</a></li>
+      <li><a href="resume.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">RESUME</a></li>
+      <li><a href="about.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">ABOUT</a></li>
+      <li><a href="contact.html" class="block px-3 py-1 border-2 border-black bg-black text-white transition-colors duration-200 focus-outline">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <main class="min-h-screen px-6 sm:px-12 py-12 max-w-6xl mx-auto">
+    <div id="page" class="page">
+      <section id="contact-hero" class="min-h-screen flex items-center">
+        <div class="w-full">
+          <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 font-mono">Contact</h1>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <p class="text-lg mb-4">I'm available for contract and full-time opportunities. Please reach out via email or connect on LinkedIn.</p>
+
+              <div class="mt-6">
+                <a href="mailto:riinvalena1@gmail.com" class="block text-base font-semibold mb-1">riinvalena1@example.com</a>
+                <a href="https://www.linkedin.com/in/riinv/" target="_blank" rel="noopener" class="block text-base font-semibold mb-1">LinkedIn</a>
+                <a href="https://github.com/riiny" target="_blank" rel="noopener" class="block text-base font-semibold">GitHub</a>
+              </div>
+            </div>
+
+            <aside>
+              <div class="brutalist-border p-6">
+                <h3 class="text-xl font-bold mb-4 font-mono">Get in touch</h3>
+                <p class="text-sm">Prefer email? Use the address above. Social links open in a new tab. For portfolios or attachments, include a short note in your message.</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <footer class="py-8 text-center text-xs text-gray-600">© <span id="year"></span> Riin Valeña</footer>
+    </div>
+  </main>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    (function(){
+      const TRANSITION_MS = 320;
+      function isLocalHtmlLink(anchor){
+        if(!anchor || !anchor.getAttribute) return false;
+        if(anchor.target && anchor.target.toLowerCase() === '_blank') return false;
+        const href = anchor.getAttribute('href') || '';
+        if(href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+        if(href.startsWith('#')) return false;
+        try{ const url = new URL(href, location.href); if(url.origin !== location.origin) return false; return url.pathname.endsWith('.html') || url.pathname !== location.pathname;}catch(e){return false}
+      }
+      function navigateWithTransition(href){
+        const page = document.getElementById('page'); if(!page){ location.href = href; return; }
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(prefersReduced){ location.href = href; return; }
+        page.classList.remove('visible'); page.classList.add('exit'); setTimeout(()=> { location.href = href; }, TRANSITION_MS);
+      }
+      document.addEventListener('click', function(e){ const a = e.target.closest('a'); if(!a) return; if(!isLocalHtmlLink(a)) return; e.preventDefault(); navigateWithTransition(a.href); });
+      function showPage(){ const page = document.getElementById('page'); if(!page) return; const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(prefersReduced){ page.classList.add('visible'); return; } requestAnimationFrame(()=>{ page.classList.add('visible'); page.classList.remove('exit'); }); }
+      document.addEventListener('DOMContentLoaded', showPage); window.addEventListener('pageshow', showPage);
+    })();
+  </script>
+</body>
+</html>
