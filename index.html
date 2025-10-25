@@ -20,11 +20,122 @@
     html{scroll-behavior:smooth}
     .brutalist-border{border:2px solid #000}
     .focus-outline:focus{outline:3px solid #0ea5e9;outline-offset:2px}
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #fffff0;
+      border-left: 2px solid #000;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #000;
+      border: 2px solid #fffff0;
+      border-radius: 0;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+    
+    ::-webkit-scrollbar-corner {
+      background: #fffff0;
+    }
+    
+    /* Firefox scrollbar */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: #000 #fffff0;
+    }
     /* Page transition wrapper (fade + slight vertical) */
     #page{opacity:0;transform:translateY(6px);transition:opacity 320ms ease, transform 320ms ease}
     #page.visible{opacity:1;transform:translateY(0)}
     #page.exit{opacity:0;transform:translateY(-6px)}
     @media (prefers-reduced-motion: reduce){#page{transition:none!important;transform:none!important}}
+    
+    /* Hero Section Animations */
+    .hero-title {
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .hero-title .title-line {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(100px);
+    }
+    
+    /* Trigger animations when page is visible */
+    #page.visible .hero-title .title-line:nth-child(1) { 
+      animation: slideUpFade 0.8s ease forwards;
+      animation-delay: 0.2s; 
+    }
+    #page.visible .hero-title .title-line:nth-child(2) { 
+      animation: slideUpFade 0.8s ease forwards;
+      animation-delay: 0.4s; 
+    }
+    
+    #page.visible .hero-description {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUpFade 0.8s ease forwards;
+      animation-delay: 0.8s;
+    }
+    
+    #page.visible .hero-button {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUpFade 0.6s ease forwards;
+      animation-delay: 1.2s;
+    }
+    
+    #page.visible .hero-right {
+      opacity: 0;
+      transform: translateX(50px);
+      animation: slideInRight 0.8s ease forwards;
+      animation-delay: 1s;
+    }
+    
+    /* Tilt Effect */
+    .tilt-container {
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease;
+    }
+    
+    
+    
+    
+    /* Keyframe Animations */
+    @keyframes slideUpFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideInRight {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    
+    
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      #page.visible .hero-title .title-line,
+      #page.visible .hero-description,
+      #page.visible .hero-button,
+      #page.visible .hero-right {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body class="antialiased leading-normal">
@@ -44,16 +155,18 @@
     <section id="hero" class="min-h-screen flex items-center">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center w-full">
         <div>
-          <h1 class="text-4xl sm:text-7xl font-extrabold tracking-tight font-mono">Riin Valeña| Front-End Developer</h1>
-          <p class="mt-6 text-lg sm:text-2xl max-w-xl">I design and build websites that are intuitively easy to navigate and fully responsive across all devices. My focus is on clear typography, robust performance, and a streamlined user experience.
-  
+          <h1 class="hero-title text-4xl sm:text-7xl font-extrabold tracking-tight font-mono">
+            <span class="title-line">Riin Valeña</span>
+            <span class="title-line">| Front-End Developer</span>
+          </h1>
+          <p class="hero-description mt-6 text-lg sm:text-2xl max-w-xl">I design and build websites that are intuitively easy to navigate and fully responsive across all devices. My focus is on clear typography, robust performance, and a streamlined user experience.
           </p>
           <div class="mt-6">
-            <a href="resume.html" class="inline-block border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors duration-150 focus-outline">View Resume</a>
+            <a href="resume.html" class="hero-button inline-block border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors duration-150 focus-outline">View Resume</a>
           </div>
         </div>
-        <div class="hidden sm:block">
-          <div class="brutalist-border p-6 h-full flex items-center justify-center">
+        <div class="hero-right hidden sm:block">
+          <div class="brutalist-border p-6 h-full flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105 tilt-container">
             <div class="text-center">
               <div class="text-xs uppercase tracking-widest text-gray-500 mb-2">Selected Work</div>
               <div class="text-2xl font-bold">Minimal interfaces, clear typography, easy to navigate</div>
@@ -176,6 +289,58 @@
   </main>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  
+  <script>
+    // Hero Section Interactive Effects
+    (function() {
+      // Tilt effect for hero right panel
+      const tiltContainer = document.querySelector('.tilt-container');
+      if (tiltContainer) {
+        tiltContainer.addEventListener('mousemove', (e) => {
+          const rect = tiltContainer.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          const mouseX = e.clientX - centerX;
+          const mouseY = e.clientY - centerY;
+          
+          const rotateX = (mouseY / rect.height) * -10; // Max 10 degrees
+          const rotateY = (mouseX / rect.width) * 10; // Max 10 degrees
+          
+          tiltContainer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        });
+        
+        tiltContainer.addEventListener('mouseleave', () => {
+          tiltContainer.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+      }
+      
+      // Staggered animation for project cards on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }, index * 100);
+          }
+        });
+      }, observerOptions);
+      
+      // Observe project cards
+      document.querySelectorAll('article').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
+      });
+    })();
+  </script>
   <!-- Project Modal -->
   <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-60 px-4 py-8 opacity-0 transition-opacity duration-300" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="modal-panel bg-white text-black max-w-6xl w-full brutalist-border shadow-lg relative max-h-[92vh] overflow-auto mx-auto transform scale-95 translate-y-2 opacity-0 transition-all duration-300">
