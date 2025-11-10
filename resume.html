@@ -4,6 +4,30 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Riin Valeña | Resume</title>
+  <script>
+    // Apply dark mode IMMEDIATELY before page renders to prevent white flash
+    (function() {
+      const saved = localStorage.getItem('darkMode');
+      if (saved === 'true') {
+        document.documentElement.style.backgroundColor = '#1a1a1a';
+        document.documentElement.className = 'dark-mode';
+        if (document.body) {
+          document.body.style.backgroundColor = '#1a1a1a';
+          document.body.className = 'dark-mode';
+        } else {
+          // If body doesn't exist yet, set it when it loads
+          const observer = new MutationObserver(function(mutations) {
+            if (document.body) {
+              document.body.style.backgroundColor = '#1a1a1a';
+              document.body.className = 'dark-mode';
+              observer.disconnect();
+            }
+          });
+          observer.observe(document.documentElement, { childList: true });
+        }
+      }
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @font-face {
@@ -18,6 +42,31 @@
       color: #1a1a1a;
       font-family: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+    }
+    html {
+      background: #ffffff;
+      transition: background-color 0.3s ease;
+    }
+    html.dark-mode {
+      background: #1a1a1a;
+    }
+    body.dark-mode html {
+      background: #1a1a1a;
+    }
+    body.dark-mode {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+    body.dark-mode .text-gray-400 {
+      color: #9ca3af;
+    }
+    body.dark-mode .text-gray-500 {
+      color: #6b7280;
+    }
+    body.dark-mode .text-gray-600 {
+      color: #9ca3af;
     }
     html {
       scroll-behavior: smooth;
@@ -30,21 +79,59 @@
     ::-webkit-scrollbar-track {
       background: #ffffff;
       border-radius: 0;
+      transition: background 0.3s ease;
+    }
+    body.dark-mode ::-webkit-scrollbar-track {
+      background: #1a1a1a;
     }
     ::-webkit-scrollbar-thumb {
       background: #000000;
       border-radius: 0;
       -webkit-border-radius: 0;
     }
+    body.dark-mode ::-webkit-scrollbar-thumb {
+      background: #ffffff;
+    }
     ::-webkit-scrollbar-thumb:hover {
       background: #000000;
       border-radius: 0;
       -webkit-border-radius: 0;
     }
+    body.dark-mode ::-webkit-scrollbar-thumb:hover {
+      background: #ffffff;
+    }
     /* Firefox scrollbar */
     * {
       scrollbar-width: thin;
       scrollbar-color: #000000 #ffffff;
+    }
+    body.dark-mode * {
+      scrollbar-color: #ffffff #1a1a1a;
+    }
+    /* Dark mode toggle button */
+    .dark-mode-toggle {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-size: 14px;
+      color: inherit;
+      transition: opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dark-mode-toggle:hover {
+      opacity: 0.6;
+    }
+    .dark-mode-toggle svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     a {
       color: inherit;
@@ -73,7 +160,14 @@
   <div id="page-content">
   <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
     <a href="index.html" class="text-xs">Riin Valeña</a>
-    <ul class="flex gap-8 text-xs">
+    <ul class="flex gap-8 text-xs items-center">
+      <li>
+        <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </li>
       <li><a href="index.html">Home</a></li>
       <li><a href="resume.html">Resume</a></li>
       <li><a href="about.html">About</a></li>
@@ -186,6 +280,13 @@
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       
       function fadeIn() {
+        // Ensure dark mode is applied before fade in
+        const saved = localStorage.getItem('darkMode');
+        if (saved === 'true') {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
         if (pageContent && !prefersReducedMotion) {
           requestAnimationFrame(() => {
             pageContent.classList.add('loaded');
@@ -218,6 +319,13 @@
         
         e.preventDefault();
         
+        // Check if dark mode is active and maintain it during transition
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        if (isDarkMode) {
+          document.documentElement.style.backgroundColor = '#1a1a1a';
+          document.body.style.backgroundColor = '#1a1a1a';
+        }
+        
         if (pageContent && !prefersReducedMotion) {
           pageContent.style.opacity = '0';
           setTimeout(() => {
@@ -241,6 +349,49 @@
           fadeIn();
         }
       });
+    })();
+  </script>
+  <script>
+    // Dark mode functionality - must run immediately before page transitions
+    (function() {
+      const body = document.body;
+      
+      // Check for saved theme preference or default to light mode
+      const getTheme = () => {
+        const saved = localStorage.getItem('darkMode');
+        return saved ? saved === 'true' : false;
+      };
+      
+      // Apply theme immediately (synchronously)
+      const applyTheme = (isDark) => {
+        if (isDark) {
+          body.classList.add('dark-mode');
+        } else {
+          body.classList.remove('dark-mode');
+        }
+        localStorage.setItem('darkMode', isDark);
+      };
+      
+      // Initialize theme IMMEDIATELY (before any animations)
+      const isDark = getTheme();
+      applyTheme(isDark);
+      
+      // Set up toggle button after DOM is ready
+      const initToggle = () => {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        if (darkModeToggle) {
+          darkModeToggle.addEventListener('click', () => {
+            const isDark = body.classList.contains('dark-mode');
+            applyTheme(!isDark);
+          });
+        }
+      };
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initToggle);
+      } else {
+        initToggle();
+      }
     })();
   </script>
   </div>
