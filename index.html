@@ -77,6 +77,8 @@
     #page-content {
       opacity: 0;
       transition: opacity 0.3s ease-in-out;
+      position: relative;
+      z-index: 1;
     }
     #page-content.loaded {
       opacity: 1;
@@ -84,6 +86,8 @@
     @media (prefers-reduced-motion: reduce) {
       #page-content {
         transition: none;
+      }
+      #page-content.loaded {
         opacity: 1;
       }
     }
@@ -100,9 +104,132 @@
       aspect-ratio: 16 / 9;
       object-fit: cover;
     }
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), 
+                  transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: all;
+      transform: scale(1);
+    }
+    #loading-screen.hidden {
+      opacity: 0;
+      background-color: rgba(255, 255, 255, 0);
+      transform: scale(0.95);
+      pointer-events: none;
+    }
+    .loading-content {
+      text-align: center;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                  transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #loading-screen.hidden .loading-content {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.9);
+    }
+    .loading-name {
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      color: #1a1a1a;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out 0.2s forwards;
+    }
+    .loading-line {
+      width: 120px;
+      height: 1px;
+      background: #1a1a1a;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .loading-line::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #1a1a1a;
+      animation: loadingProgress 1.5s ease-in-out infinite;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes loadingProgress {
+      0% {
+        left: -100%;
+      }
+      50% {
+        left: 100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .loading-name {
+        animation: none;
+        opacity: 1;
+      }
+      .loading-line::after {
+        animation: none;
+      }
+      #loading-screen {
+        transition: opacity 0.3s ease-out, background-color 0.3s ease-out;
+      }
+      #loading-screen.hidden {
+        transform: none;
+      }
+      .loading-content {
+        transition: opacity 0.3s ease-out;
+      }
+      #loading-screen.hidden .loading-content {
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-name">Riin Valeña</div>
+      <div class="loading-line"></div>
+    </div>
+  </div>
+  <script>
+    // Ensure loading screen is visible immediately
+    (function() {
+      const loadingScreen = document.getElementById('loading-screen');
+      const pageContent = document.getElementById('page-content');
+      if (loadingScreen) {
+        loadingScreen.style.display = 'flex';
+        loadingScreen.style.opacity = '1';
+      }
+      if (pageContent) {
+        pageContent.style.opacity = '0';
+        pageContent.style.pointerEvents = 'none';
+      }
+    })();
+  </script>
   <div id="page-content">
   <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
     <a href="index.html" class="text-xs">Riin Valeña</a>
@@ -207,6 +334,60 @@
   </main>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  
+  <script>
+    // Loading screen - show for 2 seconds, then hide
+    (function() {
+      // Wait for DOM to be ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLoading);
+      } else {
+        initLoading();
+      }
+      
+      function initLoading() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const pageContent = document.getElementById('page-content');
+        
+        // Ensure loading screen is visible
+        if (loadingScreen) {
+          loadingScreen.style.display = 'flex';
+          loadingScreen.style.opacity = '1';
+        }
+        
+        // Prevent interaction during loading
+        if (pageContent) {
+          pageContent.style.pointerEvents = 'none';
+          pageContent.style.opacity = '0';
+        }
+        
+        // Hide loading screen after 2 seconds
+        setTimeout(() => {
+          if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+          }
+          // Re-enable interaction, fade in page content
+          if (pageContent) {
+            pageContent.style.pointerEvents = '';
+            // Remove inline opacity style to allow CSS transition to work
+            pageContent.style.removeProperty('opacity');
+            // Use double requestAnimationFrame to ensure the style is cleared before adding class
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                pageContent.classList.add('loaded');
+              });
+            });
+          }
+          // Remove loading screen from DOM after fade out
+          setTimeout(() => {
+            if (loadingScreen) {
+              loadingScreen.remove();
+            }
+          }, 1000); // Wait for fade out transition (1s)
+        }, 2000); // 2 seconds
+      }
+    })();
+  </script>
   
   <!-- Project Modal -->
   <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 px-4 py-8" aria-hidden="true" role="dialog" aria-modal="true">
@@ -453,8 +634,13 @@
       const pageContent = document.getElementById('page-content');
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       
-      // Fade in on page load
+      // Fade in on page load - but only if loading screen is not present
       function fadeIn() {
+        const loadingScreen = document.getElementById('loading-screen');
+        // Don't fade in if loading screen is still active
+        if (loadingScreen && !loadingScreen.classList.contains('hidden')) {
+          return;
+        }
         if (pageContent && !prefersReducedMotion) {
           requestAnimationFrame(() => {
             pageContent.classList.add('loaded');
