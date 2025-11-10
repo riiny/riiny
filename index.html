@@ -407,7 +407,7 @@
       <div id="web-design" class="tab-content active">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
           <article>
-            <img loading="lazy" src="assets/img/vacantvuecover.png" alt="VacantVue" class="w-full mb-6">
+            <img src="assets/img/vacantvuecover.png" alt="VacantVue" class="w-full mb-6">
             <h3 class="text-base mb-3 uppercase">VACANTVUE</h3>
             <p class="text-xs text-gray-600 mb-3">Smart parking management system with IoT sensors, real-time availability, reservations, and cashless payments.</p>
             <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Bootstrap, PHP, Firebase, Arduino, PayMongo</p>
@@ -415,7 +415,7 @@
           </article>
 
           <article>
-            <img loading="lazy" src="assets/img/cccover.png" alt="Capstone Compass" class="w-full mb-6">
+            <img src="assets/img/cccover.png" alt="Capstone Compass" class="w-full mb-6">
             <h3 class="text-base mb-3 uppercase">CAPSTONE COMPASS</h3>
             <p class="text-xs text-gray-600 mb-3">Project management platform for students and mentors with group chat, progress tracking, and task management.</p>
             <p class="text-xs text-gray-500 mb-3">Laravel, PHP, MySQL, Bootstrap, JavaScript</p>
@@ -423,7 +423,7 @@
           </article>
 
           <article>
-            <img loading="lazy" src="assets/img/portfoliocover.png" alt="Portfolio Site" class="w-full mb-6">
+            <img src="assets/img/portfoliocover.png" alt="Portfolio Site" class="w-full mb-6">
             <h3 class="text-base mb-3 uppercase">PORTFOLIO SITE</h3>
             <p class="text-xs text-gray-600 mb-3">Responsive portfolio website with clean design.</p>
             <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Tailwind CSS</p>
@@ -436,7 +436,7 @@
       <div id="multimedia" class="tab-content hidden">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
           <article>
-            <img loading="lazy" src="assets/img/hhcover.png" alt="Hiwa-hiwa" class="w-full mb-6">
+            <img src="assets/img/hhcover.png" alt="Hiwa-hiwa" class="w-full mb-6">
             <h3 class="text-base mb-3 uppercase">HIWA-HIWA</h3>
             <p class="text-xs text-gray-600 mb-3">Digital collage posters reimagining musical icons through layered, fragmented compositions.</p>
             <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
@@ -444,7 +444,7 @@
           </article>
 
           <article>
-            <img loading="lazy" src="assets/img/vintagecover.png" alt="Vintage Shirt Design" class="w-full mb-6">
+            <img src="assets/img/vintagecover.png" alt="Vintage Shirt Design" class="w-full mb-6">
             <h3 class="text-base mb-3 uppercase">VINTAGE SHIRT DESIGN</h3>
             <p class="text-xs text-gray-600 mb-3">T-shirt designs blending retro aesthetics with bold typography celebrating impactful athletes.</p>
             <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
@@ -457,7 +457,7 @@
               class="w-full mb-6 aspect-video object-cover" 
               muted 
               loop
-              preload="metadata"
+              preload="auto"
               poster="assets/img/vctrailer.png"
             >
               <source src="assets/vids/vctrailer.mp4" type="video/mp4">
@@ -469,7 +469,7 @@
           </article>
 
           <article>
-            <img loading="lazy" src="assets/img/csm.gif" alt="2019 mini project" class="w-full mb-6 aspect-video object-cover">
+            <img src="assets/img/csm.gif" alt="2019 mini project" class="w-full mb-6 aspect-video object-cover">
             <h3 class="text-base mb-3 uppercase">2019 MINI PROJECT</h3>
             <p class="text-xs text-gray-600 mb-3">Music visualizers using images and animated GIFs to enhance visual storytelling.</p>
             <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
@@ -485,6 +485,26 @@
   </main>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  
+  <script>
+    // Preload all images including those in hidden tabs
+    (function() {
+      const imageSources = [
+        'assets/img/vacantvuecover.png',
+        'assets/img/cccover.png',
+        'assets/img/portfoliocover.png',
+        'assets/img/hhcover.png',
+        'assets/img/vintagecover.png',
+        'assets/img/vctrailer.png',
+        'assets/img/csm.gif'
+      ];
+      
+      imageSources.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    })();
+  </script>
   
   <script>
     // Loading screen - show for 2 seconds, then hide
