@@ -5,181 +5,220 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Riin Valeña | Resume</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { accent: '#0ea5e9', accentDark: '#0369a1' },
-          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'], mono: ['ui-monospace','Menlo','Monaco','monospace'] }
-        }
+  <style>
+    @font-face {
+      font-display: block;
+      font-family: "Neue Haas Grotesk";
+      src: url("https://type.cargo.site/files/NeueHaasGroteskText-Regular.woff") format("woff");
+      font-style: normal;
+      font-weight: normal;
+    }
+    body {
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    a:hover {
+      opacity: 0.6;
+    }
+    #page-content {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    #page-content.loaded {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #page-content {
+        transition: none;
+        opacity: 1;
       }
     }
-  </script>
-  <style>
-    body{background:#fffff0;color:#121212;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif}
-    html{scroll-behavior:smooth}
-    .brutalist-border{border:2px solid #000}
-    .focus-outline:focus{outline:3px solid #0ea5e9;outline-offset:2px}
-    #page{opacity:0;transform:translateY(6px);transition:opacity 320ms ease, transform 320ms ease}
-    #page.visible{opacity:1;transform:translateY(0)}
-    #page.exit{opacity:0;transform:translateY(-6px)}
-    @media (prefers-reduced-motion: reduce){#page{transition:none!important;transform:none!important}}
   </style>
 </head>
-<body class="antialiased leading-normal">
-  <nav class="fixed top-6 right-6 z-50">
-    <ul class="flex flex-col gap-3 text-sm">
-      <li><a href="index.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">HOME</a></li>
-      <li><a href="resume.html" class="block px-3 py-1 border-2 border-black bg-black text-white hover:bg-white hover:text-black transition-colors duration-200 focus-outline">RESUME</a></li>
-      <li><a href="about.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">ABOUT</a></li>
-      <li><a href="contact.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">CONTACT</a></li>
+<body>
+  <div id="page-content">
+  <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
+    <a href="index.html" class="text-xs">Riin Valeña</a>
+    <ul class="flex gap-8 text-xs">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <main class="min-h-screen px-6 sm:px-12 py-12 max-w-6xl mx-auto">
-    <div id="page" class="page">
-      <section class="min-h-screen flex items-start">
-        <div class="w-full">
-          <h1 class="text-4xl sm:text-6xl font-extrabold mb-4 font-mono">Riin Valeña</h1>
+  <main class="min-h-screen px-8 py-32 max-w-6xl mx-auto">
+    <section class="mb-48">
 
-          <div class="brutalist-border p-6 mb-6">
-            <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
-              <div>
-                <div class="text-sm">38 Lallana Extension • Tondo, Manila</div>
-                <div class="text-sm mt-1"><a href="mailto:riinvalena1@gmail.com" class="underline">riinvalena1@gmail.com</a> • +63 976-311-5113</div>
-                <div class="text-sm mt-1"><a href="https://www.linkedin.com/in/riinv/" target="_blank" rel="noopener" class="underline">www.linkedin.com/in/riinv/</a> • <a href="https://riiny.github.io/riiny/" target="_blank" rel="noopener" class="underline">riiny.github.io/riiny/</a></div>
-              </div>
-              <div>
-                <a href="assets/etc/Riin_Valeña_Resume.pdf" download class="inline-block border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors duration-150">Download Resume</a>
-              </div>
-            </div>
+      
+      <div class="w-full space-y-12">
+        <div>
+          <div class="flex justify-between items-start mb-4">
+            <h1 class="text-base">Riin Valeña</h1>
+            <a href="assets/etc/Riin_Valeña_Resume.pdf" download class="text-xs text-gray-500 hover:opacity-60">Download Resume</a>
           </div>
-
-          <div class="mb-6">
-            <h2 class="text-2xl font-bold mb-2 font-mono">Education</h2>
-            <div class="text-sm">Far Eastern University – Institute of Technology, Sampaloc, Manila</div>
-            <div class="text-xs text-gray-600">Bachelor of Science in Information Technology Specializing in Web and Mobile Application — 2025</div>
-            <ul class="text-sm mt-2 list-disc list-inside">
-              <li>Thesis: VacantVue - An Arduino-Based Parking Spot Availability Detection System</li>
-              <li>2TSY2122 CCSMA Dean’s Lister</li>
-            </ul>
+          <div class="text-xs text-gray-500 space-y-1">
+            <div>38 Lallana Extension • Tondo, Manila</div>
+            <div><a href="mailto:riinvalena1@gmail.com">riinvalena1@gmail.com</a> • +63 976-311-5113</div>
+            <div><a href="https://www.linkedin.com/in/riinv/" target="_blank" rel="noopener">www.linkedin.com/in/riinv/</a> • <a href="https://riiny.github.io/riiny/" target="_blank" rel="noopener">riiny.github.io/riiny/</a></div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          <div class="mb-6">
-            <h2 class="text-2xl font-bold mb-2 font-mono">Experience</h2>
-            <div class="space-y-6 text-sm">
-              <div>
-                <div class="font-semibold">Chris Photography — Associate Photo Editor</div>
-                <div class="text-xs text-gray-600">Caloocan City, Metro Manila — May 2021 - Jul 2021</div>
-                <ul class="mt-2 list-disc list-inside">
-                  <li>Retouched and enhanced photos using Adobe Photoshop (Creative Suite), ensuring professional image quality and consistent branding.</li>
-                  <li>Collaborated with clients, demonstrating clear communication and ability to explain technical edits.</li>
-                  <li>Curated, cropped, and refined shots for polished, client-ready delivery.</li>
-                  <li>Guaranteed all outputs met both aesthetic and technical quality benchmarks with attention to detail.</li>
-                  <li>Organized packaging and coordinated in-store pickups, ensuring a professional and client-friendly presentation.</li>
-                </ul>
-              </div>
-
-              <div>
-                <div class="font-semibold">Abiva Publishing House Inc. — Internship</div>
-                <div class="text-xs text-gray-600">Quezon City, Metro Manila — January 2025 – July 2025</div>
-                <ul class="mt-2 list-disc list-inside">
-                  <li>Converted PDF books into EPUB using HTML5 and CSS3, ensuring responsive design across devices.</li>
-                  <li>Met chapter-based deadlines with revision cycles.</li>
-                  <li>Collaborated with supervisors to troubleshoot and resolve formatting issues, demonstrating problem-solving and attention to detail.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-6">
-            <h2 class="text-2xl font-bold mb-2 font-mono">Projects</h2>
-            <div class="text-sm">
-              <div class="font-semibold">VacantVue - An Arduino-Based Parking Spot Availability Detection System (Capstone Project)</div>
-              <div class="text-xs text-gray-600">Project manager — January 2024 – July 2025</div>
-              <ul class="mt-2 list-disc list-inside">
-                <li>Led a team to design and develop a parking management POS system with web and mobile apps for real-time reservations, payments, and admin oversight.</li>
-                <li>Utilized PHP and MySQL for backend operations and website performance optimization.</li>
-                <li>Integrated the PayMongo API to provide secure and reliable digital payment options for users.</li>
-                <li>Developed Arduino-based sensors for automated parking slot detection, enabling real-time availability tracking.</li>
-                <li>Showcased leadership, collaboration, and effective escalation/follow-up on technical issues.</li>
-              </ul>
-            </div>
-          </div>
-
-
-          <footer class="py-8 text-center text-xs text-gray-600">© <span id="year"></span>  Riin Valeña</footer>
         </div>
-      </section>
-    </div>
+
+        <div>
+          <h2 class="text-base mb-6">Education</h2>
+          <div class="text-xs text-gray-600 space-y-2">
+            <div>Far Eastern University – Institute of Technology, Sampaloc, Manila</div>
+            <div>Bachelor of Science in Information Technology Specializing in Web and Mobile Application — 2025</div>
+            <div class="mt-3 space-y-1">
+              <div>Thesis: VacantVue - An Arduino-Based Parking Spot Availability Detection System</div>
+              <div>2TSY2122 CCSMA Dean's Lister</div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div>
+          <h2 class="text-base mb-6">Experience</h2>
+          <div class="text-xs text-gray-600 space-y-8">
+            <div>
+              <div class="mb-1">Chris Photography — Associate Photo Editor</div>
+              <div class="text-gray-500 mb-3">Caloocan City, Metro Manila — May 2021 - Jul 2021</div>
+              <div class="space-y-1">
+                <div>Retouched and enhanced photos using Adobe Photoshop (Creative Suite), ensuring professional image quality and consistent branding.</div>
+                <div>Collaborated with clients, demonstrating clear communication and ability to explain technical edits.</div>
+                <div>Curated, cropped, and refined shots for polished, client-ready delivery.</div>
+                <div>Guaranteed all outputs met both aesthetic and technical quality benchmarks with attention to detail.</div>
+                <div>Organized packaging and coordinated in-store pickups, ensuring a professional and client-friendly presentation.</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="mb-1">Abiva Publishing House Inc. — Internship</div>
+              <div class="text-gray-500 mb-3">Quezon City, Metro Manila — January 2025 – July 2025</div>
+              <div class="space-y-1">
+                <div>Converted PDF books into EPUB using HTML5 and CSS3, ensuring responsive design across devices.</div>
+                <div>Met chapter-based deadlines with revision cycles.</div>
+                <div>Collaborated with supervisors to troubleshoot and resolve formatting issues, demonstrating problem-solving and attention to detail.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-base mb-6">Projects</h2>
+          <div class="text-xs text-gray-600">
+            <div class="mb-1">VacantVue - An Arduino-Based Parking Spot Availability Detection System (Capstone Project)</div>
+            <div class="text-gray-500 mb-3">Project manager — January 2024 – July 2025</div>
+            <div class="space-y-1">
+              <div>Led a team to design and develop a parking management POS system with web and mobile apps for real-time reservations, payments, and admin oversight.</div>
+              <div>Utilized PHP and MySQL for backend operations and website performance optimization.</div>
+              <div>Integrated the PayMongo API to provide secure and reliable digital payment options for users.</div>
+              <div>Developed Arduino-based sensors for automated parking slot detection, enabling real-time availability tracking.</div>
+              <div>Showcased leadership, collaboration, and effective escalation/follow-up on technical issues.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pt-24 pb-12 text-xs text-gray-400">
+      © <span id="year"></span> Riin Valeña
+    </footer>
   </main>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-
   <script>
-    (function(){
-      const TRANSITION_MS = 320;
-      function isLocalHtmlLink(anchor){
-        if(!anchor || !anchor.getAttribute) return false;
-        if(anchor.target && anchor.target.toLowerCase() === '_blank') return false;
-        const href = anchor.getAttribute('href') || '';
-        if(href.startsWith('mailto:') || href.startsWith('tel:')) return false;
-        if(href.startsWith('#')) return false;
-        try{
-          const url = new URL(href, location.href);
-          if(url.origin !== location.origin) return false;
-          return url.pathname.endsWith('.html') || url.pathname !== location.pathname;
-        }catch(e){ return false; }
+    // Page transition animation
+    (function() {
+      const pageContent = document.getElementById('page-content');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      function fadeIn() {
+        if (pageContent && !prefersReducedMotion) {
+          requestAnimationFrame(() => {
+            pageContent.classList.add('loaded');
+          });
+        } else if (pageContent) {
+          pageContent.classList.add('loaded');
+        }
       }
-
-      function navigateWithTransition(href){
-        const page = document.getElementById('page');
-        if(!page){ location.href = href; return; }
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(prefersReduced){ location.href = href; return; }
-        page.classList.remove('visible');
-        page.classList.add('exit');
-        setTimeout(()=> { location.href = href; }, TRANSITION_MS);
-      }
-
-      document.addEventListener('click', function(e){
-        const a = e.target.closest('a');
-        if(!a) return;
-        if(!isLocalHtmlLink(a)) return;
+      
+      function handleNavigation(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#') || link.target === '_blank') {
+          return;
+        }
+        
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const targetPath = href.split('/').pop();
+        if (targetPath === currentPath) {
+          return;
+        }
+        
+        if (!href.endsWith('.html') && !href.includes('.html') && (href.startsWith('/') || href.startsWith('http'))) {
+          return;
+        }
+        
         e.preventDefault();
-        navigateWithTransition(a.href);
-      });
-
-      function showPage(){
-        const page = document.getElementById('page');
-        if(!page) return;
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(prefersReduced){ page.classList.add('visible'); return; }
-        requestAnimationFrame(()=>{ page.classList.add('visible'); page.classList.remove('exit'); });
+        
+        if (pageContent && !prefersReducedMotion) {
+          pageContent.style.opacity = '0';
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
+        } else {
+          window.location.href = href;
+        }
       }
-
-      document.addEventListener('DOMContentLoaded', showPage);
-      window.addEventListener('pageshow', showPage);
+      
+      document.addEventListener('click', handleNavigation);
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fadeIn);
+      } else {
+        fadeIn();
+      }
+      
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+          fadeIn();
+        }
+      });
     })();
   </script>
+  </div>
 </body>
 </html>

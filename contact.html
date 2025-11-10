@@ -5,166 +5,168 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Riin Valeña | Contact</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { accent: '#0ea5e9', accentDark: '#0369a1' },
-          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'], mono: ['ui-monospace','Menlo','Monaco','monospace'] }
-        }
+  <style>
+    @font-face {
+      font-display: block;
+      font-family: "Neue Haas Grotesk";
+      src: url("https://type.cargo.site/files/NeueHaasGroteskText-Regular.woff") format("woff");
+      font-style: normal;
+      font-weight: normal;
+    }
+    body {
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    a:hover {
+      opacity: 0.6;
+    }
+    #page-content {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    #page-content.loaded {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #page-content {
+        transition: none;
+        opacity: 1;
       }
     }
-  </script>
-  <style>
-    body{background:#fffff0;color:#121212;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif}
-    .brutalist-border{border:2px solid #000}
-    .focus-outline:focus{outline:3px solid #0ea5e9;outline-offset:2px}
-    /* Page transition wrapper (fade + slight vertical) */
-    #page{opacity:0;transform:translateY(6px);transition:opacity 320ms ease, transform 320ms ease}
-    #page.visible{opacity:1;transform:translateY(0)}
-    #page.exit{opacity:0;transform:translateY(-6px)}
-    @media (prefers-reduced-motion: reduce){#page{transition:none!important;transform:none!important}}
   </style>
 </head>
-<body class="antialiased leading-normal">
-  <nav class="fixed top-6 right-6 z-50">
-    <ul class="flex flex-col gap-3 text-sm">
-      <li><a href="index.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">HOME</a></li>
-      <li><a href="resume.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">RESUME</a></li>
-      <li><a href="about.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">ABOUT</a></li>
-      <li><a href="contact.html" class="block px-3 py-1 border-2 border-black bg-black text-white transition-colors duration-200 focus-outline">CONTACT</a></li>
+<body>
+  <div id="page-content">
+  <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
+    <a href="index.html" class="text-xs">Riin Valeña</a>
+    <ul class="flex gap-8 text-xs">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <main class="min-h-screen px-6 sm:px-12 py-16 max-w-7xl mx-auto">
-    <div id="page" class="page">
-      <!-- Hero Section -->
-      <section id="contact-hero" class="min-h-screen flex flex-col justify-center">
-        <div class="w-full">
-          <!-- Main Heading -->
-          <div class="mb-16">
-            <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 font-mono">Contact</h1>
-            <p class="text-lg mb-4">I'm available for contract and full-time opportunities.</p>
-          </div>
+  <main class="min-h-screen px-8 py-32 max-w-6xl mx-auto">
+    <section class="mb-48">
+      <h2 class="text-base font-light mb-12 text-gray-400">Contact</h2>
+      
+      <div class="w-full">
+        <p class="text-xs text-gray-600 mb-12">I'm available for contract and full-time opportunities.</p>
 
-          <!-- Main Content -->
-          <div class="mb-16">
-            <!-- Contact Information -->
-            <div class="space-y-8">
-              <div>
-                <h2 class="text-2xl font-bold mb-6 font-mono">Get In Touch</h2>
-                
-                <div class="space-y-6">
-                  <!-- Email -->
-                  <div class="group">
-                    <div class="flex items-center gap-4 p-4 border-l-4 border-black bg-gray-50 hover:bg-black hover:text-white transition-all duration-300">
-                      <div class="w-8 h-8 bg-black group-hover:bg-white rounded-sm flex items-center justify-center">
-                        <span class="text-white group-hover:text-black font-bold text-sm">@</span>
-                      </div>
-                      <div>
-                        <p class="text-sm font-mono text-gray-600 group-hover:text-gray-300">EMAIL</p>
-                        <a href="mailto:riinvalena1@gmail.com" class="text-lg font-semibold block">riinvalena1@gmail.com</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Phone -->
-                  <div class="group">
-                    <div class="flex items-center gap-4 p-4 border-l-4 border-black bg-gray-50 hover:bg-black hover:text-white transition-all duration-300">
-                      <div class="w-8 h-8 bg-black group-hover:bg-white rounded-sm flex items-center justify-center">
-                        <span class="text-white group-hover:text-black font-bold text-sm">T</span>
-                      </div>
-                      <div>
-                        <p class="text-sm font-mono text-gray-600 group-hover:text-gray-300">PHONE</p>
-                        <a href="tel:+639763115113" class="text-lg font-semibold block">+63 976 311 5113</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Location -->
-                  <div class="group">
-                    <div class="flex items-center gap-4 p-4 border-l-4 border-black bg-gray-50 hover:bg-black hover:text-white transition-all duration-300">
-                      <div class="w-8 h-8 bg-black group-hover:bg-white rounded-sm flex items-center justify-center">
-                        <span class="text-white group-hover:text-black font-bold text-sm">L</span>
-                      </div>
+        <div class="mb-12">
+          <h3 class="text-base mb-6">Get In Touch</h3>
+          
+          <div class="space-y-4 mb-12">
             <div>
-                        <p class="text-sm font-mono text-gray-600 group-hover:text-gray-300">LOCATION</p>
-                        <span class="text-lg font-semibold block">Philippines</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Social Media Section -->
-              <div class="mt-12">
-                <h3 class="text-xl font-bold mb-6 font-mono">Connect With Me</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <!-- LinkedIn -->
-                  <a href="https://www.linkedin.com/in/riinv/" target="_blank" rel="noopener" 
-                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
-                    <div class="text-2xl font-bold mb-2">in</div>
-                    <p class="text-xs font-mono uppercase tracking-wide">LinkedIn</p>
-                  </a>
-
-                  <!-- GitHub -->
-                  <a href="https://github.com/riiny" target="_blank" rel="noopener"
-                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
-                    <div class="text-2xl font-bold mb-2">gh</div>
-                    <p class="text-xs font-mono uppercase tracking-wide">GitHub</p>
-                  </a>
-
-                  <!-- Twitter/X -->
-                  <a href="https://www.facebook.com/RiinValena/" target="_blank" rel="noopener"
-                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
-                    <div class="text-2xl font-bold mb-2">fb</div>
-                    <p class="text-xs font-mono uppercase tracking-wide">Facebook</p>
-                  </a>
-
-                  <!-- Instagram -->
-                  <a href="https://www.instagram.com/riinv__/" target="_blank" rel="noopener"
-                     class="group p-6 border-2 border-black hover:bg-black hover:text-white transition-all duration-300 text-center">
-                    <div class="text-2xl font-bold mb-2">ig</div>
-                    <p class="text-xs font-mono uppercase tracking-wide">Instagram</p>
-                  </a>
-                </div>
-              </div>
+              <p class="text-xs text-gray-500 mb-1">Email</p>
+              <a href="mailto:riinvalena1@gmail.com" class="text-xs text-gray-600">riinvalena1@gmail.com</a>
             </div>
 
+            <div>
+              <p class="text-xs text-gray-500 mb-1">Phone</p>
+              <a href="tel:+639763115113" class="text-xs text-gray-600">+63 976 311 5113</a>
+            </div>
+
+            <div>
+              <p class="text-xs text-gray-500 mb-1">Location</p>
+              <span class="text-xs text-gray-600">Philippines</span>
+            </div>
           </div>
 
-          <!-- Border -->
-          <div class="border-t-2 border-black"></div>
+          <div>
+            <h3 class="text-base mb-6">Connect With Me</h3>
+            <div class="flex flex-wrap gap-4">
+              <a href="https://www.linkedin.com/in/riinv/" target="_blank" rel="noopener" class="text-xs text-gray-500 hover:opacity-60">LinkedIn</a>
+              <a href="https://github.com/riiny" target="_blank" rel="noopener" class="text-xs text-gray-500 hover:opacity-60">GitHub</a>
+              <a href="https://www.facebook.com/RiinValena/" target="_blank" rel="noopener" class="text-xs text-gray-500 hover:opacity-60">Facebook</a>
+              <a href="https://www.instagram.com/riinv__/" target="_blank" rel="noopener" class="text-xs text-gray-500 hover:opacity-60">Instagram</a>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <footer class="py-12 text-center border-t border-gray-200">
-        <p class="text-sm text-gray-500 font-mono">© <span id="year"></span> Riin Valeña • Built with passion</p>
-      </footer>
-    </div>
+    <footer class="pt-24 pb-12 text-xs text-gray-400">
+      © <span id="year"></span> Riin Valeña
+    </footer>
   </main>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
-    (function(){
-      const TRANSITION_MS = 320;
-      function isLocalHtmlLink(anchor){
-        if(!anchor || !anchor.getAttribute) return false;
-        if(anchor.target && anchor.target.toLowerCase() === '_blank') return false;
-        const href = anchor.getAttribute('href') || '';
-        if(href.startsWith('mailto:') || href.startsWith('tel:')) return false;
-        if(href.startsWith('#')) return false;
-        try{ const url = new URL(href, location.href); if(url.origin !== location.origin) return false; return url.pathname.endsWith('.html') || url.pathname !== location.pathname;}catch(e){return false}
+    // Page transition animation
+    (function() {
+      const pageContent = document.getElementById('page-content');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      function fadeIn() {
+        if (pageContent && !prefersReducedMotion) {
+          requestAnimationFrame(() => {
+            pageContent.classList.add('loaded');
+          });
+        } else if (pageContent) {
+          pageContent.classList.add('loaded');
+        }
       }
-      function navigateWithTransition(href){
-        const page = document.getElementById('page'); if(!page){ location.href = href; return; }
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(prefersReduced){ location.href = href; return; }
-        page.classList.remove('visible'); page.classList.add('exit'); setTimeout(()=> { location.href = href; }, TRANSITION_MS);
+      
+      function handleNavigation(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#') || link.target === '_blank') {
+          return;
+        }
+        
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const targetPath = href.split('/').pop();
+        if (targetPath === currentPath) {
+          return;
+        }
+        
+        if (!href.endsWith('.html') && !href.includes('.html') && (href.startsWith('/') || href.startsWith('http'))) {
+          return;
+        }
+        
+        e.preventDefault();
+        
+        if (pageContent && !prefersReducedMotion) {
+          pageContent.style.opacity = '0';
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
+        } else {
+          window.location.href = href;
+        }
       }
-      document.addEventListener('click', function(e){ const a = e.target.closest('a'); if(!a) return; if(!isLocalHtmlLink(a)) return; e.preventDefault(); navigateWithTransition(a.href); });
-      function showPage(){ const page = document.getElementById('page'); if(!page) return; const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(prefersReduced){ page.classList.add('visible'); return; } requestAnimationFrame(()=>{ page.classList.add('visible'); page.classList.remove('exit'); }); }
-      document.addEventListener('DOMContentLoaded', showPage); window.addEventListener('pageshow', showPage);
+      
+      document.addEventListener('click', handleNavigation);
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fadeIn);
+      } else {
+        fadeIn();
+      }
+      
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+          fadeIn();
+        }
+      });
     })();
   </script>
+  </div>
 </body>
 </html>

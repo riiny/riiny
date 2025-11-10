@@ -5,134 +5,180 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Riin Valeña | About</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { theme: { extend: { colors:{accent:'#0ea5e9'}, fontFamily:{sans:['Inter','system-ui'], mono:['ui-monospace','monospace']} } } }
-  </script>
   <style>
-    body{background:#fffff0;color:#121212;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif}
-    /* Page transition wrapper (fade + slight vertical) */
-    #page{opacity:0;transform:translateY(6px);transition:opacity 320ms ease, transform 320ms ease}
-    #page.visible{opacity:1;transform:translateY(0)}
-    #page.exit{opacity:0;transform:translateY(-6px)}
-    @media (prefers-reduced-motion: reduce){#page{transition:none!important;transform:none!important}}
-    .brutalist-border{border:2px solid #000}
-    .focus-outline:focus{outline:3px solid #0ea5e9;outline-offset:2px}
+    @font-face {
+      font-display: block;
+      font-family: "Neue Haas Grotesk";
+      src: url("https://type.cargo.site/files/NeueHaasGroteskText-Regular.woff") format("woff");
+      font-style: normal;
+      font-weight: normal;
+    }
+    body {
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    a:hover {
+      opacity: 0.6;
+    }
+    #page-content {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    #page-content.loaded {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #page-content {
+        transition: none;
+        opacity: 1;
+      }
+    }
   </style>
 </head>
-<body class="antialiased leading-normal">
-  <nav class="fixed top-6 right-6 z-50">
-    <ul class="flex flex-col gap-3 text-sm">
-      <li><a href="index.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">HOME</a></li>
-      <li><a href="resume.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">RESUME</a></li>
-      <li><a href="about.html" class="block px-3 py-1 border-2 border-black bg-black text-white transition-colors duration-200 focus-outline">ABOUT</a></li>
-      <li><a href="contact.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">CONTACT</a></li>
+<body>
+  <div id="page-content">
+  <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
+    <a href="index.html" class="text-xs">Riin Valeña</a>
+    <ul class="flex gap-8 text-xs">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <main class="min-h-screen px-6 sm:px-12 py-12 max-w-6xl mx-auto">
-    <div id="page" class="page">
-      <section id="about-hero" class="min-h-screen flex items-center">
-        <div class="w-full">
-          <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 font-mono">About</h1>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="md:col-span-2">
-              <p class="text-base text-justify">Hi, I'm Riin Valena - a BSIT Specializing in Web and Mobile Application Development student from Far Eastern University, currently based in Tondo, Manila. I specialize in web design and development, with hands-on experience using languages like HTML, CSS, and JavaScript. I also have a strong creative side, with skills in Photoshop, Premiere Pro, and other multimedia tools that help bring ideas to life visually and interactively.</p>
+  <main class="min-h-screen px-8 py-32 max-w-6xl mx-auto">
+    <section class="mb-48">
+      <h2 class="text-base font-light mb-12 text-gray-400">About</h2>
+      
+      <div class="w-full">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="md:col-span-2">
+            <p class="text-xs text-gray-600 mb-6">Hi, I'm Riin Valena - a BSIT Specializing in Web and Mobile Application Development student from Far Eastern University, currently based in Tondo, Manila. I specialize in web design and development, with hands-on experience using languages like HTML, CSS, and JavaScript. I also have a strong creative side, with skills in Photoshop, Premiere Pro, and other multimedia tools that help bring ideas to life visually and interactively.</p>
 
-              <h2 class="mt-8 text-2xl font-bold font-mono">More about my process</h2>
-              <p class="mt-4 text-justify">
-                When I begin a website I first imagine what it must do which serves as the core functions users need and the journeys 
-                they’ll take. With that map in mind I sketch a wireframe that becomes my blueprint: 
-                simple, structured, and focused on purpose. Next I plan how to build it, which technologies, 
-                how to break tasks into steps, and where to optimize for performance and accessibility. Alongside 
-                that technical plan I look for moments to bring in multimedia; images, motion, and sound, and weave 
-                my Photoshop and video skills into the experience so visuals support interaction. Finally I treat each 
-                project as a chance to push my boundaries: trying a new pattern, streamlining a flow, or refining an animation until it feels right.
-              </p>
-            </div>
+            <h2 class="text-base mb-4">More about my process</h2>
+            <p class="text-xs text-gray-600">
+              When I begin a website I first imagine what it must do which serves as the core functions users need and the journeys 
+              they'll take. With that map in mind I sketch a wireframe that becomes my blueprint: 
+              simple, structured, and focused on purpose. Next I plan how to build it, which technologies, 
+              how to break tasks into steps, and where to optimize for performance and accessibility. Alongside 
+              that technical plan I look for moments to bring in multimedia; images, motion, and sound, and weave 
+              my Photoshop and video skills into the experience so visuals support interaction. Finally I treat each 
+              project as a chance to push my boundaries: trying a new pattern, streamlining a flow, or refining an animation until it feels right.
+            </p>
+          </div>
 
-            <aside class="md:col-span-1">
-              <div class="brutalist-border p-6">
-                <h3 class="text-xl font-bold mb-4 font-mono">Skills</h3>
-                <div class="grid grid-cols-1 gap-4">
-                  <div>
-                    <h4 class="text-lg font-semibold mb-2">Web design</h4>
-                    <ul class="space-y-2">
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">HTML</li>
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">CSS</li>
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">JavaScript</li>
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">Tailwind</li>
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">Bootstrap</li>
-                    </ul>
-                  </div>
+          <aside class="md:col-span-1">
+            <div class="border border-gray-300 p-6">
+              <h3 class="text-base mb-4">Skills</h3>
+              <div class="grid grid-cols-1 gap-4">
+                <div>
+                  <h4 class="text-xs mb-2">Web design</h4>
+                  <ul class="space-y-2">
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">HTML</li>
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">CSS</li>
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">JavaScript</li>
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Tailwind</li>
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Bootstrap</li>
+                  </ul>
+                </div>
 
-                  <div>
-                    <h4 class="text-lg font-semibold mb-2">Multimedia</h4>
-                    <ul class="space-y-2">
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">Adobe Photoshop</li>
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">Adobe Premiere Pro</li>
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">Canva</li>
-                      <li class="inline-block px-2 py-1 border-2 border-black font-semibold">Figma</li>
-                    </ul>
-                  </div>
+                <div>
+                  <h4 class="text-xs mb-2">Multimedia</h4>
+                  <ul class="space-y-2">
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Adobe Photoshop</li>
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Adobe Premiere Pro</li>
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Canva</li>
+                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Figma</li>
+                  </ul>
                 </div>
               </div>
-
-
-            </aside>
-          </div>
+            </div>
+          </aside>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <footer class="py-8 text-center text-xs text-gray-600">© <span id="year"></span> Riin Valeña</footer>
-    </div>
+    <footer class="pt-24 pb-12 text-xs text-gray-400">
+      © <span id="year"></span> Riin Valeña
+    </footer>
   </main>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
-    (function(){
-      const TRANSITION_MS = 320;
-      function isLocalHtmlLink(anchor){
-        if(!anchor || !anchor.getAttribute) return false;
-        if(anchor.target && anchor.target.toLowerCase() === '_blank') return false;
-        const href = anchor.getAttribute('href') || '';
-        if(href.startsWith('mailto:') || href.startsWith('tel:')) return false;
-        if(href.startsWith('#')) return false; // hash navigation
-        try{
-          const url = new URL(href, location.href);
-          if(url.origin !== location.origin) return false;
-          return url.pathname.endsWith('.html') || url.pathname !== location.pathname;
-        }catch(e){ return false; }
+    // Page transition animation
+    (function() {
+      const pageContent = document.getElementById('page-content');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      function fadeIn() {
+        if (pageContent && !prefersReducedMotion) {
+          requestAnimationFrame(() => {
+            pageContent.classList.add('loaded');
+          });
+        } else if (pageContent) {
+          pageContent.classList.add('loaded');
+        }
       }
-
-      function navigateWithTransition(href){
-        const page = document.getElementById('page');
-        if(!page){ location.href = href; return; }
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(prefersReduced){ location.href = href; return; }
-        page.classList.remove('visible');
-        page.classList.add('exit');
-        setTimeout(()=> { location.href = href; }, TRANSITION_MS);
-      }
-
-      document.addEventListener('click', function(e){
-        const a = e.target.closest('a');
-        if(!a) return;
-        if(!isLocalHtmlLink(a)) return;
+      
+      function handleNavigation(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#') || link.target === '_blank') {
+          return;
+        }
+        
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const targetPath = href.split('/').pop();
+        if (targetPath === currentPath) {
+          return;
+        }
+        
+        if (!href.endsWith('.html') && !href.includes('.html') && (href.startsWith('/') || href.startsWith('http'))) {
+          return;
+        }
+        
         e.preventDefault();
-        navigateWithTransition(a.href);
-      });
-
-      function showPage(){
-        const page = document.getElementById('page');
-        if(!page) return;
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(prefersReduced){ page.classList.add('visible'); return; }
-        requestAnimationFrame(()=>{ page.classList.add('visible'); page.classList.remove('exit'); });
+        
+        if (pageContent && !prefersReducedMotion) {
+          pageContent.style.opacity = '0';
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
+        } else {
+          window.location.href = href;
+        }
       }
-
-      document.addEventListener('DOMContentLoaded', showPage);
-      window.addEventListener('pageshow', showPage);
+      
+      document.addEventListener('click', handleNavigation);
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fadeIn);
+      } else {
+        fadeIn();
+      }
+      
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+          fadeIn();
+        }
+      });
     })();
   </script>
+  </div>
 </body>
 </html>

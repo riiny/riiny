@@ -3,360 +3,224 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Riin Valeña | Home</title>
+  <title>Riin Valeña</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { accent: '#0ea5e9', accentDark: '#0369a1' },
-          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'], mono: ['ui-monospace','Menlo','Monaco','monospace'] }
-        }
-      }
-    }
-  </script>
   <style>
-    body{background:#fffff0;color:#121212;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif}
-    html{scroll-behavior:smooth}
-    .brutalist-border{border:2px solid #000}
-    .focus-outline:focus{outline:3px solid #0ea5e9;outline-offset:2px}
-    
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 12px;
+    @font-face {
+      font-display: block;
+      font-family: "Neue Haas Grotesk";
+      src: url("https://type.cargo.site/files/NeueHaasGroteskText-Regular.woff") format("woff");
+      font-style: normal;
+      font-weight: normal;
     }
-    
-    ::-webkit-scrollbar-track {
-      background: #fffff0;
-      border-left: 2px solid #000;
+    body {
+      background: #ffffff;
+      color: #1a1a1a;
+      font-family: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
     }
-    
-    ::-webkit-scrollbar-thumb {
-      background: #000;
-      border: 2px solid #fffff0;
-      border-radius: 0;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-      background: #333;
-    }
-    
-    ::-webkit-scrollbar-corner {
-      background: #fffff0;
-    }
-    
-    /* Firefox scrollbar */
     html {
-      scrollbar-width: thin;
-      scrollbar-color: #000 #fffff0;
+      scroll-behavior: smooth;
     }
-    /* Page transition wrapper (fade + slight vertical) */
-    #page{opacity:0;transform:translateY(6px);transition:opacity 320ms ease, transform 320ms ease}
-    #page.visible{opacity:1;transform:translateY(0)}
-    #page.exit{opacity:0;transform:translateY(-6px)}
-    @media (prefers-reduced-motion: reduce){#page{transition:none!important;transform:none!important}}
-    
-    /* Hero Section Animations */
-    .hero-title {
-      overflow: hidden;
-      position: relative;
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
-    
-    .hero-title .title-line {
-      display: inline-block;
+    a:hover {
+      opacity: 0.6;
+    }
+    button.js-open-modal {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: inherit;
+      display: inline;
+      line-height: inherit;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .tab-button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
+      transition: opacity 0.2s;
+    }
+    .tab-button.active {
+      color: #1a1a1a;
+    }
+    .tab-content {
       opacity: 0;
-      transform: translateY(100px);
+      transform: translateY(10px);
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      pointer-events: none;
     }
-    
-    /* Trigger animations when page is visible */
-    #page.visible .hero-title .title-line:nth-child(1) { 
-      animation: slideUpFade 0.8s ease forwards;
-      animation-delay: 0.2s; 
+    .tab-content.hidden {
+      display: none;
     }
-    #page.visible .hero-title .title-line:nth-child(2) { 
-      animation: slideUpFade 0.8s ease forwards;
-      animation-delay: 0.4s; 
+    .tab-content.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
-    
-    #page.visible .hero-description {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: slideUpFade 0.8s ease forwards;
-      animation-delay: 0.8s;
-    }
-    
-    #page.visible .hero-button {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideUpFade 0.6s ease forwards;
-      animation-delay: 1.2s;
-    }
-    
-    #page.visible .hero-right {
-      opacity: 0;
-      transform: translateX(50px);
-      animation: slideInRight 0.8s ease forwards;
-      animation-delay: 1s;
-    }
-    
-    /* Tilt Effect */
-    .tilt-container {
-      transform-style: preserve-3d;
-      transition: transform 0.1s ease;
-    }
-    
-    
-    
-    
-    /* Keyframe Animations */
-    @keyframes slideUpFade {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes slideInRight {
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    
-    
-    /* Reduced motion support */
     @media (prefers-reduced-motion: reduce) {
-      #page.visible .hero-title .title-line,
-      #page.visible .hero-description,
-      #page.visible .hero-button,
-      #page.visible .hero-right {
-        animation: none;
-        opacity: 1;
+      .tab-content {
+        transition: none;
         transform: none;
       }
     }
+    #page-content {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    #page-content.loaded {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #page-content {
+        transition: none;
+        opacity: 1;
+      }
+    }
+    article img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+    }
+    article img[src*="csm"] {
+      width: 100% !important;
+      height: auto;
+      min-width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
   </style>
 </head>
-<body class="antialiased leading-normal">
-  <!-- Fixed small nav top-right linking to separate pages -->
-  <nav class="fixed top-6 right-6 z-50">
-    <ul class="flex flex-col gap-3 text-sm">
-      <li><a href="index.html" class="block px-3 py-1 border-2 border-black bg-black text-white hover:bg-white hover:text-black transition-colors duration-200 focus-outline">HOME</a></li>
-  <li><a href="resume.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">RESUME</a></li>
-  <li><a href="about.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">ABOUT</a></li>
-  <li><a href="contact.html" class="block px-3 py-1 border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-200 focus-outline">CONTACT</a></li>
+<body>
+  <div id="page-content">
+  <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
+    <a href="index.html" class="text-xs">Riin Valeña</a>
+    <ul class="flex gap-8 text-xs">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
 
-  <main class="min-h-screen px-6 sm:px-12 py-12 max-w-6xl mx-auto">
-    <div id="page" class="page">
-    <!-- HERO -->
-    <section id="hero" class="min-h-screen flex items-center">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-center w-full">
-        <div>
-          <h1 class="hero-title text-4xl sm:text-7xl font-extrabold tracking-tight font-mono">
-            <span class="title-line">Riin Valeña</span>
-            <span class="title-line">| Front-End Developer</span>
-          </h1>
-          <p class="hero-description mt-6 text-lg sm:text-2xl max-w-xl">I design and build websites that are intuitively easy to navigate and fully responsive across all devices. My focus is on clear typography, robust performance, and a streamlined user experience.
-          </p>
-          <div class="mt-6">
-            <a href="resume.html" class="hero-button inline-block border-2 border-black px-4 py-2 hover:bg-black hover:text-white transition-colors duration-150 focus-outline">View Resume</a>
-          </div>
-        </div>
-        <div class="hero-right hidden sm:block">
-          <div class="brutalist-border p-6 h-full flex items-center justify-center hover:shadow-lg transition-all duration-300 hover:scale-105 tilt-container">
-            <div class="text-center">
-              <div class="text-xs uppercase tracking-widest text-gray-500 mb-2">Selected Work</div>
-              <div class="text-2xl font-bold">Minimal interfaces, clear typography, easy to navigate</div>
-            </div>
-          </div>
+  <main class="min-h-screen px-8 py-32 max-w-6xl mx-auto">
+    <!-- PROJECTS -->
+    <section id="projects" class="mb-48">
+      <h2 class="text-xs text-gray-400 mb-12">Projects</h2>
+      
+      <!-- Tabs -->
+      <div class="flex gap-8 mb-16 text-xs">
+        <button class="tab-button active text-gray-400 hover:opacity-60" data-tab="web-design">Web Design</button>
+        <button class="tab-button text-gray-400 hover:opacity-60" data-tab="multimedia">Multimedia</button>
+      </div>
+
+      <!-- Web Design Tab -->
+      <div id="web-design" class="tab-content active">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+          <article>
+            <img loading="lazy" src="assets/img/vacantvuecover.png" alt="VacantVue" class="w-full mb-6">
+            <h3 class="text-base mb-3 uppercase">VACANTVUE</h3>
+            <p class="text-xs text-gray-600 mb-3">Smart parking management system with IoT sensors, real-time availability, reservations, and cashless payments.</p>
+            <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Bootstrap, PHP, Firebase, Arduino, PayMongo</p>
+            <button data-project="alpha" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+          </article>
+
+          <article>
+            <img loading="lazy" src="assets/img/cccover.png" alt="Capstone Compass" class="w-full mb-6">
+            <h3 class="text-base mb-3 uppercase">CAPSTONE COMPASS</h3>
+            <p class="text-xs text-gray-600 mb-3">Project management platform for students and mentors with group chat, progress tracking, and task management.</p>
+            <p class="text-xs text-gray-500 mb-3">Laravel, PHP, MySQL, Bootstrap, JavaScript</p>
+            <button data-project="epsilon" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+          </article>
+
+          <article>
+            <img loading="lazy" src="assets/img/portfoliocover.png" alt="Portfolio Site" class="w-full mb-6">
+            <h3 class="text-base mb-3 uppercase">PORTFOLIO SITE</h3>
+            <p class="text-xs text-gray-600 mb-3">Responsive portfolio website with clean design.</p>
+            <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Tailwind CSS</p>
+            <a href="https://github.com/riiny/riiny" target="_blank" class="text-xs text-gray-500 hover:opacity-60">GitHub</a>
+          </article>
         </div>
       </div>
-    </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="py-12">
-      <h2 class="text-3xl font-bold mb-6 font-mono">Projects</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Project card images: 160px height on mobile, 192px on small screens and up -->
-        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
-          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
-            <!-- Unsplash images: 1200px width, auto height, cropped to fit container -->
-            <img loading="lazy" src="assets/img/vacantvuecover.png" alt="VacantVue project screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 font-mono">VacantVue: Arduino-Based Parking Spot Availability Detection System</h3>
-            <p class="text-sm mb-3">A smart parking management system that utilizes IoT sensors and a PHP/Firebase 
-              platform to offer real-time availability, reservations, and cashless payments.</p>
-            <p class="text-xs mb-3 font-semibold">Tech: HTML5, CSS3, JavaScript, Bootstrap, PHP, Firebase, Arduino, PayMongo</p>
-            <button data-project="alpha" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
-          </div>
-        </article>
+      <!-- Multimedia Tab -->
+      <div id="multimedia" class="tab-content hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+          <article>
+            <img loading="lazy" src="assets/img/hhcover.png" alt="Hiwa-hiwa" class="w-full mb-6">
+            <h3 class="text-base mb-3 uppercase">HIWA-HIWA</h3>
+            <p class="text-xs text-gray-600 mb-3">Digital collage posters reimagining musical icons through layered, fragmented compositions.</p>
+            <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
+            <a href="https://www.behance.net/gallery/211533245/HIWA-HIWA-Collage-Art-Series" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
+          </article>
 
-        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
-          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
-            <img loading="lazy" src="assets/img/portfoliocover.png" alt="Project Beta screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 font-mono">Portfolio Site</h3>
-            <p class="text-sm mb-3">A modern, responsive portfolio website showcasing my work and skills with smooth animations and clean design.</p>
-            <p class="text-xs mb-3 font-semibold">Tech: HTML5, CSS3, JavaScript, Tailwind CSS</p>
-            <a href="https://github.com/riiny/riiny" target="_blank" class="text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">Github</a>
-          </div>
-        </article>
+          <article>
+            <img loading="lazy" src="assets/img/vintagecover.png" alt="Vintage Shirt Design" class="w-full mb-6">
+            <h3 class="text-base mb-3 uppercase">VINTAGE SHIRT DESIGN</h3>
+            <p class="text-xs text-gray-600 mb-3">T-shirt designs blending retro aesthetics with bold typography celebrating impactful athletes.</p>
+            <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
+            <a href="https://www.behance.net/gallery/212629569/Vintage-Shirt-Designs-Sports" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
+          </article>
 
-        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
-          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
-            <img loading="lazy" src="assets/img/cccover.png" alt="Project Gamma screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 font-mono">Capstone Compass</h3>
-            <p class="text-sm mb-3">
-              A project management platform that helps students and mentors collaborate efficiently on academic capstone projects through features like group chat, progress tracking, task management, and submission handling.            </p>
-            <p class="text-xs mb-3 font-semibold">Tech: Laravel, PHP, MySQL, Bootstrap, Javascript</p>
-            <button data-project="epsilon" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
-          </div>
-        </article>
-
-        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
-          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
-            <img loading="lazy" src="assets/img/hhcover.png" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 font-mono">Hiwa-hiwa</h3>
-            <p class="text-sm mb-3">A series of digital collage posters that utilize layered, fragmented pieces to deconstruct and reimagine the faces of musical icons in a multidimensional and cohesive new style.</p>
-            <p class="text-xs mb-3 font-semibold">Tech: Adobe Photoshop, Adobe Lightroom</p>
-            <a href="https://www.behance.net/gallery/211533245/HIWA-HIWA-Collage-Art-Series" target="_blank" class="text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">Behance</a>
-          </div>
-        </article>
-
-        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
-          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
-            <img loading="lazy" src="assets/img/vintagecover.png" alt="Project Gamma screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 font-mono">Vintage Shirt Design</h3>
-            <p class="text-sm mb-3">A collection of T-shirt designs that blend retro aesthetics and vintage-inspired textures with bold typography to celebrate impactful athletes through a classic sports-themed visual lens.</p>
-            <p class="text-xs mb-3 font-semibold">Tech: Adobe Photoshop, Adobe Lightroom</p>
-            <a href="https://www.behance.net/gallery/212629569/Vintage-Shirt-Designs-Sports" target="_blank" class="text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">Behance</a>
-          </div>
-        </article>
-
-        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
-          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black relative">
+          <article>
             <video 
               id="vc-trailer-video"
-              class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105" 
+              class="w-full mb-6 aspect-video object-cover" 
               muted 
               loop
               preload="metadata"
               poster="assets/img/vctrailer.png"
             >
               <source src="assets/vids/vctrailer.mp4" type="video/mp4">
-              Your browser does not support the video tag.
             </video>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 font-mono">VacantVue - Official Trailer</h3>
-            <p class="text-sm mb-3">I produced the VacantVue trailer for our capstone thesis exhibit, showcasing the UI/UX design and seamless integration of its mobile/desktop applications, along with the Arduino-powered engineering used for real-time slot detection in this complete smart parking solution.</p>
-            <p class="text-xs mb-3 font-semibold">Tech: Adobe Premiere Pro, Adobe Photoshop</p>
-            <button data-project="theta" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
-          </div>
-        </article>
+            <h3 class="text-base mb-3 uppercase">VACANTVUE TRAILER</h3>
+            <p class="text-xs text-gray-600 mb-3">Promotional video showcasing UI/UX design and Arduino-powered engineering for the smart parking solution.</p>
+            <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
+            <button data-project="theta" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+          </article>
 
-        <article class="brutalist-border overflow-hidden hover:shadow-lg transition-shadow duration-150 group">
-          <div class="w-full h-40 sm:h-48 bg-gray-100 overflow-hidden border-b-2 border-black">
-            <img loading="lazy" src="assets/img/csm.gif" alt="2019 mini project screenshot" class="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105">
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold mb-2 font-mono">2019 mini project</h3>
-            <p class="text-sm mb-3">In 2019, I created a personal mini project to experiment with music visualizers for favorite tracks, challenging my creativity to design simple, entertaining videos that used only images and animated GIFs to complement the atmosphere and enhance the visual storytelling of each song.</p>
-            <p class="text-xs mb-3 font-semibold">Tech: Adobe Premiere Pro, Adobe Photoshop</p>
-            <button data-project="iota" class="js-open-modal text-sm inline-block border-2 border-black px-3 py-1 hover:bg-black hover:text-white transition-colors duration-150">View</button>
-          </div>
-        </article>
+          <article>
+            <img loading="lazy" src="assets/img/csm.gif" alt="2019 mini project" class="w-full mb-6 aspect-video object-cover">
+            <h3 class="text-base mb-3 uppercase">2019 MINI PROJECT</h3>
+            <p class="text-xs text-gray-600 mb-3">Music visualizers using images and animated GIFs to enhance visual storytelling.</p>
+            <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
+            <button data-project="iota" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+          </article>
+        </div>
       </div>
     </section>
 
-    
-
-    
-
-    <footer class="py-8 text-center text-xs text-gray-600">© <span id="year"></span>  Riin Valeña</footer>
-    </div>
+    <footer class="pt-24 pb-12 text-xs text-gray-400">
+      © <span id="year"></span> Riin Valeña
+    </footer>
   </main>
 
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   
-  <script>
-    // Hero Section Interactive Effects
-    (function() {
-      // Tilt effect for hero right panel
-      const tiltContainer = document.querySelector('.tilt-container');
-      if (tiltContainer) {
-        tiltContainer.addEventListener('mousemove', (e) => {
-          const rect = tiltContainer.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
-          
-          const mouseX = e.clientX - centerX;
-          const mouseY = e.clientY - centerY;
-          
-          const rotateX = (mouseY / rect.height) * -10; // Max 10 degrees
-          const rotateY = (mouseX / rect.width) * 10; // Max 10 degrees
-          
-          tiltContainer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-        });
-        
-        tiltContainer.addEventListener('mouseleave', () => {
-          tiltContainer.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-        });
-      }
-      
-      // Staggered animation for project cards on scroll
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
-      
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-          if (entry.isIntersecting) {
-            setTimeout(() => {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
-            }, index * 100);
-          }
-        });
-      }, observerOptions);
-      
-      // Observe project cards
-      document.querySelectorAll('article').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'all 0.6s ease';
-        observer.observe(card);
-      });
-    })();
-  </script>
   <!-- Project Modal -->
-  <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-60 px-4 py-8 opacity-0 transition-opacity duration-300" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal-panel bg-white text-black max-w-6xl w-full brutalist-border shadow-lg relative max-h-[92vh] overflow-auto mx-auto transform scale-95 translate-y-2 opacity-0 transition-all duration-300">
-  <div class="p-6">
-        <h3 id="modal-title" class="text-2xl font-bold mb-3 font-mono"></h3>
-        <div id="modal-carousel" class="relative">
-          <button id="modal-prev" class="absolute left-0 top-1/2 -translate-y-1/2 border-2 border-black bg-white px-3 py-2">‹</button>
-          <!-- Modal images: 384px height on mobile, 520px on small screens and up -->
-          <div id="modal-image-container" class="w-full h-96 sm:h-[520px] bg-gray-100 flex items-center justify-center overflow-hidden">
-            <!-- Image inserted here -->
-          </div>
-          <button id="modal-next" class="absolute right-0 top-1/2 -translate-y-1/2 border-2 border-black bg-white px-3 py-2">›</button>
+  <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 px-4 py-8" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="bg-white max-w-4xl w-full max-h-[90vh] overflow-auto p-12 relative">
+      <button id="modal-close" class="absolute top-6 right-6 text-xl text-gray-400 hover:text-gray-600">×</button>
+      <h3 id="modal-title" class="text-base mb-6 uppercase"></h3>
+      <div id="modal-carousel" class="relative mb-8">
+        <button id="modal-prev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-3 py-2 text-gray-600 hover:text-gray-900 text-lg">‹</button>
+        <div id="modal-image-container" class="w-full bg-gray-100 flex items-center justify-center overflow-hidden min-h-[400px]">
         </div>
-        <p id="modal-desc" class="mt-4 text-base"></p>
-        <p id="modal-tech" class="mt-3 text-sm font-semibold"></p>
+        <button id="modal-next" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-3 py-2 text-gray-600 hover:text-gray-900 text-lg">›</button>
       </div>
+      <p id="modal-desc" class="text-xs text-gray-600 mb-6"></p>
+      <p id="modal-tech" class="text-xs text-gray-500"></p>
     </div>
   </div>
 
@@ -364,35 +228,16 @@
     (function(){
       const projects = {
         alpha: {
-          title: 'VacantVue: Arduino-Based Parking Spot Availability Detection System',
+          title: 'VACANTVUE',
           long: 'VacantVue is a smart parking management system I led as the Project Leader for my capstone thesis. It provides real-time slot availability, easy reservations, and secure cashless payments through a web and mobile platform integrated with IoT sensors.\n\nIn this role, I managed the entire development process from planning and task delegation, to testing, developing, and deployment, ensuring the system aligned with our objectives. Built with PHP, Firebase, and Arduino-based sensors, VacantVue delivers real-time monitoring through ultrasonic sensors and an ESP32 Wi-Fi module, synchronizing data with Firebase for accurate updates. Motorists can reserve slots and pay seamlessly via PayMongo, while attendants and administrators access dashboards for walk-in transactions, monitoring, and reporting. By applying Agile Scrum methodology and ISO-aligned quality standards, I guided the team in creating a reliable, sustainable, and user-friendly solution that reduces parking search times and enhances urban mobility.', 
           tech: ['HTML5','CSS3','JavaScript','Bootstrap','PHP','Firebase','Arduino','PayMongo'],
-          // Modal images: 1600px width for high resolution display
           images: [
             'assets/img/vc1.png',
             'assets/img/vc2.png'
           ]
         },
-        gamma: {
-          title: 'Project Gamma',
-          long: 'Project Gamma is a documentation and design system exercise. It focuses on component usage, accessibility guidelines, and live examples for cross-team reuse.',
-          tech: ['Figma','Storybook'],
-          images: [
-            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop&s=5',
-            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop&s=6'
-          ]
-        },
-        delta: {
-          title: 'Project Delta',
-          long: 'Project Delta demonstrates a responsive grid layout engine, with experiments in typographic rhythm and column balancing across breakpoints.',
-          tech: ['React','CSS Grid'],
-          images: [
-            'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1600&auto=format&fit=crop&s=7',
-            'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1600&auto=format&fit=crop&s=8'
-          ]
-        },
         epsilon: {
-          title: 'Capstone Compass',
+          title: 'CAPSTONE COMPASS',
           long: 'Capstone Compass is a comprehensive project management platform designed specifically for academic capstone projects. It facilitates seamless collaboration between students, mentors, and advisors through features like real-time group chat, progress tracking, task management, and streamlined submission handling. The platform streamlines the entire capstone journey from initial planning to final presentation, ensuring all stakeholders stay connected and informed throughout the project lifecycle.',
           tech: ['Laravel','PHP','MySQL','Bootstrap','JavaScript','jQuery'],
           images: [
@@ -403,15 +248,15 @@
           ]
         },
         theta: {
-          title: 'VacantVue - Official Trailer',
+          title: 'VACANTVUE TRAILER',
           long: 'A promotional video project showcasing the VacantVue parking management system. Created using Adobe Premiere Pro, highlighting the key features, user experience, and technical capabilities of the IoT-based solution.',
-          tech: ['Video Editing','Adobe Premiere'],
+          tech: ['Video Editing','Adobe Premiere Pro'],
           images: [
             'assets/vids/vctrailereal.mp4',
           ]
         },
         iota: {
-          title: '2019 Mini Project',
+          title: '2019 MINI PROJECT',
           long: 'A creative video project from 2019 where I experimented with music visualizers for my favorite tracks. This project challenged my creativity to design simple, entertaining videos using only images and animated GIFs to complement the atmosphere and enhance the visual storytelling of each song. Each video was carefully crafted to synchronize with the music, creating immersive audio-visual experiences that showcase early experimentation with motion graphics and video editing techniques.',
           tech: ['Adobe Premiere Pro','Adobe Photoshop'],
           images: [
@@ -432,18 +277,19 @@
       const imgContainer = document.getElementById('modal-image-container');
       const prevBtn = document.getElementById('modal-prev');
       const nextBtn = document.getElementById('modal-next');
+      const closeBtn = document.getElementById('modal-close');
 
       let current = { key: null, idx: 0 };
 
       function openModal(key){
         const p = projects[key];
         if(!p) return;
-        current.key = key; current.idx = 0;
+        current.key = key; 
+        current.idx = 0;
         titleEl.textContent = p.title;
         descEl.innerHTML = p.long.replace(/\n\n/g, '<br><br>');
-        techEl.textContent = 'Tech: ' + p.tech.join(', ');
+        techEl.textContent = p.tech.join(', ');
         
-        // Hide/show navigation arrows based on number of images
         if(p.images.length <= 1) {
           prevBtn.style.display = 'none';
           nextBtn.style.display = 'none';
@@ -453,34 +299,16 @@
         }
         
         renderImage();
-        // show overlay then animate in
         modal.classList.remove('hidden');
-        // force a frame so transitions run
-        requestAnimationFrame(()=>{
-          modal.classList.remove('opacity-0');
-          modal.classList.add('opacity-100');
-          const panel = modal.querySelector('.modal-panel');
-          panel.classList.remove('scale-95','translate-y-2','opacity-0');
-          panel.classList.add('scale-100','translate-y-0','opacity-100');
-        });
         modal.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
       }
 
       function closeModal(){
-        const panel = modal.querySelector('.modal-panel');
-        // animate out
-        modal.classList.remove('opacity-100');
-        modal.classList.add('opacity-0');
-        panel.classList.remove('scale-100','translate-y-0','opacity-100');
-        panel.classList.add('scale-95','translate-y-2','opacity-0');
-        // wait for transition then hide
-        setTimeout(()=>{
-          modal.classList.add('hidden');
-          modal.setAttribute('aria-hidden','true');
-          document.body.style.overflow = '';
-          current = { key: null, idx: 0 };
-        }, 320);
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        current = { key: null, idx: 0 };
       }
 
       function renderImage(){
@@ -489,23 +317,18 @@
         const url = p.images[current.idx];
         imgContainer.innerHTML = '';
         
-        // Check if the URL is a video file
         if(url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg')) {
           const video = document.createElement('video');
           video.src = url;
-          video.alt = p.title + ' video ' + (current.idx + 1);
-          video.className = 'w-full h-full object-contain bg-black';
+          video.className = 'w-full object-contain';
           video.controls = true;
-          video.autoplay = false;
           video.muted = true;
-          video.loop = true;
           imgContainer.appendChild(video);
         } else {
           const img = document.createElement('img');
           img.src = url;
-          img.alt = p.title + ' screenshot ' + (current.idx + 1);
-          img.className = 'w-full h-full object-cover';
-          img.loading = 'lazy';
+          img.alt = p.title;
+          img.className = 'w-full object-contain';
           imgContainer.appendChild(img);
         }
       }
@@ -516,6 +339,7 @@
         current.idx = (current.idx - 1 + p.images.length) % p.images.length;
         renderImage();
       });
+
       nextBtn.addEventListener('click', ()=>{
         const p = projects[current.key];
         if(!p) return;
@@ -523,8 +347,8 @@
         renderImage();
       });
 
+      closeBtn.addEventListener('click', closeModal);
 
-      // Open modal buttons
       document.querySelectorAll('.js-open-modal').forEach(btn=>{
         btn.addEventListener('click', (e)=>{
           const key = btn.getAttribute('data-project');
@@ -532,7 +356,6 @@
         });
       });
 
-      // Keyboard interactions
       document.addEventListener('keydown', (e)=>{
         if(modal.classList.contains('hidden')) return;
         if(e.key === 'Escape') closeModal();
@@ -540,78 +363,162 @@
         if(e.key === 'ArrowRight') nextBtn.click();
       });
 
-      // Click outside to close
       modal.addEventListener('click', (e)=>{
         if(e.target === modal) closeModal();
       });
     })();
   </script>
   <script>
+    // Tab switching functionality with animation
     (function(){
-      const TRANSITION_MS = 320;
-      function isLocalHtmlLink(anchor){
-        if(!anchor || !anchor.getAttribute) return false;
-        if(anchor.target && anchor.target.toLowerCase() === '_blank') return false;
-        const href = anchor.getAttribute('href') || '';
-        if(href.startsWith('mailto:') || href.startsWith('tel:')) return false;
-        if(href.startsWith('#')) return false; // hash navigation
-        try{
-          const url = new URL(href, location.href);
-          if(url.origin !== location.origin) return false;
-          return url.pathname.endsWith('.html') || url.pathname !== location.pathname;
-        }catch(e){ return false; }
-      }
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      function navigateWithTransition(href){
-        const page = document.getElementById('page');
-        if(!page){ location.href = href; return; }
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(prefersReduced){ location.href = href; return; }
-        page.classList.remove('visible');
-        page.classList.add('exit');
-        setTimeout(()=> { location.href = href; }, TRANSITION_MS);
-      }
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const targetTab = button.getAttribute('data-tab');
+          const targetContent = document.getElementById(targetTab);
+          
+          // Don't do anything if clicking the same tab
+          if (button.classList.contains('active')) return;
 
-      document.addEventListener('click', function(e){
-        const a = e.target.closest('a');
-        if(!a) return;
-        if(!isLocalHtmlLink(a)) return;
-        e.preventDefault();
-        navigateWithTransition(a.href);
-      });
+          // Remove active class from all buttons
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          // Add active class to clicked button
+          button.classList.add('active');
 
-      function showPage(){
-        const page = document.getElementById('page');
-        if(!page) return;
-        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if(prefersReduced){ page.classList.add('visible'); return; }
-        requestAnimationFrame(()=>{ page.classList.add('visible'); page.classList.remove('exit'); });
-      }
-
-      document.addEventListener('DOMContentLoaded', showPage);
-      window.addEventListener('pageshow', showPage);
-    })();
-
-    // Video hover play functionality
-    (function(){
-      const video = document.getElementById('vc-trailer-video');
-      if (!video) return;
-
-      // Find the parent article element
-      const article = video.closest('article');
-      if (!article) return;
-
-      article.addEventListener('mouseenter', function() {
-        video.play().catch(e => {
-          console.log('Video play failed:', e);
+          // Find currently active tab content
+          const activeContent = document.querySelector('.tab-content.active');
+          
+          if (prefersReducedMotion) {
+            // Instant switch for reduced motion
+            tabContents.forEach(content => {
+              content.classList.remove('active', 'hidden');
+              if (content !== targetContent) {
+                content.classList.add('hidden');
+              }
+            });
+            targetContent.classList.remove('hidden');
+            targetContent.classList.add('active');
+          } else {
+            // Animated transition
+            if (activeContent) {
+              // Fade out current tab
+              activeContent.classList.remove('active');
+              
+              // Wait for fade-out to start, then prepare new tab
+              setTimeout(() => {
+                // Hide current tab
+                activeContent.classList.add('hidden');
+                
+                // Show new tab (but keep it invisible - it has opacity 0 by default)
+                targetContent.classList.remove('hidden');
+                
+                // Force reflow to ensure the element is rendered in the DOM
+                void targetContent.offsetHeight;
+                
+                // Trigger fade-in animation on next frame
+                requestAnimationFrame(() => {
+                  requestAnimationFrame(() => {
+                    targetContent.classList.add('active');
+                  });
+                });
+              }, 150); // Half of transition duration for smoother overlap
+            } else {
+              // If no active content, just show the target
+              tabContents.forEach(content => {
+                content.classList.remove('active', 'hidden');
+                if (content !== targetContent) {
+                  content.classList.add('hidden');
+                }
+              });
+              targetContent.classList.remove('hidden');
+              
+              // Force reflow
+              void targetContent.offsetHeight;
+              
+              requestAnimationFrame(() => {
+                targetContent.classList.add('active');
+              });
+            }
+          }
         });
-      });
-
-      article.addEventListener('mouseleave', function() {
-        video.pause();
-        // Don't reset currentTime - let it resume from where it was paused
       });
     })();
   </script>
+  <script>
+    // Page transition animation
+    (function() {
+      const pageContent = document.getElementById('page-content');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      // Fade in on page load
+      function fadeIn() {
+        if (pageContent && !prefersReducedMotion) {
+          requestAnimationFrame(() => {
+            pageContent.classList.add('loaded');
+          });
+        } else if (pageContent) {
+          pageContent.classList.add('loaded');
+        }
+      }
+      
+      // Fade out on navigation
+      function handleNavigation(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        // Skip if it's an external link, mailto, tel, or anchor link
+        if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#') || link.target === '_blank') {
+          return;
+        }
+        
+        // Skip if it's the same page
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const targetPath = href.split('/').pop();
+        if (targetPath === currentPath) {
+          return;
+        }
+        
+        // Only handle .html files or relative paths (assumed to be HTML)
+        if (!href.endsWith('.html') && !href.includes('.html') && (href.startsWith('/') || href.startsWith('http'))) {
+          return;
+        }
+        
+        e.preventDefault();
+        
+        if (pageContent && !prefersReducedMotion) {
+          pageContent.style.opacity = '0';
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
+        } else {
+          window.location.href = href;
+        }
+      }
+      
+      // Add event listeners
+      document.addEventListener('click', handleNavigation);
+      
+      // Fade in on load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fadeIn);
+      } else {
+        fadeIn();
+      }
+      
+      // Also handle browser back/forward
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+          fadeIn();
+        }
+      });
+    })();
+  </script>
+  </div>
 </body>
 </html>
