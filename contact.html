@@ -22,6 +22,30 @@
     html {
       scroll-behavior: smooth;
     }
+    /* Custom minimal scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #ffffff;
+      border-radius: 0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #000000;
+      border-radius: 0;
+      -webkit-border-radius: 0;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #000000;
+      border-radius: 0;
+      -webkit-border-radius: 0;
+    }
+    /* Firefox scrollbar */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #000000 #ffffff;
+    }
     a {
       color: inherit;
       text-decoration: none;
