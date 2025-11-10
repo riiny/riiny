@@ -42,12 +42,12 @@
       color: #1a1a1a;
       font-family: "Neue Haas Grotesk", -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       line-height: 1.6;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
       min-height: 100vh;
     }
     html {
       background: #ffffff;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.8s ease-in-out;
     }
     html.dark-mode {
       background: #1a1a1a;
@@ -79,7 +79,7 @@
     ::-webkit-scrollbar-track {
       background: #ffffff;
       border-radius: 0;
-      transition: background 0.3s ease;
+      transition: background 0.8s ease-in-out;
     }
     body.dark-mode ::-webkit-scrollbar-track {
       background: #1a1a1a;
@@ -120,6 +120,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      vertical-align: middle;
+      line-height: 1;
     }
     .dark-mode-toggle:hover {
       opacity: 0.6;
@@ -161,10 +163,21 @@
   <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
     <a href="index.html" class="text-xs">Riin Valeña</a>
     <ul class="flex gap-8 text-xs items-center">
-      <li>
+      <li class="flex items-center">
         <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
-          <svg viewBox="0 0 24 24">
+          <svg id="moon-icon" viewBox="0 0 24 24" class="dark-mode-icon">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun-icon" viewBox="0 0 24 24" class="dark-mode-icon" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
         </button>
       </li>
@@ -310,6 +323,21 @@
         return saved ? saved === 'true' : false;
       };
       
+      // Update icon based on theme
+      const updateIcon = (isDark) => {
+        const moonIcon = document.getElementById('moon-icon');
+        const sunIcon = document.getElementById('sun-icon');
+        if (moonIcon && sunIcon) {
+          if (isDark) {
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+          } else {
+            moonIcon.style.display = 'block';
+            sunIcon.style.display = 'none';
+          }
+        }
+      };
+      
       // Apply theme immediately (synchronously)
       const applyTheme = (isDark) => {
         if (isDark) {
@@ -318,6 +346,7 @@
           body.classList.remove('dark-mode');
         }
         localStorage.setItem('darkMode', isDark);
+        updateIcon(isDark);
       };
       
       // Initialize theme IMMEDIATELY (before any animations)
@@ -328,6 +357,9 @@
       const initToggle = () => {
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         if (darkModeToggle) {
+          // Update icon on initial load
+          updateIcon(isDark);
+          
           darkModeToggle.addEventListener('click', () => {
             const isDark = body.classList.contains('dark-mode');
             applyTheme(!isDark);
