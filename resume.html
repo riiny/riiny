@@ -187,6 +187,14 @@
         opacity: 1;
       }
     }
+    /* Resume section titles: match project title style (same size, black) */
+    .section-title {
+      font-size: 0.75rem; /* text-xs */
+      line-height: 1.6;
+      margin-bottom: 0.75rem; /* mb-3 */
+      color: #000000;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -228,8 +236,8 @@
       
       <div class="w-full space-y-12">
         <div>
-          <div class="flex justify-between items-start mb-4">
-            <h1 class="text-base">Riin Valeña</h1>
+          <div class="flex justify-between items-center mb-4">
+            <h1 class="section-title">Riin Valeña</h1>
             <a href="assets/etc/Riin_Valeña_Resume.pdf" download class="text-xs text-gray-500 hover:opacity-60">Download Resume</a>
           </div>
           <div class="text-xs text-gray-500 space-y-1">
@@ -240,7 +248,7 @@
         </div>
 
         <div>
-          <h2 class="text-base mb-6">Education</h2>
+          <h2 class="section-title">Education</h2>
           <div class="text-xs text-gray-600 space-y-2">
             <div>Far Eastern University – Institute of Technology, Sampaloc, Manila</div>
             <div>Bachelor of Science in Information Technology Specializing in Web and Mobile Application — 2025</div>
@@ -271,7 +279,7 @@
 
 
         <div>
-          <h2 class="text-base mb-6">Experience</h2>
+          <h2 class="section-title">Experience</h2>
           <div class="text-xs text-gray-600 space-y-8">
             <div>
               <div class="mb-1">Chris Photography — Associate Photo Editor</div>
@@ -298,7 +306,7 @@
         </div>
 
         <div>
-          <h2 class="text-base mb-6">Projects</h2>
+          <h2 class="section-title">Projects</h2>
           <div class="text-xs text-gray-600">
             <div class="mb-1">VacantVue - An Arduino-Based Parking Spot Availability Detection System (Capstone Project)</div>
             <div class="text-gray-500 mb-3">Project manager — January 2024 – July 2025</div>
