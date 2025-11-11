@@ -29,6 +29,7 @@
     })();
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <style>
     @font-face {
       font-display: block;
@@ -70,6 +71,30 @@
     }
     html {
       scroll-behavior: smooth;
+    }
+    /* Minimal hamburger menu */
+    .burger { display: none; background: none; border: 0; padding: 8px; cursor: pointer; z-index: 60; color: inherit; transition: transform 0.25s ease; }
+    .burger .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; font-size: 24px; line-height: 1; display: inline-block; transition: transform 0.25s ease, opacity 0.25s ease; }
+    nav.fixed-nav.open .burger { transform: rotate(90deg); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out; }
+    @media (max-width: 640px) {
+      .burger { display: inline-flex; align-items: center; justify-content: center; }
+      .nav-links {
+        display: flex;
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background: #ffffff;
+        padding: 96px 24px 24px 24px;
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+        text-align: center;
+        z-index: 55;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+      body.dark-mode .nav-links { background: #1a1a1a; }
+      nav.fixed-nav.open .nav-links { transform: translateX(0); }
     }
     /* Disable current page nav link */
     .nav-link-disabled {
@@ -166,9 +191,12 @@
 </head>
 <body>
   <div id="page-content">
-  <nav class="fixed top-8 left-8 right-8 z-50 flex justify-between items-center">
+  <nav class="flex justify-between items-center px-8 py-8 fixed top-0 left-0 right-0 z-50 fixed-nav">
     <a href="index.html" class="text-xs">Riin Valeña</a>
-    <ul class="flex gap-8 text-xs items-center">
+    <button id="burger-btn" class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <ul id="nav-links" class="nav-links text-xs items-center">
       <li class="flex items-center">
         <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
           <svg id="moon-icon" viewBox="0 0 24 24" class="dark-mode-icon">
@@ -248,7 +276,7 @@
 
   </main>
   <script>
-    // Page transition animation
+    // Page transition animation + navbar burger toggle
     (function() {
       const pageContent = document.getElementById('page-content');
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -332,6 +360,29 @@
           fadeIn();
         }
       });
+
+      // Burger toggle
+      const nav = document.querySelector('nav.fixed-nav');
+      const burgerBtn = document.getElementById('burger-btn');
+      const burgerIcon = burgerBtn ? burgerBtn.querySelector('.material-symbols-outlined') : null;
+      if (burgerBtn && nav && burgerIcon) {
+        burgerBtn.addEventListener('click', () => {
+          const isOpen = nav.classList.toggle('open');
+          burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          burgerIcon.textContent = isOpen ? 'close' : 'menu';
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        document.addEventListener('click', (e) => {
+          if (!nav.classList.contains('open')) return;
+          const within = e.target.closest('nav');
+          if (!within) {
+            nav.classList.remove('open');
+            burgerBtn.setAttribute('aria-expanded', 'false');
+            burgerIcon.textContent = 'menu';
+            document.body.style.overflow = '';
+          }
+        });
+      }
     })();
   </script>
   <script>

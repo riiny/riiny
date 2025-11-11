@@ -29,6 +29,7 @@
     })();
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <style>
     @font-face {
       font-display: block;
@@ -247,6 +248,7 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* IE and Edge */
+      touch-action: pan-x; /* Hint that we only pan horizontally */
       box-sizing: border-box;
     }
     .projects-slider-container::-webkit-scrollbar {
@@ -300,8 +302,8 @@
     }
     @media (max-width: 768px) {
       .project-slide {
-        width: calc(100vw - 64px);
-        max-width: calc(100vw - 64px);
+        width: 85vw;
+        max-width: 85vw;
       }
       .projects-slider-container {
         margin-left: -32px;
@@ -312,6 +314,7 @@
       }
       .projects-slider {
         padding-right: 32px;
+        gap: 16px;
       }
     }
     .projects-slider.dragging {
@@ -497,6 +500,46 @@
     body.dark-mode nav.fixed-nav {
       background: #1a1a1a;
     }
+    /* Minimal hamburger menu */
+    .burger {
+      display: none;
+      background: none;
+      border: 0;
+      padding: 8px;
+      cursor: pointer;
+      z-index: 60;
+      color: inherit;
+      transition: transform 0.25s ease;
+    }
+    .burger .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 24px;
+      line-height: 1;
+      display: inline-block;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    nav.fixed-nav.open .burger { transform: rotate(90deg); }
+    /* Links container */
+    .nav-links { display: flex; gap: 2rem; align-items: center; transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out; }
+    @media (max-width: 640px) {
+      .burger { display: inline-flex; align-items: center; justify-content: center; }
+      .nav-links {
+        display: flex;
+        position: fixed;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background: #ffffff;
+        padding: 96px 24px 24px 24px;
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+        text-align: center;
+        z-index: 55;
+        transform: translateX(100%);
+        transition: transform 0.3s ease, background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+      }
+      body.dark-mode .nav-links { background: #1a1a1a; }
+      nav.fixed-nav.open .nav-links { transform: translateX(0); }
+    }
   </style>
 </head>
 <body style="overflow: hidden;">
@@ -525,7 +568,10 @@
   <div id="page-content">
   <nav class="flex justify-between items-center px-8 py-8 fixed top-0 left-0 right-0 z-50 fixed-nav">
     <a href="index.html" class="text-xs">Riin Valeña</a>
-    <ul class="flex gap-8 text-xs items-center">
+    <button id="burger-btn" class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <ul id="nav-links" class="nav-links text-xs items-center">
       <li class="flex items-center">
         <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
           <svg id="moon-icon" viewBox="0 0 24 24" class="dark-mode-icon">
@@ -990,7 +1036,7 @@
         // Physics state
         let isDown = false;
         let isDragging = false;
-        let dragThreshold = 5;
+        let dragThreshold = 6;
         let currentPosition = 0;
         let targetPosition = 0;
         let velocity = 0;
@@ -999,10 +1045,13 @@
         let animationFrameId = null;
         
         // Physics constants
-        const FRICTION = 0.92; // High friction (0.92 = heavy feel, lower = more friction)
-        const MOMENTUM_MULTIPLIER = 0.8; // How much momentum to preserve
-        const ELASTIC_RESISTANCE = 0.15; // Elastic pull strength at bounds
-        const ELASTIC_THRESHOLD = 50; // Distance from bounds to start elastic effect
+        // Tune heavier, more tactile feel especially on mobile
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const FRICTION = isMobile ? 0.88 : 0.92; // Lower = more friction per frame
+        const MOMENTUM_MULTIPLIER = isMobile ? 0.7 : 0.8; // Preserve less momentum on mobile
+        const ELASTIC_RESISTANCE = isMobile ? 0.25 : 0.18; // Stronger elastic on mobile
+        const ELASTIC_THRESHOLD = isMobile ? 80 : 60; // Start elastic a bit earlier on mobile
+        const MAX_VELOCITY = isMobile ? 40 : 60; // Cap fling speed
         
         // Get bounds
         const getBounds = () => {
@@ -1045,7 +1094,7 @@
           if (isDown) {
             // While dragging, smoothly interpolate to target with heavy feel
             const diff = targetPosition - currentPosition;
-            currentPosition += diff * 0.25; // Heavy, damped movement (lower = heavier)
+            currentPosition += diff * 0.22; // Heavier, damped movement
             currentPosition = applyElasticBounds(currentPosition, bounds);
             container.scrollLeft = currentPosition;
             animationFrameId = requestAnimationFrame(animate);
@@ -1062,7 +1111,7 @@
             
             // If we hit a bound, reduce velocity significantly
             if (beforeElastic !== currentPosition) {
-              velocity *= 0.4; // Strong damping at bounds
+              velocity *= 0.35; // Strong damping at bounds
             }
             
             // Snap back to bounds if velocity is very low and we're out of bounds
@@ -1231,9 +1280,11 @@
           velocity = 0;
           
           startAnimation();
-        }, { passive: true });
+        }, { passive: false });
         
         container.addEventListener('touchmove', (e) => {
+          // Prevent the page from vertically scrolling while dragging horizontally
+          e.preventDefault();
           if (!isDown) return;
           
           const touchX = e.touches[0].pageX;
@@ -1251,7 +1302,7 @@
           
           lastTouchX = touchX;
           lastTouchTime = now;
-        }, { passive: true });
+        }, { passive: false });
         
         container.addEventListener('touchend', (e) => {
           if (isDown) {
@@ -1264,11 +1315,14 @@
             
             // Convert touch movement to scroll velocity (inverse because scroll is opposite to touch)
             velocity = -(positionDelta / timeDelta) * 16.67 * MOMENTUM_MULTIPLIER;
+            // Cap velocity to avoid excessive fling
+            if (velocity > MAX_VELOCITY) velocity = MAX_VELOCITY;
+            if (velocity < -MAX_VELOCITY) velocity = -MAX_VELOCITY;
             
             // Continue animation with momentum
             startAnimation();
           }
-        }, { passive: true });
+        }, { passive: false });
         
         // Sync scroll position on scroll events (for wheel scrolling)
         container.addEventListener('scroll', () => {
@@ -1282,7 +1336,7 @@
     })();
   </script>
   <script>
-    // Page transition animation
+    // Page transition animation + navbar burger toggle
     (function() {
       const pageContent = document.getElementById('page-content');
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1379,6 +1433,31 @@
           fadeIn();
         }
       });
+
+      // Burger toggle
+      const nav = document.querySelector('nav.fixed-nav');
+      const burgerBtn = document.getElementById('burger-btn');
+      const burgerIcon = burgerBtn ? burgerBtn.querySelector('.material-symbols-outlined') : null;
+      if (burgerBtn && nav && burgerIcon) {
+        burgerBtn.addEventListener('click', () => {
+          const isOpen = nav.classList.toggle('open');
+          burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          // Swap icon text for minimal animated cue
+          burgerIcon.textContent = isOpen ? 'close' : 'menu';
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        // Close on outside click (mobile)
+        document.addEventListener('click', (e) => {
+          if (!nav.classList.contains('open')) return;
+          const within = e.target.closest('nav');
+          if (!within) {
+            nav.classList.remove('open');
+            burgerBtn.setAttribute('aria-expanded', 'false');
+            burgerIcon.textContent = 'menu';
+            document.body.style.overflow = '';
+          }
+        });
+      }
     })();
   </script>
   <script>
