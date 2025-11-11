@@ -71,6 +71,12 @@
     html {
       scroll-behavior: smooth;
     }
+    /* Disable current page nav link */
+    .nav-link-disabled {
+      pointer-events: none;
+      opacity: 0.6;
+      cursor: default;
+    }
     /* Custom minimal scrollbar */
     ::-webkit-scrollbar {
       width: 4px;
@@ -280,17 +286,22 @@
       </div>
     </section>
 
-    <footer class="pt-24 pb-12 text-xs text-gray-400">
-      © <span id="year"></span> Riin Valeña
-    </footer>
   </main>
-
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   <script>
     // Page transition animation
     (function() {
       const pageContent = document.getElementById('page-content');
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const currentPath = window.location.pathname.split('/').pop() || 'resume.html';
+
+      // Disable current page link in navbar
+      document.querySelectorAll('nav a[href]').forEach(a => {
+        const targetPath = a.getAttribute('href')?.split('/').pop();
+        if (targetPath === currentPath) {
+          a.classList.add('nav-link-disabled');
+          a.setAttribute('aria-current', 'page');
+        }
+      });
       
       function fadeIn() {
         // Ensure dark mode is applied before fade in
@@ -320,7 +331,6 @@
           return;
         }
         
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
         const targetPath = href.split('/').pop();
         if (targetPath === currentPath) {
           return;

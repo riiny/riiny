@@ -44,6 +44,7 @@
       line-height: 1.6;
       transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
       min-height: 100vh;
+      overflow-x: hidden;
     }
     body.dark-mode {
       background: #1a1a1a;
@@ -52,6 +53,8 @@
     html {
       background: #ffffff;
       transition: background-color 0.8s ease-in-out;
+      overflow: hidden;
+      height: 100%;
     }
     html.dark-mode {
       background: #1a1a1a;
@@ -212,13 +215,107 @@
       width: 100%;
       height: auto;
       max-width: 100%;
+      user-drag: none;
+      -webkit-user-drag: none;
+      user-select: none;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
     }
-    article img[src*="csm"] {
-      width: 100% !important;
+    article video {
+      display: block;
+      width: 100%;
       height: auto;
-      min-width: 100%;
+      max-width: 100%;
+    }
+    /* Ensure uniform thumbnail sizing for slider media */
+    .projects-slider article img,
+    .projects-slider article video {
       aspect-ratio: 16 / 9;
       object-fit: cover;
+    }
+    /* Projects Slider */
+    .projects-slider-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      padding-left: calc(50vw - 50%);
+      padding-right: calc(50vw - 50%);
+      cursor: grab;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      box-sizing: border-box;
+    }
+    .projects-slider-container::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+    .projects-slider-container:active {
+      cursor: grabbing;
+    }
+    .projects-slider {
+      display: flex;
+      gap: 64px;
+      padding-right: calc(50vw - 50%);
+      width: max-content;
+      align-items: stretch;
+    }
+    .project-slide {
+      flex: 0 0 auto;
+      width: 400px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Keep CTA buttons/links aligned at the bottom for uniformity */
+    .project-slide > .js-open-modal,
+    .project-slide > a {
+      margin-top: auto;
+      align-self: flex-start;
+      display: inline-block;
+    }
+    /* Clamp descriptions and tech stacks to two lines for uniform cards */
+    .projects-slider .project-slide p.text-gray-600,
+    .projects-slider .project-slide p.text-gray-500 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    /* Ensure single-line descriptions still occupy two-line space */
+    .projects-slider .project-slide p.text-gray-600 {
+      line-height: 1.6;
+      min-height: 3.2em; /* 2 lines * 1.6 line-height */
+    }
+    /* Project titles: same size as description, but black, uppercase, bold */
+    .project-slide h3 {
+      font-size: 0.75rem; /* text-xs */
+      line-height: 1.6;
+      margin-bottom: 0.75rem; /* mb-3 */
+      color: #000000;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    @media (max-width: 768px) {
+      .project-slide {
+        width: calc(100vw - 64px);
+        max-width: calc(100vw - 64px);
+      }
+      .projects-slider-container {
+        margin-left: -32px;
+        margin-right: -32px;
+        padding-left: 32px;
+        padding-right: 32px;
+        width: calc(100% + 64px);
+      }
+      .projects-slider {
+        padding-right: 32px;
+      }
+    }
+    .projects-slider.dragging {
+      scroll-behavior: auto;
     }
     #loading-screen {
       position: fixed;
@@ -249,6 +346,12 @@
     }
     body.dark-mode #loading-screen.hidden {
       background-color: rgba(26, 26, 26, 0);
+    }
+    /* Disable current page nav link */
+    .nav-link-disabled {
+      pointer-events: none;
+      opacity: 0.6;
+      cursor: default;
     }
     .loading-content {
       text-align: center;
@@ -338,9 +441,65 @@
         transform: none;
       }
     }
+    /* Modal open animation */
+    #project-modal {
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    #project-modal.show {
+      opacity: 1;
+    }
+    #project-modal .modal-panel {
+      transform: translateY(8px) scale(0.98);
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      will-change: transform, opacity;
+    }
+    #project-modal.show .modal-panel {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #project-modal,
+      #project-modal .modal-panel {
+        transition: none;
+      }
+    }
+    /* Dark mode styles for modal */
+    body.dark-mode #project-modal .modal-panel {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+    body.dark-mode #project-modal #modal-image-container {
+      background: #111111;
+    }
+    body.dark-mode #project-modal #modal-prev,
+    body.dark-mode #project-modal #modal-next {
+      background: rgba(255, 255, 255, 0.08);
+      color: #9ca3af;
+    }
+    body.dark-mode #project-modal #modal-prev:hover,
+    body.dark-mode #project-modal #modal-next:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    body.dark-mode #project-modal #modal-close {
+      color: #9ca3af;
+    }
+    body.dark-mode #project-modal #modal-close:hover {
+      color: #ffffff;
+    }
+    /* Navbar explicit backgrounds for custom dark mode */
+    nav.fixed-nav {
+      background: #ffffff;
+      transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+    }
+    body.dark-mode nav.fixed-nav {
+      background: #1a1a1a;
+    }
   </style>
 </head>
-<body>
+<body style="overflow: hidden;">
   <!-- Loading Screen -->
   <div id="loading-screen">
     <div class="loading-content">
@@ -364,7 +523,7 @@
     })();
   </script>
   <div id="page-content">
-  <nav class="flex justify-between items-center px-8 py-8">
+  <nav class="flex justify-between items-center px-8 py-8 fixed top-0 left-0 right-0 z-50 fixed-nav">
     <a href="index.html" class="text-xs">Riin Valeña</a>
     <ul class="flex gap-8 text-xs items-center">
       <li class="flex items-center">
@@ -392,9 +551,9 @@
     </ul>
   </nav>
 
-  <main class="min-h-screen px-8 py-32 max-w-6xl mx-auto">
+  <main class="min-h-screen px-8 pt-32 pb-0 max-w-6xl mx-auto">
     <!-- PROJECTS -->
-    <section id="projects" class="mb-48">
+    <section id="projects" class="mb-0">
       <h2 class="text-xs text-gray-400 mb-12">Projects</h2>
       
       <!-- Tabs -->
@@ -405,86 +564,93 @@
 
       <!-- Web Design Tab -->
       <div id="web-design" class="tab-content active">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-          <article>
-            <img src="assets/img/vacantvuecover.png" alt="VacantVue" class="w-full mb-6">
-            <h3 class="text-base mb-3 uppercase">VACANTVUE</h3>
-            <p class="text-xs text-gray-600 mb-3">Smart parking management system with IoT sensors, real-time availability, reservations, and cashless payments.</p>
-            <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Bootstrap, PHP, Firebase, Arduino, PayMongo</p>
-            <button data-project="alpha" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
-          </article>
+        <div class="projects-slider-container">
+          <div class="projects-slider" data-slider="web-design">
+            <article class="project-slide">
+              <img src="assets/img/vacantvuecover.png" alt="VacantVue" class="w-full mb-6">
+              <h3 class="text-base mb-3 uppercase">VACANTVUE</h3>
+              <p class="text-xs text-gray-600 mb-3">Smart parking management system with IoT sensors, real-time availability, reservations, and cashless payments.</p>
+              <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Bootstrap, PHP, Firebase, Arduino, PayMongo</p>
+              <button data-project="alpha" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+            </article>
 
-          <article>
-            <img src="assets/img/cccover.png" alt="Capstone Compass" class="w-full mb-6">
-            <h3 class="text-base mb-3 uppercase">CAPSTONE COMPASS</h3>
-            <p class="text-xs text-gray-600 mb-3">Project management platform for students and mentors with group chat, progress tracking, and task management.</p>
-            <p class="text-xs text-gray-500 mb-3">Laravel, PHP, MySQL, Bootstrap, JavaScript</p>
-            <button data-project="epsilon" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
-          </article>
+            <article class="project-slide">
+              <img src="assets/img/cccover.png" alt="Capstone Compass" class="w-full mb-6">
+              <h3 class="text-base mb-3 uppercase">CAPSTONE COMPASS</h3>
+              <p class="text-xs text-gray-600 mb-3">Project management platform for students and mentors with group chat, progress tracking, and task management.</p>
+              <p class="text-xs text-gray-500 mb-3">Laravel, PHP, MySQL, Bootstrap, JavaScript</p>
+              <button data-project="epsilon" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+            </article>
 
-          <article>
-            <img src="assets/img/portfoliocover.png" alt="Portfolio Site" class="w-full mb-6">
-            <h3 class="text-base mb-3 uppercase">PORTFOLIO SITE</h3>
-            <p class="text-xs text-gray-600 mb-3">Responsive portfolio website with clean design.</p>
-            <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Tailwind CSS</p>
-            <a href="https://github.com/riiny/riiny" target="_blank" class="text-xs text-gray-500 hover:opacity-60">GitHub</a>
-          </article>
+            <article class="project-slide">
+              <img src="assets/img/portfoliocover.png" alt="Kape Juan" class="w-full mb-6">
+              <h3 class="text-base mb-3 uppercase">KAPE JUAN</h3>
+              <p class="text-xs text-gray-600 mb-3">A cozy cafe landing page concept with warm visuals and simple ordering flow.</p>
+              <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript</p>
+              <button data-project="kape" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+            </article>
+
+            <article class="project-slide">
+              <img src="assets/img/portfoliocover.png" alt="Portfolio Site" class="w-full mb-6">
+              <h3 class="text-base mb-3 uppercase">PORTFOLIO SITE</h3>
+              <p class="text-xs text-gray-600 mb-3">Responsive portfolio website with clean design.</p>
+              <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Tailwind CSS</p>
+              <a href="https://github.com/riiny/riiny" target="_blank" class="text-xs text-gray-500 hover:opacity-60">GitHub</a>
+            </article>
+          </div>
         </div>
       </div>
 
       <!-- Multimedia Tab -->
       <div id="multimedia" class="tab-content hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-          <article>
-            <img src="assets/img/hhcover.png" alt="Hiwa-hiwa" class="w-full mb-6">
-            <h3 class="text-base mb-3 uppercase">HIWA-HIWA</h3>
-            <p class="text-xs text-gray-600 mb-3">Digital collage posters reimagining musical icons through layered, fragmented compositions.</p>
-            <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
-            <a href="https://www.behance.net/gallery/211533245/HIWA-HIWA-Collage-Art-Series" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
-          </article>
+        <div class="projects-slider-container">
+          <div class="projects-slider" data-slider="multimedia">
+            <article class="project-slide">
+              <img src="assets/img/hhcover.png" alt="Hiwa-hiwa" class="w-full mb-6">
+              <h3 class="text-base mb-3 uppercase">HIWA-HIWA</h3>
+              <p class="text-xs text-gray-600 mb-3">Digital collage posters reimagining musical icons through layered, fragmented compositions.</p>
+              <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
+              <a href="https://www.behance.net/gallery/211533245/HIWA-HIWA-Collage-Art-Series" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
+            </article>
 
-          <article>
-            <img src="assets/img/vintagecover.png" alt="Vintage Shirt Design" class="w-full mb-6">
-            <h3 class="text-base mb-3 uppercase">VINTAGE SHIRT DESIGN</h3>
-            <p class="text-xs text-gray-600 mb-3">T-shirt designs blending retro aesthetics with bold typography celebrating impactful athletes.</p>
-            <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
-            <a href="https://www.behance.net/gallery/212629569/Vintage-Shirt-Designs-Sports" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
-          </article>
+            <article class="project-slide">
+              <img src="assets/img/vintagecover.png" alt="Vintage Shirt Design" class="w-full mb-6">
+              <h3 class="text-base mb-3 uppercase">VINTAGE SHIRT DESIGN</h3>
+              <p class="text-xs text-gray-600 mb-3">T-shirt designs blending retro aesthetics with bold typography celebrating impactful athletes.</p>
+              <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
+              <a href="https://www.behance.net/gallery/212629569/Vintage-Shirt-Designs-Sports" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
+            </article>
 
-          <article>
-            <video 
-              id="vc-trailer-video"
-              class="w-full mb-6 aspect-video object-cover" 
-              muted 
-              loop
-              preload="auto"
-              poster="assets/img/vctrailer.png"
-            >
-              <source src="assets/vids/vctrailer.mp4" type="video/mp4">
-            </video>
-            <h3 class="text-base mb-3 uppercase">VACANTVUE TRAILER</h3>
-            <p class="text-xs text-gray-600 mb-3">Promotional video showcasing UI/UX design and Arduino-powered engineering for the smart parking solution.</p>
-            <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
-            <button data-project="theta" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
-          </article>
+            <article class="project-slide">
+              <video 
+                id="vc-trailer-video"
+                class="w-full mb-6" 
+                muted 
+                loop
+                preload="auto"
+                poster="assets/img/vctrailer.png"
+              >
+                <source src="assets/vids/vctrailer.mp4" type="video/mp4">
+              </video>
+              <h3 class="text-base mb-3 uppercase">VACANTVUE TRAILER</h3>
+              <p class="text-xs text-gray-600 mb-3">Promotional video showcasing UI/UX design and Arduino-powered engineering for the smart parking solution.</p>
+              <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
+              <button data-project="theta" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+            </article>
 
-          <article>
-            <img src="assets/img/csm.gif" alt="2019 mini project" class="w-full mb-6 aspect-video object-cover">
-            <h3 class="text-base mb-3 uppercase">2019 MINI PROJECT</h3>
-            <p class="text-xs text-gray-600 mb-3">Music visualizers using images and animated GIFs to enhance visual storytelling.</p>
-            <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
-            <button data-project="iota" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
-          </article>
+            <article class="project-slide">
+              <img src="assets/img/csm.gif" alt="2019 mini project" class="w-full mb-6">
+              <h3 class="text-base mb-3 uppercase">2019 MINI PROJECT</h3>
+              <p class="text-xs text-gray-600 mb-3">Music visualizers using images and animated GIFs to enhance visual storytelling.</p>
+              <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
+              <button data-project="iota" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
-    <footer class="pt-24 pb-12 text-xs text-gray-400">
-      © <span id="year"></span> Riin Valeña
-    </footer>
   </main>
-
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
   
   <script>
     // Preload all images including those in hidden tabs
@@ -562,7 +728,7 @@
   
   <!-- Project Modal -->
   <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 px-4 py-8" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="bg-white max-w-4xl w-full max-h-[90vh] overflow-auto p-12 relative">
+    <div class="bg-white max-w-4xl w-full max-h-[90vh] overflow-auto p-12 relative modal-panel">
       <button id="modal-close" class="absolute top-6 right-6 text-xl text-gray-400 hover:text-gray-600">×</button>
       <h3 id="modal-title" class="text-base mb-6 uppercase"></h3>
       <div id="modal-carousel" class="relative mb-8">
@@ -591,7 +757,7 @@
         epsilon: {
           title: 'CAPSTONE COMPASS',
           long: 'Capstone Compass is a comprehensive project management platform designed specifically for academic capstone projects. It facilitates seamless collaboration between students, mentors, and advisors through features like real-time group chat, progress tracking, task management, and streamlined submission handling. The platform streamlines the entire capstone journey from initial planning to final presentation, ensuring all stakeholders stay connected and informed throughout the project lifecycle.',
-          tech: ['Laravel','PHP','MySQL','Bootstrap','JavaScript','jQuery'],
+          tech: ['Laravel','PHP','MySQL','Bootstrap','JavaScript'],
           images: [
             'assets/img/cc1.png',
             'assets/img/cc2.png',
@@ -599,10 +765,18 @@
             'assets/img/cc4.png'
           ]
         },
+        kape: {
+          title: 'KAPE JUAN',
+          long: 'Kape Juan is a concept landing page for a neighborhood cafe, focusing on a warm visual identity, simple menu browsing, and a straightforward call-to-action for orders and reservations.',
+          tech: ['HTML5','CSS3','JavaScript'],
+          images: [
+            'assets/img/portfoliocover.png'
+          ]
+        },
         theta: {
           title: 'VACANTVUE TRAILER',
           long: 'A promotional video project showcasing the VacantVue parking management system. Created using Adobe Premiere Pro, highlighting the key features, user experience, and technical capabilities of the IoT-based solution.',
-          tech: ['Video Editing','Adobe Premiere Pro'],
+          tech: ['Adobe Premiere Pro','Adobe Photoshop'],
           images: [
             'assets/vids/vctrailereal.mp4',
           ]
@@ -652,12 +826,20 @@
         
         renderImage();
         modal.classList.remove('hidden');
+        // Trigger open animation
+        requestAnimationFrame(() => {
+          modal.classList.add('show');
+        });
         modal.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
       }
 
       function closeModal(){
-        modal.classList.add('hidden');
+        // Remove show to allow a quick fade-out, then hide
+        modal.classList.remove('show');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 200);
         modal.setAttribute('aria-hidden','true');
         document.body.style.overflow = '';
         current = { key: null, idx: 0 };
@@ -800,10 +982,320 @@
     })();
   </script>
   <script>
+    // Projects slider drag functionality with physics-based movement
+    (function() {
+      const containers = document.querySelectorAll('.projects-slider-container');
+      
+      containers.forEach(container => {
+        // Physics state
+        let isDown = false;
+        let isDragging = false;
+        let dragThreshold = 5;
+        let currentPosition = 0;
+        let targetPosition = 0;
+        let velocity = 0;
+        let lastPosition = 0;
+        let lastTime = 0;
+        let animationFrameId = null;
+        
+        // Physics constants
+        const FRICTION = 0.92; // High friction (0.92 = heavy feel, lower = more friction)
+        const MOMENTUM_MULTIPLIER = 0.8; // How much momentum to preserve
+        const ELASTIC_RESISTANCE = 0.15; // Elastic pull strength at bounds
+        const ELASTIC_THRESHOLD = 50; // Distance from bounds to start elastic effect
+        
+        // Get bounds
+        const getBounds = () => {
+          const slider = container.querySelector('.projects-slider');
+          if (!slider) return { min: 0, max: 0 };
+          const maxScroll = slider.scrollWidth - container.clientWidth;
+          return {
+            min: 0,
+            max: Math.max(0, maxScroll)
+          };
+        };
+        
+        // Apply elastic resistance at bounds
+        const applyElasticBounds = (pos, bounds) => {
+          if (pos < bounds.min) {
+            const overshoot = bounds.min - pos;
+            if (overshoot > 0) {
+              // Elastic resistance - stronger the further you go
+              const resistance = Math.min(overshoot / ELASTIC_THRESHOLD, 1);
+              return bounds.min - overshoot * (1 - ELASTIC_RESISTANCE * resistance);
+            }
+          } else if (pos > bounds.max) {
+            const overshoot = pos - bounds.max;
+            if (overshoot > 0) {
+              const resistance = Math.min(overshoot / ELASTIC_THRESHOLD, 1);
+              return bounds.max + overshoot * (1 - ELASTIC_RESISTANCE * resistance);
+            }
+          }
+          return pos;
+        };
+        
+        // Physics animation loop
+        const animate = (timestamp) => {
+          if (!lastTime) lastTime = timestamp;
+          const deltaTime = Math.min((timestamp - lastTime) / 16.67, 2); // Normalize to 60fps, cap at 2x
+          lastTime = timestamp;
+          
+          const bounds = getBounds();
+          
+          if (isDown) {
+            // While dragging, smoothly interpolate to target with heavy feel
+            const diff = targetPosition - currentPosition;
+            currentPosition += diff * 0.25; // Heavy, damped movement (lower = heavier)
+            currentPosition = applyElasticBounds(currentPosition, bounds);
+            container.scrollLeft = currentPosition;
+            animationFrameId = requestAnimationFrame(animate);
+          } else {
+            // Apply friction to velocity (high friction = heavy feel)
+            velocity *= FRICTION;
+            
+            // Update position with velocity
+            currentPosition += velocity * deltaTime;
+            
+            // Apply elastic bounds
+            const beforeElastic = currentPosition;
+            currentPosition = applyElasticBounds(currentPosition, bounds);
+            
+            // If we hit a bound, reduce velocity significantly
+            if (beforeElastic !== currentPosition) {
+              velocity *= 0.4; // Strong damping at bounds
+            }
+            
+            // Snap back to bounds if velocity is very low and we're out of bounds
+            if (Math.abs(velocity) < 0.05) {
+              if (currentPosition < bounds.min) {
+                const snapDiff = bounds.min - currentPosition;
+                currentPosition += snapDiff * 0.2; // Smooth snap back
+                if (Math.abs(snapDiff) < 0.5) {
+                  currentPosition = bounds.min;
+                  velocity = 0;
+                }
+              } else if (currentPosition > bounds.max) {
+                const snapDiff = bounds.max - currentPosition;
+                currentPosition += snapDiff * 0.2; // Smooth snap back
+                if (Math.abs(snapDiff) < 0.5) {
+                  currentPosition = bounds.max;
+                  velocity = 0;
+                }
+              }
+            }
+            
+            container.scrollLeft = currentPosition;
+            
+            // Continue animation if there's still movement
+            if (Math.abs(velocity) > 0.01 || (currentPosition < bounds.min && Math.abs(bounds.min - currentPosition) > 0.5) || (currentPosition > bounds.max && Math.abs(currentPosition - bounds.max) > 0.5)) {
+              animationFrameId = requestAnimationFrame(animate);
+            } else {
+              animationFrameId = null;
+              lastTime = 0;
+              // Ensure final position is correct
+              if (currentPosition < bounds.min) {
+                container.scrollLeft = bounds.min;
+              } else if (currentPosition > bounds.max) {
+                container.scrollLeft = bounds.max;
+              }
+            }
+          }
+        };
+        
+        // Start animation loop
+        const startAnimation = () => {
+          if (!animationFrameId) {
+            lastTime = 0;
+            animationFrameId = requestAnimationFrame(animate);
+          }
+        };
+        
+        // Initialize position
+        currentPosition = container.scrollLeft;
+        targetPosition = currentPosition;
+        
+        // Mouse events
+        container.addEventListener('mousedown', (e) => {
+          // Don't start drag if clicking on a link or button
+          if (e.target.closest('a, button')) return;
+          
+          isDown = true;
+          isDragging = false;
+          container.style.cursor = 'grabbing';
+          container.style.userSelect = 'none';
+          
+          // Stop any ongoing animation
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+          
+          // Initialize positions
+          currentPosition = container.scrollLeft;
+          targetPosition = currentPosition;
+          lastPosition = e.pageX;
+          lastTime = performance.now();
+          velocity = 0;
+          
+          startAnimation();
+        });
+        
+        container.addEventListener('mouseleave', () => {
+          if (isDown) {
+            isDown = false;
+            container.style.cursor = 'grab';
+            container.style.userSelect = '';
+            startAnimation(); // Continue with momentum
+          }
+        });
+        
+        container.addEventListener('mouseup', (e) => {
+          if (isDown) {
+            isDown = false;
+            container.style.cursor = 'grab';
+            container.style.userSelect = '';
+            
+            // Calculate final velocity for momentum
+            const now = performance.now();
+            const timeDelta = Math.max(now - lastTime, 1);
+            const positionDelta = e.pageX - lastPosition;
+            
+            // Convert mouse movement to scroll velocity (inverse because scroll is opposite to mouse)
+            velocity = -(positionDelta / timeDelta) * 16.67 * MOMENTUM_MULTIPLIER;
+            
+            // If we didn't drag much, allow click events
+            if (!isDragging) {
+              const clickable = document.elementFromPoint(e.clientX, e.clientY);
+              if (clickable) {
+                const link = clickable.closest('a, button');
+                if (link && !link.hasAttribute('data-project')) {
+                  const modalBtn = clickable.closest('.js-open-modal');
+                  if (!modalBtn) {
+                    link.click();
+                  }
+                }
+              }
+            }
+            isDragging = false;
+            
+            // Continue animation with momentum
+            startAnimation();
+          }
+        });
+        
+        container.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          
+          const now = performance.now();
+          const positionDelta = e.pageX - lastPosition;
+          
+          // Update target position with heavy friction feel (inverse for scroll)
+          targetPosition = currentPosition - positionDelta * 1.3;
+          
+          // Check if we've moved enough to consider it dragging
+          if (Math.abs(positionDelta) > dragThreshold) {
+            isDragging = true;
+          }
+          
+          lastPosition = e.pageX;
+          lastTime = now;
+        });
+        
+        // Touch events for mobile
+        let touchStartX = 0;
+        let touchStartTime = 0;
+        let lastTouchX = 0;
+        let lastTouchTime = 0;
+        
+        container.addEventListener('touchstart', (e) => {
+          // Don't start drag if touching a link or button
+          if (e.target.closest('a, button')) return;
+          
+          isDown = true;
+          isDragging = false;
+          
+          // Stop any ongoing animation
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+          
+          touchStartX = e.touches[0].pageX;
+          lastTouchX = touchStartX;
+          touchStartTime = performance.now();
+          lastTouchTime = touchStartTime;
+          
+          currentPosition = container.scrollLeft;
+          targetPosition = currentPosition;
+          velocity = 0;
+          
+          startAnimation();
+        }, { passive: true });
+        
+        container.addEventListener('touchmove', (e) => {
+          if (!isDown) return;
+          
+          const touchX = e.touches[0].pageX;
+          const now = performance.now();
+          const positionDelta = touchX - lastTouchX;
+          const timeDelta = Math.max(now - lastTouchTime, 1);
+          
+          // Update target position (inverse for scroll)
+          targetPosition = currentPosition - positionDelta * 1.3;
+          
+          // Check if we've moved enough to consider it dragging
+          if (Math.abs(touchX - touchStartX) > dragThreshold) {
+            isDragging = true;
+          }
+          
+          lastTouchX = touchX;
+          lastTouchTime = now;
+        }, { passive: true });
+        
+        container.addEventListener('touchend', (e) => {
+          if (isDown) {
+            isDown = false;
+            
+            // Calculate final velocity for momentum
+            const now = performance.now();
+            const timeDelta = Math.max(now - lastTouchTime, 1);
+            const positionDelta = lastTouchX - touchStartX;
+            
+            // Convert touch movement to scroll velocity (inverse because scroll is opposite to touch)
+            velocity = -(positionDelta / timeDelta) * 16.67 * MOMENTUM_MULTIPLIER;
+            
+            // Continue animation with momentum
+            startAnimation();
+          }
+        }, { passive: true });
+        
+        // Sync scroll position on scroll events (for wheel scrolling)
+        container.addEventListener('scroll', () => {
+          if (!isDown && !animationFrameId) {
+            currentPosition = container.scrollLeft;
+            targetPosition = currentPosition;
+            velocity = 0;
+          }
+        }, { passive: true });
+      });
+    })();
+  </script>
+  <script>
     // Page transition animation
     (function() {
       const pageContent = document.getElementById('page-content');
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+
+      // Disable current page link in navbar
+      document.querySelectorAll('nav a[href]').forEach(a => {
+        const targetPath = a.getAttribute('href')?.split('/').pop();
+        if (targetPath === currentPath) {
+          a.classList.add('nav-link-disabled');
+          a.setAttribute('aria-current', 'page');
+        }
+      });
       
       // Fade in on page load - but only if loading screen is not present
       function fadeIn() {
@@ -842,7 +1334,6 @@
         }
         
         // Skip if it's the same page
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
         const targetPath = href.split('/').pop();
         if (targetPath === currentPath) {
           return;
