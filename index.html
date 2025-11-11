@@ -298,6 +298,10 @@
       margin-bottom: 0.75rem; /* mb-3 */
       color: #000000;
       font-weight: 700;
+      transition: color 0.8s ease-in-out;
+    }
+    body.dark-mode .project-slide h3 {
+      color: #ffffff;
     }
     @media (max-width: 768px) {
       .project-slide {
@@ -496,6 +500,13 @@
       background: #ffffff;
       transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
     }
+    .nav-brand {
+      color: #000000;
+      transition: color 0.8s ease-in-out;
+    }
+    body.dark-mode .nav-brand {
+      color: #ffffff;
+    }
     body.dark-mode nav.fixed-nav {
       background: #1a1a1a;
     }
@@ -566,7 +577,7 @@
   </script>
   <div id="page-content">
   <nav class="flex justify-between items-center px-8 py-8 fixed top-0 left-0 right-0 z-50 fixed-nav">
-    <a href="index.html" class="text-xs">Riin Valeña</a>
+    <a href="index.html" class="text-xs nav-brand">Riin Valeña</a>
     <button id="burger-btn" class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <span class="material-symbols-outlined">menu</span>
     </button>
