@@ -227,6 +227,50 @@
     body.dark-mode .about-name-banner {
       color: #ffffff;
     }
+    .skills-rectangle {
+      width: 100%;
+    }
+    .skills-rectangle-inner {
+      border: 1px solid #d1d5db;
+      padding: 48px;
+      background: #f9fafb;
+      color: #1f2937; /* slate-800 */
+      transition: background-color 0.8s ease-in-out,
+                  border-color 0.8s ease-in-out,
+                  color 0.8s ease-in-out;
+    }
+    .skills-rectangle-inner h3,
+    .skills-rectangle-inner h4,
+    .skills-rectangle-inner li {
+      transition: color 0.8s ease-in-out;
+    }
+    .skills-rectangle-inner h4 {
+      color: #6b7280;
+      letter-spacing: 0.12em;
+    }
+    .skills-rectangle-inner li {
+      color: #1f2937;
+    }
+    body.dark-mode .skills-rectangle-inner {
+      border-color: #2d2d2d;
+      background: #121212;
+      color: #e5e7eb;
+    }
+    body.dark-mode .skills-rectangle-inner h4 {
+      color: #9ca3af;
+    }
+    body.dark-mode .skills-rectangle-inner li {
+      color: #d1d5db;
+    }
+    .skills-rectangle-inner,
+    .skills-rectangle-inner * {
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+    .skills-rectangle-inner h3 {
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -267,38 +311,67 @@
       <h2 class="section-title mb-12">About</h2>
       
       <div class="w-full">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="md:col-span-2">
+        <div class="grid grid-cols-1 gap-8">
+          <div>
             <p class="text-xs text-gray-600 mb-6">Hi, I’m Riin Valena, a Bachelor of Science in Information Technology graduate specializing in Web and Mobile Application Development from Far Eastern University. Based in Tondo, Manila, I merge creativity and precision through web design and development. My approach blends technical structure with visual intent, using tools like Photoshop, Premiere Pro, and other multimedia software to transform ideas into purposeful and polished outcomes that meet every objective with clarity and impact.</p>
           </div>
+        </div>
+      </div>
 
-          <aside class="md:col-span-1">
-            <div class="border border-gray-300 p-6">
-              <h3 class="text-base mb-4">Skills</h3>
-              <div class="grid grid-cols-1 gap-4">
-                <div>
-                  <h4 class="text-xs mb-2">Web design</h4>
-                  <ul class="space-y-2">
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">HTML</li>
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">CSS</li>
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">JavaScript</li>
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Tailwind</li>
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Bootstrap</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 class="text-xs mb-2">Multimedia</h4>
-                  <ul class="space-y-2">
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Adobe Photoshop</li>
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Adobe Premiere Pro</li>
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Canva</li>
-                    <li class="inline-block px-2 py-1 text-xs text-gray-500">Figma</li>
-                  </ul>
-                </div>
-              </div>
+      <div class="skills-rectangle mt-16">
+        <div class="skills-rectangle-inner">
+          <h3 class="text-base mb-8">Skills</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div>
+              <h4 class="text-xs mb-3 uppercase tracking-wide">Frontend</h4>
+              <ul class="space-y-2">
+                <li class="inline-block px-2 py-1 text-xs">HTML</li>
+                <li class="inline-block px-2 py-1 text-xs">CSS</li>
+                <li class="inline-block px-2 py-1 text-xs">JavaScript</li>
+                <li class="inline-block px-2 py-1 text-xs">Tailwind CSS</li>
+                <li class="inline-block px-2 py-1 text-xs">Bootstrap</li>
+                <li class="inline-block px-2 py-1 text-xs">React</li>
+                <li class="inline-block px-2 py-1 text-xs">React Router</li>
+                <li class="inline-block px-2 py-1 text-xs">Framer Motion</li>
+                <li class="inline-block px-2 py-1 text-xs">Chart.js</li>
+                <li class="inline-block px-2 py-1 text-xs">Next.js</li>
+              </ul>
             </div>
-          </aside>
+
+            <div>
+              <h4 class="text-xs mb-3 uppercase tracking-wide">Backend</h4>
+              <ul class="space-y-2">
+                <li class="inline-block px-2 py-1 text-xs">PHP</li>
+                <li class="inline-block px-2 py-1 text-xs">Firebase (Realtime Database)</li>
+                <li class="inline-block px-2 py-1 text-xs">MySQL</li>
+                <li class="inline-block px-2 py-1 text-xs">Supabase</li>
+                <li class="inline-block px-2 py-1 text-xs">PostgreSQL</li>
+                <li class="inline-block px-2 py-1 text-xs">CodeIgniter</li>
+                <li class="inline-block px-2 py-1 text-xs">Laravel</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-xs mb-3 uppercase tracking-wide">Middleware / Tools</h4>
+              <ul class="space-y-2">
+                <li class="inline-block px-2 py-1 text-xs">Git</li>
+                <li class="inline-block px-2 py-1 text-xs">Firebase PHP SDK</li>
+                <li class="inline-block px-2 py-1 text-xs">Stripe</li>
+                <li class="inline-block px-2 py-1 text-xs">React Context</li>
+                <li class="inline-block px-2 py-1 text-xs">Arduino</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-xs mb-3 uppercase tracking-wide">Multimedia</h4>
+              <ul class="space-y-2">
+                <li class="inline-block px-2 py-1 text-xs">Adobe Photoshop</li>
+                <li class="inline-block px-2 py-1 text-xs">Adobe Premiere Pro</li>
+                <li class="inline-block px-2 py-1 text-xs">Canva</li>
+                <li class="inline-block px-2 py-1 text-xs">Figma</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
