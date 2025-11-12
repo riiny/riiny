@@ -327,7 +327,7 @@
       min-height: 3.2em; /* 2 lines * 1.6 line-height */
     }
     /* Project titles: match description size with black text */
-    .project-slide h3 {
+    .project-title {
       font-size: 0.75rem; /* text-xs */
       line-height: 1.6;
       margin-bottom: 0.75rem; /* mb-3 */
@@ -335,7 +335,7 @@
       font-weight: 700;
       transition: color 0.8s ease-in-out;
     }
-    body.dark-mode .project-slide h3 {
+    body.dark-mode .project-title {
       color: #ffffff;
     }
     @media (max-width: 768px) {
@@ -660,7 +660,7 @@
           <div class="projects-slider" data-slider="web-design">
             <article class="project-slide">
               <img src="assets/img/vacantvuecover.png" alt="VacantVue" class="w-full mb-6">
-              <h3 class="mb-3">VacantVue</h3>
+              <h3 class="project-title mb-3">VacantVue</h3>
               <p class="text-xs text-gray-600 mb-3">Smart parking management system with IoT sensors, real-time availability, reservations, and cashless payments.</p>
               <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Bootstrap, PHP, Firebase, Arduino, PayMongo</p>
               <button data-project="alpha" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
@@ -668,7 +668,7 @@
 
             <article class="project-slide">
               <img src="assets/img/cccover.png" alt="Capstone Compass" class="w-full mb-6">
-              <h3 class="mb-3">Capstone Compass</h3>
+              <h3 class="project-title mb-3">Capstone Compass</h3>
               <p class="text-xs text-gray-600 mb-3">Project management platform for students and mentors with group chat, progress tracking, and task management.</p>
               <p class="text-xs text-gray-500 mb-3">Laravel, PHP, MySQL, Bootstrap, JavaScript</p>
               <button data-project="epsilon" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
@@ -681,7 +681,7 @@
                 class="w-full mb-6" 
                 data-slideshow="kape"
               >
-              <h3 class="mb-3">Kape Juan</h3>
+              <h3 class="project-title mb-3">Kape Juan</h3>
               <p class="text-xs text-gray-600 mb-3">Kape Juan is a modern, responsive coffee shop web app for browsing the menu, placing orders, and managing purchases.</p>
               <p class="text-xs text-gray-500 mb-3">React, React Router, Framer Motion, Tailwind, Chart.js, Stripe, Supabase, React Context, Babel, ESLint</p>
               <button data-project="kape" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
@@ -689,7 +689,7 @@
 
             <article class="project-slide">
               <img src="assets/img/portfoliocover.png" alt="Portfolio Site" class="w-full mb-6">
-              <h3 class="mb-3">Portfolio Site</h3>
+              <h3 class="project-title mb-3">Portfolio Site</h3>
               <p class="text-xs text-gray-600 mb-3">Responsive portfolio website with clean design.</p>
               <p class="text-xs text-gray-500 mb-3">HTML5, CSS3, JavaScript, Tailwind CSS</p>
               <a href="https://github.com/riiny/riiny" target="_blank" class="text-xs text-gray-500 hover:opacity-60">GitHub</a>
@@ -704,7 +704,7 @@
           <div class="projects-slider" data-slider="multimedia">
             <article class="project-slide">
               <img src="assets/img/hhcover.png" alt="Hiwa-hiwa" class="w-full mb-6">
-              <h3 class="mb-3">Hiwa-Hiwa</h3>
+              <h3 class="project-title mb-3">Hiwa-Hiwa</h3>
               <p class="text-xs text-gray-600 mb-3">Digital collage posters reimagining musical icons through layered, fragmented compositions.</p>
               <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
               <a href="https://www.behance.net/gallery/211533245/HIWA-HIWA-Collage-Art-Series" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
@@ -712,7 +712,7 @@
 
             <article class="project-slide">
               <img src="assets/img/vintagecover.png" alt="Vintage Shirt Design" class="w-full mb-6">
-              <h3 class="mb-3">Vintage Shirt Design</h3>
+              <h3 class="project-title mb-3">Vintage Shirt Design</h3>
               <p class="text-xs text-gray-600 mb-3">T-shirt designs blending retro aesthetics with bold typography celebrating impactful athletes.</p>
               <p class="text-xs text-gray-500 mb-3">Adobe Photoshop, Adobe Lightroom</p>
               <a href="https://www.behance.net/gallery/212629569/Vintage-Shirt-Designs-Sports" target="_blank" class="text-xs text-gray-500 hover:opacity-60">Behance</a>
@@ -729,7 +729,7 @@
               >
                 <source src="assets/vids/vctrailer.mp4" type="video/mp4">
               </video>
-              <h3 class="mb-3">VacantVue Trailer</h3>
+              <h3 class="project-title mb-3">VacantVue Trailer</h3>
               <p class="text-xs text-gray-600 mb-3">Promotional video showcasing UI/UX design and Arduino-powered engineering for the smart parking solution.</p>
               <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
               <button data-project="theta" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
@@ -737,7 +737,7 @@
 
             <article class="project-slide">
               <img src="assets/img/csm.gif" alt="2019 mini project" class="w-full mb-6">
-              <h3 class="mb-3">2019 Mini Project</h3>
+              <h3 class="project-title mb-3">2019 Mini Project</h3>
               <p class="text-xs text-gray-600 mb-3">Music visualizers using images and animated GIFs to enhance visual storytelling.</p>
               <p class="text-xs text-gray-500 mb-3">Adobe Premiere Pro, Adobe Photoshop</p>
               <button data-project="iota" class="js-open-modal text-xs text-gray-500 hover:opacity-60">View details</button>
@@ -857,7 +857,7 @@
   <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 px-4 py-8" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="bg-white max-w-4xl w-full max-h-[90vh] overflow-auto p-12 relative modal-panel">
       <button id="modal-close" class="absolute top-6 right-6 text-xl text-gray-400 hover:text-gray-600">×</button>
-      <h3 id="modal-title" class="text-base mb-6 uppercase"></h3>
+      <h3 id="modal-title" class="project-title mb-6"></h3>
       <div id="modal-carousel" class="relative mb-8">
         <button id="modal-prev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-3 py-2 text-gray-600 hover:text-gray-900 text-lg">‹</button>
         <div id="modal-image-container" class="w-full bg-gray-100 flex items-center justify-center overflow-hidden min-h-[400px]">
