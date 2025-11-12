@@ -232,7 +232,7 @@
     }
     .skills-rectangle-inner {
       border: 1px solid #d1d5db;
-      padding: 48px;
+      padding: 32px;
       background: #f9fafb;
       color: #1f2937; /* slate-800 */
       transition: background-color 0.8s ease-in-out,
@@ -275,7 +275,7 @@
 </head>
 <body>
   <div id="page-content">
-  <nav class="flex justify-between items-center px-8 py-8 fixed top-0 left-0 right-0 z-50 fixed-nav">
+  <nav class="flex justify-between items-center px-8 py-8 fixed-nav">
     <a href="index.html" class="text-xs nav-brand">Riin Valeña</a>
     <button id="burger-btn" class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <span class="material-symbols-outlined">menu</span>
@@ -306,8 +306,8 @@
     </ul>
   </nav>
 
-  <main class="min-h-screen px-8 py-32 max-w-6xl mx-auto">
-    <section class="mb-48">
+  <main class="px-8 pt-10 pb-0 lg:pt-6 max-w-6xl mx-auto">
+    <section class="mb-16 lg:mb-0">
       <h2 class="section-title mb-12">About</h2>
       
       <div class="w-full">
@@ -318,13 +318,13 @@
         </div>
       </div>
 
-      <div class="skills-rectangle mt-16">
+      <div class="skills-rectangle mt-10 md:mt-6 lg:mt-4">
         <div class="skills-rectangle-inner">
           <h3 class="text-base mb-8">Skills</h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div>
               <h4 class="text-xs mb-3 uppercase tracking-wide">Frontend</h4>
-              <ul class="space-y-2">
+              <ul class="space-y-1.5">
                 <li class="inline-block px-2 py-1 text-xs">HTML</li>
                 <li class="inline-block px-2 py-1 text-xs">CSS</li>
                 <li class="inline-block px-2 py-1 text-xs">JavaScript</li>
@@ -340,7 +340,7 @@
 
             <div>
               <h4 class="text-xs mb-3 uppercase tracking-wide">Backend</h4>
-              <ul class="space-y-2">
+              <ul class="space-y-1.5">
                 <li class="inline-block px-2 py-1 text-xs">PHP</li>
                 <li class="inline-block px-2 py-1 text-xs">Firebase (Realtime Database)</li>
                 <li class="inline-block px-2 py-1 text-xs">MySQL</li>
@@ -353,7 +353,7 @@
 
             <div>
               <h4 class="text-xs mb-3 uppercase tracking-wide">Middleware / Tools</h4>
-              <ul class="space-y-2">
+              <ul class="space-y-1.5">
                 <li class="inline-block px-2 py-1 text-xs">Git</li>
                 <li class="inline-block px-2 py-1 text-xs">Firebase PHP SDK</li>
                 <li class="inline-block px-2 py-1 text-xs">Stripe</li>
@@ -364,7 +364,7 @@
 
             <div>
               <h4 class="text-xs mb-3 uppercase tracking-wide">Multimedia</h4>
-              <ul class="space-y-2">
+              <ul class="space-y-1.5">
                 <li class="inline-block px-2 py-1 text-xs">Adobe Photoshop</li>
                 <li class="inline-block px-2 py-1 text-xs">Adobe Premiere Pro</li>
                 <li class="inline-block px-2 py-1 text-xs">Canva</li>
