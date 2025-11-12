@@ -1159,11 +1159,11 @@
         // Physics constants
         // Tune heavier, more tactile feel especially on mobile
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        const FRICTION = isMobile ? 0.92 : 0.92; // Lower = more friction per frame
-        const MOMENTUM_MULTIPLIER = isMobile ? 0.8 : 0.8; // Preserve less momentum on mobile
+        const FRICTION = isMobile ? 0.88 : 0.92; // Lower = more friction per frame
+        const MOMENTUM_MULTIPLIER = isMobile ? 0.6 : 0.8; // Preserve less momentum on mobile
         const ELASTIC_RESISTANCE = isMobile ? 0.18 : 0.18; // Stronger elastic on mobile
         const ELASTIC_THRESHOLD = isMobile ? 120 : 60; // Start elastic a bit earlier on mobile
-        const MAX_VELOCITY = isMobile ? 50 : 60; // Cap fling speed
+        const MAX_VELOCITY = isMobile ? 36 : 60; // Cap fling speed
         const DRAG_INTERPOLATION = isMobile ? 0.18 : 0.22; // Softer follow on mobile
         
         // Get bounds
