@@ -487,9 +487,17 @@
     #project-modal {
       opacity: 0;
       transition: opacity 0.25s ease;
+      z-index: 120;
     }
     #project-modal.show {
       opacity: 1;
+    }
+    body.modal-open nav.fixed-nav,
+    body.modal-open nav.fixed-nav * {
+      pointer-events: none;
+    }
+    body.modal-open {
+      touch-action: none;
     }
     #project-modal .modal-panel {
       transform: translateY(8px) scale(0.98);
@@ -515,6 +523,33 @@
     body.dark-mode #project-modal #modal-image-container {
       background: #111111;
     }
+    #project-modal #modal-prev,
+    #project-modal #modal-next {
+      z-index: 10;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 20px;
+      font-weight: 300;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transform: translateY(-50%);
+    }
+    #project-modal #modal-prev:hover,
+    #project-modal #modal-next:hover {
+      transform: translateY(-50%) scale(1.1);
+      background: rgba(255, 255, 255, 0.95) !important;
+    }
+    #project-modal #modal-prev:active,
+    #project-modal #modal-next:active {
+      transform: translateY(-50%) scale(0.95);
+    }
     body.dark-mode #project-modal #modal-prev,
     body.dark-mode #project-modal #modal-next {
       background: rgba(255, 255, 255, 0.08);
@@ -523,13 +558,63 @@
     body.dark-mode #project-modal #modal-prev:hover,
     body.dark-mode #project-modal #modal-next:hover {
       color: #ffffff;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.15);
     }
     body.dark-mode #project-modal #modal-close {
       color: #9ca3af;
     }
     body.dark-mode #project-modal #modal-close:hover {
       color: #ffffff;
+    }
+    #project-modal #modal-image-container {
+      max-height: min(70vh, 640px);
+      position: relative;
+    }
+    #project-modal #modal-image-container img,
+    #project-modal #modal-image-container video {
+      width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: inherit;
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: opacity, transform;
+    }
+    #project-modal #modal-image-container img.fade-out,
+    #project-modal #modal-image-container video.fade-out {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+    #project-modal #modal-image-container img.fade-in,
+    #project-modal #modal-image-container video.fade-in {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #project-modal #modal-image-container img,
+      #project-modal #modal-image-container video {
+        transition: opacity 0.2s ease;
+      }
+      #project-modal #modal-image-container img.fade-out,
+      #project-modal #modal-image-container video.fade-out {
+        transform: none;
+      }
+    }
+    @media (max-width: 640px) {
+      #project-modal {
+        padding-top: 48px;
+        padding-bottom: 32px;
+      }
+      #project-modal .modal-panel {
+        padding: 24px 20px;
+        max-height: calc(100vh - 64px);
+        border-radius: 20px;
+      }
+      #project-modal #modal-image-container {
+        min-height: 0;
+        max-height: 55vh;
+        border-radius: 16px;
+      }
     }
     /* Navbar explicit backgrounds for custom dark mode */
     nav.fixed-nav {
@@ -643,7 +728,7 @@
     </ul>
   </nav>
 
-  <main class="min-h-screen px-8 pt-32 pb-0 max-w-6xl mx-auto">
+  <main class="min-h-screen px-8 pt-16 sm:pt-20 md:pt-24 lg:pt-32 pb-0 max-w-6xl mx-auto">
     <!-- PROJECTS -->
     <section id="projects" class="mb-0">
       <h2 class="text-xs text-gray-400 mb-12">Projects</h2>
@@ -854,15 +939,15 @@
   </script>
   
   <!-- Project Modal -->
-  <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50 px-4 py-8" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="bg-white max-w-4xl w-full max-h-[90vh] overflow-auto p-12 relative modal-panel">
+  <div id="project-modal" class="fixed inset-0 z-50 hidden flex justify-center items-start md:items-center bg-black bg-opacity-50 px-3 sm:px-4 py-6 md:py-8 overflow-y-auto" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="bg-white max-w-4xl w-full max-h-[90vh] overflow-auto p-6 md:p-12 relative modal-panel rounded-2xl shadow-2xl">
       <button id="modal-close" class="absolute top-6 right-6 text-xl text-gray-400 hover:text-gray-600">×</button>
       <h3 id="modal-title" class="project-title mb-6"></h3>
-      <div id="modal-carousel" class="relative mb-8">
-        <button id="modal-prev" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-3 py-2 text-gray-600 hover:text-gray-900 text-lg">‹</button>
-        <div id="modal-image-container" class="w-full bg-gray-100 flex items-center justify-center overflow-hidden min-h-[400px]">
+      <div id="modal-carousel" class="relative mb-6 md:mb-8">
+        <button id="modal-prev" class="absolute left-2 top-1/2 bg-white bg-opacity-80 text-gray-600 hover:text-gray-900" aria-label="Previous image">←</button>
+        <div id="modal-image-container" class="w-full bg-gray-100 flex items-center justify-center overflow-hidden rounded-xl min-h-[240px] md:min-h-[400px] max-h-[70vh]">
         </div>
-        <button id="modal-next" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-3 py-2 text-gray-600 hover:text-gray-900 text-lg">›</button>
+        <button id="modal-next" class="absolute right-2 top-1/2 bg-white bg-opacity-80 text-gray-600 hover:text-gray-900" aria-label="Next image">→</button>
       </div>
       <p id="modal-desc" class="text-xs text-gray-600 mb-6"></p>
       <p id="modal-tech" class="text-xs text-gray-500"></p>
@@ -953,6 +1038,11 @@
 
       let current = { key: null, idx: 0 };
 
+      const bodyEl = document.body;
+      const navEl = document.querySelector('nav.fixed-nav');
+      const burgerBtnEl = document.getElementById('burger-btn');
+      const burgerIconEl = burgerBtnEl ? burgerBtnEl.querySelector('.material-symbols-outlined') : null;
+
       function openModal(key){
         const p = projects[key];
         if(!p) return;
@@ -970,7 +1060,7 @@
           nextBtn.style.display = 'block';
         }
         
-        renderImage();
+        renderImage(true); // Immediate render for initial load
         modal.classList.remove('hidden');
         // Trigger open animation
         requestAnimationFrame(() => {
@@ -978,6 +1068,19 @@
         });
         modal.setAttribute('aria-hidden','false');
         document.body.style.overflow = 'hidden';
+        if (bodyEl) {
+          bodyEl.classList.add('modal-open');
+        }
+        if (navEl && navEl.classList.contains('open')) {
+          navEl.classList.remove('open');
+          if (burgerBtnEl) {
+            burgerBtnEl.setAttribute('aria-expanded', 'false');
+          }
+          if (burgerIconEl) {
+            burgerIconEl.textContent = 'menu';
+          }
+          document.body.style.overflow = 'hidden';
+        }
       }
 
       function closeModal(){
@@ -989,41 +1092,102 @@
         modal.setAttribute('aria-hidden','true');
         document.body.style.overflow = '';
         current = { key: null, idx: 0 };
+        if (bodyEl) {
+          bodyEl.classList.remove('modal-open');
+        }
       }
 
-      function renderImage(){
+      function renderImage(immediate = false){
         const p = projects[current.key];
         if(!p) return;
         const url = p.images[current.idx];
-        imgContainer.innerHTML = '';
+        const existingMedia = imgContainer.querySelector('img, video');
         
-        if(url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg')) {
-          const video = document.createElement('video');
-          video.src = url;
-          video.className = 'w-full object-contain';
-          const isKapeVideo = current.key === 'kape';
-          video.controls = !isKapeVideo;
-          video.muted = true;
-          if (isKapeVideo) {
-            video.loop = true;
-            video.autoplay = true;
-            video.setAttribute('playsinline', '');
-            video.setAttribute('muted', '');
-            video.setAttribute('loop', '');
-            video.setAttribute('autoplay', '');
-            // ensure playback starts when ready
-            video.addEventListener('canplay', () => {
-              video.play().catch(() => {});
-            }, { once: true });
+        // If immediate (first load), just show the image without fade
+        if (immediate || !existingMedia) {
+          imgContainer.innerHTML = '';
+          
+          if(url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg')) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.className = 'w-full object-contain fade-in';
+            const isKapeVideo = current.key === 'kape';
+            video.controls = !isKapeVideo;
+            video.muted = true;
+            if (isKapeVideo) {
+              video.loop = true;
+              video.autoplay = true;
+              video.setAttribute('playsinline', '');
+              video.setAttribute('muted', '');
+              video.setAttribute('loop', '');
+              video.setAttribute('autoplay', '');
+              // ensure playback starts when ready
+              video.addEventListener('canplay', () => {
+                video.play().catch(() => {});
+              }, { once: true });
+            }
+            imgContainer.appendChild(video);
+          } else {
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = p.title;
+            img.className = 'w-full object-contain fade-in';
+            imgContainer.appendChild(img);
           }
-          imgContainer.appendChild(video);
-        } else {
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = p.title;
-          img.className = 'w-full object-contain';
-          imgContainer.appendChild(img);
+          return;
         }
+        
+        // Smooth transition: fade out existing, then fade in new
+        existingMedia.classList.add('fade-out');
+        existingMedia.classList.remove('fade-in');
+        
+        setTimeout(() => {
+          imgContainer.innerHTML = '';
+          
+          if(url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg')) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.className = 'w-full object-contain fade-out';
+            const isKapeVideo = current.key === 'kape';
+            video.controls = !isKapeVideo;
+            video.muted = true;
+            if (isKapeVideo) {
+              video.loop = true;
+              video.autoplay = true;
+              video.setAttribute('playsinline', '');
+              video.setAttribute('muted', '');
+              video.setAttribute('loop', '');
+              video.setAttribute('autoplay', '');
+              // ensure playback starts when ready
+              video.addEventListener('canplay', () => {
+                video.play().catch(() => {});
+              }, { once: true });
+            }
+            imgContainer.appendChild(video);
+            
+            // Trigger fade-in after a brief moment to ensure element is rendered
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                video.classList.remove('fade-out');
+                video.classList.add('fade-in');
+              });
+            });
+          } else {
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = p.title;
+            img.className = 'w-full object-contain fade-out';
+            imgContainer.appendChild(img);
+            
+            // Trigger fade-in after a brief moment to ensure element is rendered
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                img.classList.remove('fade-out');
+                img.classList.add('fade-in');
+              });
+            });
+          }
+        }, 200); // Half of transition duration for smooth overlap
       }
 
       prevBtn.addEventListener('click', ()=>{
