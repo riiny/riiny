@@ -263,6 +263,15 @@
       transform: translateY(-18px) scale(1.26);
       filter: saturate(1.05);
     }
+    /* Disable hover effect on mobile */
+    @media (max-width: 768px) {
+      .projects-slider:not(.is-moving) .project-slide > img:hover,
+      .projects-slider:not(.is-moving) .project-slide > video:hover {
+        z-index: 1;
+        transform: none;
+        filter: none;
+      }
+    }
     /* Projects Slider */
     .projects-slider-container {
       overflow-x: auto;
@@ -275,17 +284,28 @@
       padding-left: calc(50vw - 50%);
       padding-right: calc(50vw - 50%);
       padding-top: 32px;
-      cursor: grab;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* IE and Edge */
       touch-action: pan-x; /* Hint that we only pan horizontally */
       box-sizing: border-box;
+      scroll-behavior: auto;
+      overscroll-behavior-x: contain;
+    }
+
+    .projects-slider-container:not(.slider-native) {
+      cursor: grab;
+    }
+
+    .projects-slider-container.slider-native {
+      scroll-behavior: auto;
+      touch-action: auto;
+      cursor: auto;
     }
     .projects-slider-container::-webkit-scrollbar {
       display: none; /* Chrome, Safari, Opera */
     }
-    .projects-slider-container:active {
+    .projects-slider-container:not(.slider-native):active {
       cursor: grabbing;
     }
     .projects-slider {
@@ -1308,205 +1328,154 @@
     })();
   </script>
   <script>
-    // Projects slider drag functionality with physics-based movement
+    // Projects slider - simplified drag functionality
     (function() {
       const containers = document.querySelectorAll('.projects-slider-container');
       
       containers.forEach(container => {
-        // Physics state
         const sliderEl = container.querySelector('.projects-slider');
+        const mode = (container.dataset.sliderMode || 'auto').toLowerCase();
+        const prefersNative =
+          mode === 'native' ||
+          (mode === 'auto' && (window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0)) ||
+          (mode === 'auto' && window.matchMedia('(max-width: 768px)').matches);
+
+        if (prefersNative && mode !== 'physics') {
+          container.classList.add('slider-native');
+          container.style.cursor = '';
+          if (sliderEl) {
+            sliderEl.classList.remove('is-moving');
+          }
+          return;
+        }
+
+        // Simple drag state
         let isDown = false;
         let isDragging = false;
         let dragThreshold = 6;
-        let currentPosition = 0;
-        let targetPosition = 0;
-        let velocity = 0;
-        let lastPosition = 0;
-        let lastTime = 0;
-        let animationFrameId = null;
-        let movingState = false;
+        let startX = 0;
+        let startScrollLeft = 0;
         let scrollTimeoutId = null;
+        let snapBackAnimationId = null;
+        const elasticResistance = 0.3; // Resistance factor for elastic effect
         
         const updateMovingState = (moving) => {
-          if (movingState === moving) return;
-          movingState = moving;
           container.classList.toggle('slider-moving', moving);
           if (sliderEl) {
             sliderEl.classList.toggle('is-moving', moving);
           }
         };
         
-        // Physics constants
-        // Tune heavier, more tactile feel especially on mobile
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        const FRICTION = isMobile ? 0.88 : 0.92; // Lower = more friction per frame
-        const MOMENTUM_MULTIPLIER = isMobile ? 0.6 : 0.8; // Preserve less momentum on mobile
-        const ELASTIC_RESISTANCE = isMobile ? 0.18 : 0.18; // Stronger elastic on mobile
-        const ELASTIC_THRESHOLD = isMobile ? 120 : 60; // Start elastic a bit earlier on mobile
-        const MAX_VELOCITY = isMobile ? 36 : 60; // Cap fling speed
-        const DRAG_INTERPOLATION = isMobile ? 0.18 : 0.22; // Softer follow on mobile
-        
-        // Get bounds
-        const getBounds = () => {
-          const slider = container.querySelector('.projects-slider');
-          if (!slider) return { min: 0, max: 0 };
-          const maxScroll = slider.scrollWidth - container.clientWidth;
-          return {
-            min: 0,
-            max: Math.max(0, maxScroll)
-          };
+        // Get scroll boundaries
+        const getScrollBounds = () => {
+          const maxScroll = container.scrollWidth - container.clientWidth;
+          return { min: 0, max: maxScroll };
         };
         
-        // Apply elastic resistance at bounds
-        const applyElasticBounds = (pos, bounds) => {
-          if (pos < bounds.min) {
-            const overshoot = bounds.min - pos;
-            if (overshoot > 0) {
-              // Elastic resistance - stronger the further you go
-              const resistance = Math.min(overshoot / ELASTIC_THRESHOLD, 1);
-              return bounds.min - overshoot * (1 - ELASTIC_RESISTANCE * resistance);
-            }
-          } else if (pos > bounds.max) {
-            const overshoot = pos - bounds.max;
-            if (overshoot > 0) {
-              const resistance = Math.min(overshoot / ELASTIC_THRESHOLD, 1);
-              return bounds.max + overshoot * (1 - ELASTIC_RESISTANCE * resistance);
-            }
+        // Apply elastic effect using transform
+        const applyElasticEffect = (targetScroll) => {
+          const bounds = getScrollBounds();
+          let overscrollX = 0;
+          let clampedScroll = targetScroll;
+          
+          // Calculate overscroll and clamp scroll position
+          if (targetScroll < bounds.min) {
+            overscrollX = targetScroll - bounds.min;
+            clampedScroll = bounds.min;
+          } else if (targetScroll > bounds.max) {
+            overscrollX = targetScroll - bounds.max;
+            clampedScroll = bounds.max;
           }
-          return pos;
+          
+          // Apply clamped scroll
+          container.scrollLeft = clampedScroll;
+          
+          // Apply elastic transform with resistance (flipped sign for correct direction)
+          if (sliderEl && overscrollX !== 0) {
+            const elasticOffset = -overscrollX * elasticResistance;
+            sliderEl.style.transform = `translateX(${elasticOffset}px)`;
+            sliderEl.style.transition = 'none';
+          } else if (sliderEl) {
+            // Reset transform when within bounds
+            sliderEl.style.transform = '';
+            sliderEl.style.transition = '';
+          }
+          
+          return { clampedScroll, overscrollX };
         };
         
-        // Physics animation loop
-        const animate = (timestamp) => {
-          if (!lastTime) lastTime = timestamp;
-          const deltaTime = Math.min((timestamp - lastTime) / 16.67, 2); // Normalize to 60fps, cap at 2x
-          lastTime = timestamp;
+        // Snap back to boundaries with smooth animation
+        const snapBackToBounds = () => {
+          if (snapBackAnimationId) {
+            cancelAnimationFrame(snapBackAnimationId);
+          }
           
-          const bounds = getBounds();
-          const approxVelocity = Math.abs(velocity);
-          const isSettling = Math.abs(targetPosition - currentPosition);
-          const currentlyMoving = isDown || approxVelocity > 0.18 || isSettling > 0.3;
-          updateMovingState(currentlyMoving);
+          if (!sliderEl) return;
           
-          if (isDown) {
-            // While dragging, smoothly interpolate to target with heavy feel
-            const diff = targetPosition - currentPosition;
-            currentPosition += diff * DRAG_INTERPOLATION; // Heavier, damped movement
-            currentPosition = applyElasticBounds(currentPosition, bounds);
-            // Clamp scroll position, apply visual elastic offset via transform
-            const clamped = Math.min(bounds.max, Math.max(bounds.min, currentPosition));
-            const visualOffset = currentPosition - clamped;
-            container.scrollLeft = clamped;
-            if (sliderEl) {
-              if (Math.abs(visualOffset) > 0.5) {
-                sliderEl.style.transform = `translateX(${ -visualOffset }px)`;
-              } else {
-                sliderEl.style.transform = '';
-              }
-            }
-            animationFrameId = requestAnimationFrame(animate);
-          } else {
-            // Apply friction to velocity (high friction = heavy feel)
-            velocity *= FRICTION;
+          const bounds = getScrollBounds();
+          const currentScroll = container.scrollLeft;
+          const currentTransform = sliderEl.style.transform;
+          
+          // Check if we have an elastic transform applied
+          const transformMatch = currentTransform.match(/translateX\(([-\d.]+)px\)/);
+          const currentOffset = transformMatch ? parseFloat(transformMatch[1]) : 0;
+          
+          // If there's no offset, no need to snap back
+          if (currentOffset === 0) {
+            return;
+          }
+          
+          // Smooth snap-back animation
+          const startOffset = currentOffset;
+          const targetOffset = 0;
+          const duration = 300; // milliseconds
+          const startTime = performance.now();
+          
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
             
-            // Update position with velocity
-            currentPosition += velocity * deltaTime;
+            // Easing function (ease-out)
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentOffset = startOffset + (targetOffset - startOffset) * easeOut;
             
-            // Apply elastic bounds
-            const beforeElastic = currentPosition;
-            currentPosition = applyElasticBounds(currentPosition, bounds);
-            
-            // If we hit a bound, reduce velocity significantly
-            if (beforeElastic !== currentPosition) {
-              velocity *= 0.35; // Strong damping at bounds
-            }
-            
-            // Snap back to bounds if velocity is very low and we're out of bounds
-            if (Math.abs(velocity) < 0.05) {
-              if (currentPosition < bounds.min) {
-                const snapDiff = bounds.min - currentPosition;
-                currentPosition += snapDiff * 0.2; // Smooth snap back
-                if (Math.abs(snapDiff) < 0.5) {
-                  currentPosition = bounds.min;
-                  velocity = 0;
-                }
-              } else if (currentPosition > bounds.max) {
-                const snapDiff = bounds.max - currentPosition;
-                currentPosition += snapDiff * 0.2; // Smooth snap back
-                if (Math.abs(snapDiff) < 0.5) {
-                  currentPosition = bounds.max;
-                  velocity = 0;
-                }
-              }
-            }
-            
-            // Clamp scroll position, apply visual elastic offset via transform
-            const clamped = Math.min(bounds.max, Math.max(bounds.min, currentPosition));
-            const visualOffset = currentPosition - clamped;
-            container.scrollLeft = clamped;
-            if (sliderEl) {
-              if (Math.abs(visualOffset) > 0.5) {
-                sliderEl.style.transform = `translateX(${ -visualOffset }px)`;
-              } else {
-                sliderEl.style.transform = '';
-              }
-            }
-            
-            // Continue animation if there's still movement
-            if (Math.abs(velocity) > 0.01 || (currentPosition < bounds.min && Math.abs(bounds.min - currentPosition) > 0.5) || (currentPosition > bounds.max && Math.abs(currentPosition - bounds.max) > 0.5)) {
-              animationFrameId = requestAnimationFrame(animate);
+            if (Math.abs(currentOffset) > 0.1) {
+              sliderEl.style.transform = `translateX(${currentOffset}px)`;
+              sliderEl.style.transition = 'none';
+              snapBackAnimationId = requestAnimationFrame(animate);
             } else {
-              animationFrameId = null;
-              lastTime = 0;
-              updateMovingState(false);
-              // Ensure final position is correct
-              if (currentPosition < bounds.min) {
-                container.scrollLeft = bounds.min;
-              } else if (currentPosition > bounds.max) {
-                container.scrollLeft = bounds.max;
-              }
-              if (sliderEl) sliderEl.style.transform = '';
+              sliderEl.style.transform = '';
+              sliderEl.style.transition = '';
+              snapBackAnimationId = null;
             }
-          }
+          };
+          
+          snapBackAnimationId = requestAnimationFrame(animate);
         };
         
-        // Start animation loop
-        const startAnimation = () => {
-          if (!animationFrameId) {
-            lastTime = 0;
-            animationFrameId = requestAnimationFrame(animate);
-          }
-        };
-        
-        // Initialize position
-        currentPosition = container.scrollLeft;
-        targetPosition = currentPosition;
-        
-        // Mouse events
+        // Mouse events - simple direct scroll with elastic effect
         container.addEventListener('mousedown', (e) => {
-          // Don't start drag if clicking on a link or button
           if (e.target.closest('a, button')) return;
+          
+          // Cancel any ongoing snap-back animation
+          if (snapBackAnimationId) {
+            cancelAnimationFrame(snapBackAnimationId);
+            snapBackAnimationId = null;
+          }
+          
+          // Reset any existing transform
+          if (sliderEl) {
+            sliderEl.style.transform = '';
+            sliderEl.style.transition = '';
+          }
           
           isDown = true;
           isDragging = false;
+          startX = e.pageX;
+          startScrollLeft = container.scrollLeft;
           container.style.cursor = 'grabbing';
           container.style.userSelect = 'none';
           updateMovingState(true);
-          
-          // Stop any ongoing animation
-          if (animationFrameId) {
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = null;
-          }
-          
-          // Initialize positions
-          currentPosition = container.scrollLeft;
-          targetPosition = currentPosition;
-          lastPosition = e.pageX;
-          lastTime = performance.now();
-          velocity = 0;
-          
-          startAnimation();
         });
         
         container.addEventListener('mouseleave', () => {
@@ -1514,7 +1483,8 @@
             isDown = false;
             container.style.cursor = 'grab';
             container.style.userSelect = '';
-            startAnimation(); // Continue with momentum
+            updateMovingState(false);
+            snapBackToBounds();
           }
         });
         
@@ -1524,15 +1494,7 @@
             container.style.cursor = 'grab';
             container.style.userSelect = '';
             
-            // Calculate final velocity for momentum
-            const now = performance.now();
-            const timeDelta = Math.max(now - lastTime, 1);
-            const positionDelta = e.pageX - lastPosition;
-            
-            // Convert mouse movement to scroll velocity (inverse because scroll is opposite to mouse)
-            velocity = -(positionDelta / timeDelta) * 16.67 * MOMENTUM_MULTIPLIER;
-            
-            // If we didn't drag much, allow click events
+            // Allow click events if we didn't drag
             if (!isDragging) {
               const clickable = document.elementFromPoint(e.clientX, e.clientY);
               if (clickable) {
@@ -1546,9 +1508,8 @@
               }
             }
             isDragging = false;
-            
-            // Continue animation with momentum
-            startAnimation();
+            updateMovingState(false);
+            snapBackToBounds();
           }
         });
         
@@ -1556,111 +1517,77 @@
           if (!isDown) return;
           e.preventDefault();
           
-          const now = performance.now();
-          const positionDelta = e.pageX - lastPosition;
+          const deltaX = e.pageX - startX;
+          const totalDelta = Math.abs(deltaX);
           
-          // Update target position with heavy friction feel (inverse for scroll)
-          targetPosition = currentPosition - positionDelta * 1.3;
-          
-          // Check if we've moved enough to consider it dragging
-          if (Math.abs(positionDelta) > dragThreshold) {
+          if (totalDelta > dragThreshold) {
             isDragging = true;
           }
           
-          lastPosition = e.pageX;
-          lastTime = now;
+          // Apply elastic effect with resistance at boundaries
+          const targetScroll = startScrollLeft - deltaX;
+          applyElasticEffect(targetScroll);
         });
         
-        // Touch events for mobile
-        let touchStartX = 0;
-        let touchStartTime = 0;
-        let lastTouchX = 0;
-        let lastTouchTime = 0;
-        
+        // Touch events - simple direct scroll with elastic effect
         container.addEventListener('touchstart', (e) => {
-          // Don't start drag if touching a link or button
           if (e.target.closest('a, button')) return;
+          
+          // Cancel any ongoing snap-back animation
+          if (snapBackAnimationId) {
+            cancelAnimationFrame(snapBackAnimationId);
+            snapBackAnimationId = null;
+          }
+          
+          // Reset any existing transform
+          if (sliderEl) {
+            sliderEl.style.transform = '';
+            sliderEl.style.transition = '';
+          }
           
           isDown = true;
           isDragging = false;
+          startX = e.touches[0].pageX;
+          startScrollLeft = container.scrollLeft;
           updateMovingState(true);
-          
-          // Stop any ongoing animation
-          if (animationFrameId) {
-            cancelAnimationFrame(animationFrameId);
-            animationFrameId = null;
-          }
-          
-          touchStartX = e.touches[0].pageX;
-          lastTouchX = touchStartX;
-          touchStartTime = performance.now();
-          lastTouchTime = touchStartTime;
-          
-          currentPosition = container.scrollLeft;
-          targetPosition = currentPosition;
-          velocity = 0;
-          
-          startAnimation();
         }, { passive: false });
         
         container.addEventListener('touchmove', (e) => {
-          // Prevent the page from vertically scrolling while dragging horizontally
-          e.preventDefault();
           if (!isDown) return;
+          e.preventDefault();
           
-          const touchX = e.touches[0].pageX;
-          const now = performance.now();
-          const positionDelta = touchX - lastTouchX;
-          const timeDelta = Math.max(now - lastTouchTime, 1);
+          const deltaX = e.touches[0].pageX - startX;
+          const totalDelta = Math.abs(deltaX);
           
-          // Update target position (inverse for scroll)
-          targetPosition = currentPosition - positionDelta * 1.3;
-          
-          // Check if we've moved enough to consider it dragging
-          if (Math.abs(touchX - touchStartX) > dragThreshold) {
+          if (totalDelta > dragThreshold) {
             isDragging = true;
           }
           
-          lastTouchX = touchX;
-          lastTouchTime = now;
+          // Apply elastic effect with resistance at boundaries
+          const targetScroll = startScrollLeft - deltaX;
+          applyElasticEffect(targetScroll);
         }, { passive: false });
         
-        container.addEventListener('touchend', (e) => {
+        container.addEventListener('touchend', () => {
           if (isDown) {
             isDown = false;
-            
-            // Calculate final velocity for momentum
-            const now = performance.now();
-            const timeDelta = Math.max(now - lastTouchTime, 1);
-            const positionDelta = lastTouchX - touchStartX;
-            
-            // Convert touch movement to scroll velocity (inverse because scroll is opposite to touch)
-            velocity = -(positionDelta / timeDelta) * 16.67 * MOMENTUM_MULTIPLIER;
-            // Cap velocity to avoid excessive fling
-            if (velocity > MAX_VELOCITY) velocity = MAX_VELOCITY;
-            if (velocity < -MAX_VELOCITY) velocity = -MAX_VELOCITY;
-            
-            // Continue animation with momentum
-            startAnimation();
+            isDragging = false;
+            updateMovingState(false);
+            snapBackToBounds();
           }
         }, { passive: false });
         
-        // Sync scroll position on scroll events (for wheel scrolling)
+        // Sync scroll state
         container.addEventListener('scroll', () => {
-          if (!isDown && !animationFrameId) {
-            currentPosition = container.scrollLeft;
-            targetPosition = currentPosition;
-            velocity = 0;
-          }
           updateMovingState(true);
           if (scrollTimeoutId) {
             clearTimeout(scrollTimeoutId);
           }
           scrollTimeoutId = setTimeout(() => {
-            if (!isDown && !animationFrameId) {
+            if (!isDown) {
               updateMovingState(false);
             }
-          }, 180);
+          }, 150);
         }, { passive: true });
       });
     })();
