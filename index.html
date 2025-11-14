@@ -1418,42 +1418,74 @@
         const snapBackToBounds = () => {
           if (snapBackAnimationId) {
             cancelAnimationFrame(snapBackAnimationId);
+            snapBackAnimationId = null;
           }
           
           if (!sliderEl) return;
           
-          const bounds = getScrollBounds();
-          const currentScroll = container.scrollLeft;
-          const currentTransform = sliderEl.style.transform;
+          // First, capture the current transform state BEFORE any changes
+          const currentTransform = sliderEl.style.transform || '';
+          let currentOffset = 0;
           
           // Check if we have an elastic transform applied
-          const transformMatch = currentTransform.match(/translateX\(([-\d.]+)px\)/);
-          const currentOffset = transformMatch ? parseFloat(transformMatch[1]) : 0;
+          // Match translateX with optional negative sign and decimal numbers
+          const transformMatch = currentTransform.match(/translateX\(\s*([-]?\d+\.?\d*)\s*px\)/);
+          if (transformMatch) {
+            currentOffset = parseFloat(transformMatch[1]);
+          } else {
+            // If no transform found, check computed style as fallback
+            const computedStyle = window.getComputedStyle(sliderEl);
+            const matrix = computedStyle.transform;
+            if (matrix && matrix !== 'none') {
+              const matrixMatch = matrix.match(/matrix\([^,]+,\s*[^,]+,\s*[^,]+,\s*[^,]+,\s*([-]?\d+\.?\d*),\s*([-]?\d+\.?\d*)\)/);
+              if (matrixMatch) {
+                currentOffset = parseFloat(matrixMatch[1]) || 0;
+              }
+            }
+          }
           
           // If there's no offset, no need to snap back
-          if (currentOffset === 0) {
+          if (Math.abs(currentOffset) < 0.1) {
+            // Still ensure scroll position is correct
+            const bounds = getScrollBounds();
+            const currentScroll = container.scrollLeft;
+            if (currentScroll < bounds.min) {
+              container.scrollLeft = bounds.min;
+            } else if (currentScroll > bounds.max) {
+              container.scrollLeft = bounds.max;
+            }
             return;
+          }
+          
+          // Now that we've captured the offset, ensure scroll position is within bounds
+          const bounds = getScrollBounds();
+          const currentScroll = container.scrollLeft;
+          if (currentScroll < bounds.min) {
+            container.scrollLeft = bounds.min;
+          } else if (currentScroll > bounds.max) {
+            container.scrollLeft = bounds.max;
           }
           
           // Smooth snap-back animation
           const startOffset = currentOffset;
           const targetOffset = 0;
-          const duration = 300; // milliseconds
+          const duration = 1000; // milliseconds (slower for smoother effect)
           const startTime = performance.now();
           
           const animate = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Easing function (ease-out)
+            // Easing function (ease-out cubic)
             const easeOut = 1 - Math.pow(1 - progress, 3);
-            const currentOffset = startOffset + (targetOffset - startOffset) * easeOut;
+            const animatedOffset = startOffset + (targetOffset - startOffset) * easeOut;
             
-            if (Math.abs(currentOffset) > 0.1) {
-              sliderEl.style.transform = `translateX(${currentOffset}px)`;
+            if (Math.abs(animatedOffset) > 0.1) {
+              sliderEl.style.transform = `translateX(${animatedOffset}px)`;
               sliderEl.style.transition = 'none';
               snapBackAnimationId = requestAnimationFrame(animate);
             } else {
+              // Animation complete
               sliderEl.style.transform = '';
               sliderEl.style.transition = '';
               snapBackAnimationId = null;
@@ -1579,10 +1611,16 @@
             container.style.userSelect = '';
             updateMovingState(false);
             
-            // Apply momentum scrolling based on velocity (reduced for desktop)
-            const desktopVelocityReduction = 0.5; // Reduce desktop velocity by 50%
-            const velocityPerFrame = velocity * 16.67 * desktopVelocityReduction;
-            applyMomentum(velocityPerFrame);
+            // Check if we have an elastic transform that needs to snap back
+            const hasElasticTransform = sliderEl && sliderEl.style.transform && sliderEl.style.transform.includes('translateX');
+            if (hasElasticTransform) {
+              snapBackToBounds();
+            } else {
+              // Apply momentum scrolling based on velocity (reduced for desktop)
+              const desktopVelocityReduction = 0.5; // Reduce desktop velocity by 50%
+              const velocityPerFrame = velocity * 16.67 * desktopVelocityReduction;
+              applyMomentum(velocityPerFrame);
+            }
           }
         });
         
@@ -1608,10 +1646,16 @@
             isDragging = false;
             updateMovingState(false);
             
-            // Apply momentum scrolling based on velocity (reduced for desktop)
-            const desktopVelocityReduction = 0.5; // Reduce desktop velocity by 50%
-            const velocityPerFrame = velocity * 16.67 * desktopVelocityReduction;
-            applyMomentum(velocityPerFrame);
+            // Check if we have an elastic transform that needs to snap back
+            const hasElasticTransform = sliderEl && sliderEl.style.transform && sliderEl.style.transform.includes('translateX');
+            if (hasElasticTransform) {
+              snapBackToBounds();
+            } else {
+              // Apply momentum scrolling based on velocity (reduced for desktop)
+              const desktopVelocityReduction = 0.5; // Reduce desktop velocity by 50%
+              const velocityPerFrame = velocity * 16.67 * desktopVelocityReduction;
+              applyMomentum(velocityPerFrame);
+            }
           }
         });
         
@@ -1729,10 +1773,16 @@
             isDragging = false;
             updateMovingState(false);
             
-            // Apply momentum scrolling based on velocity
-            // Convert velocity from px/ms to px/frame (assuming ~60fps = ~16.67ms per frame)
-            const velocityPerFrame = velocity * 16.67;
-            applyMomentum(velocityPerFrame);
+            // Check if we have an elastic transform that needs to snap back
+            const hasElasticTransform = sliderEl && sliderEl.style.transform && sliderEl.style.transform.includes('translateX');
+            if (hasElasticTransform) {
+              snapBackToBounds();
+            } else {
+              // Apply momentum scrolling based on velocity
+              // Convert velocity from px/ms to px/frame (assuming ~60fps = ~16.67ms per frame)
+              const velocityPerFrame = velocity * 16.67;
+              applyMomentum(velocityPerFrame);
+            }
           }
         }, { passive: false });
         
